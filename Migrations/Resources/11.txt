@@ -1,0 +1,2 @@
+Date,ClientId,ProductId,Sum
+2019-12-23,6acb9fb3-9213-49cd-abda-f9785a658d55,89a5c4a4-6d02-412f-bb58-55a09f8afc7d,150
