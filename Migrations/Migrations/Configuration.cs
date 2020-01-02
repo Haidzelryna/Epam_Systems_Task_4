@@ -13,7 +13,7 @@ namespace Migrations.Migrations
 {
     public class Configuration : DbMigrationsConfiguration<DataContext>
     {
-        private const string AdminId = "F84B5406-C71E-4189-9220-5B7290ECB863";
+        private const string ADMINID = "80AB7036-5D4A-11E6-9903-0050569977A1";
 
         public Configuration()
         {
@@ -22,7 +22,7 @@ namespace Migrations.Migrations
 
         protected override void Seed(DataContext context)
         {
-            var adminGuid = Guid.Parse(AdminId);
+            var adminGuid = Guid.Parse(ADMINID);
 
             Configuration.ParseResource(context.Sales, Resources.Resource._11,
                  sale =>
