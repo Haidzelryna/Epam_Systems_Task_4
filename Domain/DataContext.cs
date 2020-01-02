@@ -34,7 +34,7 @@ namespace Domain
             modelBuilder.Entity<Client>().ToTable("Clients");
             modelBuilder.Entity<Product>().ToTable("Products");
             modelBuilder.Entity<Sale>().ToTable("Sales");
-            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
 
         public override int SaveChanges()
