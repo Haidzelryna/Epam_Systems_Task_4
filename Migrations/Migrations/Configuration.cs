@@ -40,7 +40,7 @@ namespace Migrations.Migrations
             public static void ParseResource<TDataType>(IDbSet<TDataType> dbSet, byte[] resourceName, Action<TDataType> action = null)
            where TDataType : class
         {
-            if (dbSet.Any())
+            if (!dbSet.Any())
             {
                 return;
             }
