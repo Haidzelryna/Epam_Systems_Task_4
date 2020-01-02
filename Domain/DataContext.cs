@@ -29,16 +29,11 @@ namespace Domain
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<User>().ToTable("UserLists");
-
-            modelBuilder.Entity<Contact>().ToTable("Contacts");
-
             modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<Contact>().ToTable("Contacts");
             modelBuilder.Entity<Client>().ToTable("Clients");
             modelBuilder.Entity<Product>().ToTable("Products");
             modelBuilder.Entity<Sale>().ToTable("Sales");
-
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
 
