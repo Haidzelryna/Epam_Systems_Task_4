@@ -4,14 +4,40 @@ using System.Linq;
 using System.Reflection;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Migrations;
 using CsvHelper;
+using System.Data.Entity.Validation;
+using Domain;
+using System.Data.Entity.Migrations;
 
 namespace Migrations.Migrations
 {
-    public class Configuration
+    public class Configuration : DbMigrationsConfiguration<DataContext>
     {
-        public static void ParseResource<TDataType>(IDbSet<TDataType> dbSet, byte[] resourceName, Action<TDataType> action = null)
+        private const string AdminId = "F84B5406-C71E-4189-9220-5B7290ECB863";
+
+        public Configuration()
+        {
+            AutomaticMigrationsEnabled = false;
+        }
+
+        protected override void Seed(DataContext context)
+        {
+            var adminGuid = Guid.Parse(AdminId);
+
+            Configuration.ParseResource(context.Sales, Resources.Resource._11,
+                 sale =>
+                 {
+                     sale.CreatedByUserId = adminGuid;
+                     sale.CreatedDateTime = DateTime.UtcNow;
+                 });
+
+            Configuration.RunEntityValidationException(() =>
+            {
+                context.SaveChanges();
+            });
+        }
+
+            public static void ParseResource<TDataType>(IDbSet<TDataType> dbSet, byte[] resourceName, Action<TDataType> action = null)
            where TDataType : class
         {
             if (dbSet.Any())
@@ -59,5 +85,46 @@ namespace Migrations.Migrations
             csvReader.Configuration.IgnoreReferences = true;
             return csvReader.GetRecords<T>().ToArray();
         }
+
+        public static void RunEntityValidationException(Action action)
+        {
+            try
+            {
+                action();
+            }
+            catch (AggregateException aggregateException)
+            {
+                foreach (var exception in aggregateException.InnerExceptions)
+                {
+                    if (exception is DbEntityValidationException)
+                    {
+                        throw new ApplicationException(GetValidationMessage((DbEntityValidationException)exception));
+                    }
+                }
+
+                throw;
+            }
+            catch (DbEntityValidationException validationException)
+            {
+                throw new ApplicationException(GetValidationMessage(validationException));
+            }
+        }
+
+        private static string GetValidationMessage(DbEntityValidationException validationException)
+        {
+            return $"Validation errors saving an entity to the database:"; // { GetFullMessage("\r\n") }";
+        }
+
+        //public static string GetFullMessage(this DbEntityValidationException exception, string separator = ";", bool messagesOnly = false)
+        //{
+        //    var messages = exception.EntityValidationErrors
+        //            .SelectMany(validationResult => validationResult.ValidationErrors,
+        //                (rslt, error) => error.PropertyName != null && !messagesOnly
+        //                    ? $"{error.ErrorMessage} [{error.PropertyName}]"
+        //                    : $"{error.ErrorMessage}")
+        //            .Distinct();
+
+        //    return string.Join(separator, messages);
+        //}
     }
 }

@@ -80,6 +80,12 @@
       <Link>Resources\111.txt</Link>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{d0f743f0-ed5e-4138-a3a1-7b21f0cb0b9f}</Project>
+      <Name>Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain
 {
-    [Table("User")]
+    [Table("Contact")]
     public class Contact : BaseEntity
     {
         [Column("I")]
@@ -27,7 +27,7 @@ namespace Domain
         public string Email { get; set; }
 
         //[ForeignKey("UserId")]
-        //public virtual ICollection<ApplicationUser> Users { get; set; }
+        //public virtual ICollection<User> Users { get; set; }
     }
 }
 

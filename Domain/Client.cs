@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain
 {
+    [Table("Client")]
     public class Client: BaseEntity
     {
         public Guid? ContactId { get; set; }

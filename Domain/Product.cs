@@ -2,6 +2,7 @@
 
 namespace Domain
 {
+    //[Table("Product")]
     public class Product : BaseEntity
     {
         [MaxLength(50)]

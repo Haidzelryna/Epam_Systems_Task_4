@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace Domain
 {
@@ -14,18 +15,22 @@ namespace Domain
 
         //protected readonly IUserService userService;
 
-        ///// <summary>
-        ///// Initializes a new instance of the <see cref="Context"/> class.
-        ///// </summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Context"/> class.
+        /// </summary>
         //public DataContext() : base("EntityContext")
         //{
         //}
+
+        public DataContext() : base("DbConnection")
+        {
+        }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<ApplicationUser>().ToTable("UserLists");
+            modelBuilder.Entity<User>().ToTable("UserLists");
 
             modelBuilder.Entity<Contact>().ToTable("Contacts");
 
@@ -34,7 +39,7 @@ namespace Domain
             modelBuilder.Entity<Product>().ToTable("Products");
             modelBuilder.Entity<Sale>().ToTable("Sales");
 
-            //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
 
         public override int SaveChanges()
