@@ -8,8 +8,6 @@ namespace Task_4
     {
         private const string ADMINID = "80AB7036-5D4A-11E6-9903-0050569977A1";
 
-        
-
         static void Main(string[] args)
         {
             Configuration conf = new Configuration();
