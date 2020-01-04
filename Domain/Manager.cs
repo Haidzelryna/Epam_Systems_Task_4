@@ -8,8 +8,8 @@ namespace Domain
     /// <summary>
     /// 
     /// </summary>
-    [Table("User")]
-    public class User : BaseEntity
+    [Table("Manager")]
+    public class Manager : Entity
     {
         public Guid? ContactId { get; set; }
         //[ForeignKey(nameof(ContactId))]

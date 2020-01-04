@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain
 {
     [Table("Contact")]
-    public class Contact : BaseEntity
+    public class Contact : Entity
     {
         [Column("I")]
         [MaxLength(255)]
@@ -26,8 +26,8 @@ namespace Domain
         [MaxLength(255)]
         public string Email { get; set; }
 
-        //[ForeignKey("UserId")]
-        //public virtual ICollection<User> Users { get; set; }
+        //[ForeignKey("ManagerId")]
+        //public virtual ICollection<Manager> Managers { get; set; }
     }
 }
 

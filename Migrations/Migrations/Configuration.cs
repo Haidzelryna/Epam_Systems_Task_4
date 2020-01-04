@@ -24,20 +24,20 @@ namespace Migrations.Migrations
         {
             var adminGuid = Guid.Parse(ADMINID);
 
-            Configuration.ParseResource(context.Sales, Resources.Resource._11,
+            ParseResource(context.Sales, Resources.Resource._11,
                  sale =>
                  {
                      sale.CreatedByUserId = adminGuid;
                      sale.CreatedDateTime = DateTime.UtcNow;
                  });
 
-            Configuration.RunEntityValidationException(() =>
+            RunEntityValidationException(() =>
             {
                 context.SaveChanges();
             });
         }
 
-            public static void ParseResource<TDataType>(IDbSet<TDataType> dbSet, byte[] resourceName, Action<TDataType> action = null)
+            public void ParseResource<TDataType>(IDbSet<TDataType> dbSet, byte[] resourceName, Action<TDataType> action = null)
            where TDataType : class
         {
             if (!dbSet.Any())
@@ -47,12 +47,12 @@ namespace Migrations.Migrations
             ParseCollection(dbSet, ParseResource(resourceName, action).ToArray());
         }
 
-        private static void ParseCollection<T>(IDbSet<T> dbSet, T[] entities) where T : class
+        private void ParseCollection<T>(IDbSet<T> dbSet, T[] entities) where T : class
         {
             dbSet.AddOrUpdate(entities);
         }
 
-        public static IEnumerable<T> ParseResource<T>(byte[] resourceName, Action<T> action = null)
+        public IEnumerable<T> ParseResource<T>(byte[] resourceName, Action<T> action = null)
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
             using (Stream stream = new MemoryStream(resourceName))
@@ -86,7 +86,7 @@ namespace Migrations.Migrations
             return csvReader.GetRecords<T>().ToArray();
         }
 
-        public static void RunEntityValidationException(Action action)
+        public void RunEntityValidationException(Action action)
         {
             try
             {

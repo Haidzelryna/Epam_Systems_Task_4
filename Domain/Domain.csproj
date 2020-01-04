@@ -42,9 +42,12 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Entity.Design" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,8 +56,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="DataModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001031052120_SampleMigrations.cs" />
+    <Compile Include="Migrations\202001031052120_SampleMigrations.designer.cs">
+      <DependentUpon>202001031052120_SampleMigrations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001031105164_202001031052120_SampleMigrations.cs" />
+    <Compile Include="Migrations\202001031105164_202001031052120_SampleMigrations.designer.cs">
+      <DependentUpon>202001031105164_202001031052120_SampleMigrations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Manager.cs" />
     <Compile Include="BaseEntity.cs" />
     <Compile Include="DataContext.cs" />
     <Compile Include="Product.cs" />
@@ -70,7 +86,22 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <EntityDeploy Include="DataModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DataModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DataModel.edmx.diagram">
+      <DependentUpon>DataModel.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202001031052120_SampleMigrations.resx">
+      <DependentUpon>202001031052120_SampleMigrations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001031105164_202001031052120_SampleMigrations.resx">
+      <DependentUpon>202001031105164_202001031052120_SampleMigrations.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

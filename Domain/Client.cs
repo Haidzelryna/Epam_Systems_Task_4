@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain
 {
     [Table("Client")]
-    public class Client: BaseEntity
+    public class Client: Entity
     {
         public Guid? ContactId { get; set; }
         //[ForeignKey(nameof(ContactId))]

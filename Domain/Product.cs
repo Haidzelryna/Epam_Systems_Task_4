@@ -3,7 +3,7 @@
 namespace Domain
 {
     //[Table("Product")]
-    public class Product : BaseEntity
+    public class Product : Entity
     {
         [MaxLength(50)]
         public string Price { get; set; }
