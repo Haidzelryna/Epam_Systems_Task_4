@@ -2,14 +2,14 @@
 
 namespace Domain.Repository
 {
-    public interface IGenericRepository<Entity, IEntity>: IEntity where Entity: IEntity
+    public interface IGenericRepository<IEntityRepos>
     {
         //Get
 
-        void Add(IEntity entity);
+        void Add(IEntityRepos entity);
 
-        void Delete(IEntity Entity);
+        void Delete(IEntityRepos Entity);
 
-        IQueryable<IEntity> SaveChanges();
+        IQueryable<IEntityRepos> SaveChanges();
     }
 }

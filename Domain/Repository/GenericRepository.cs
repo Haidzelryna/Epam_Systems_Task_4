@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace Domain.Repository
 {
-    public class GenericRepository<Entity, IEntity> : IGenericRepository<Entity, IEntity> //where Entity : class, interface        
+    public class GenericRepository<IEntityRepos> : IGenericRepository<IEntityRepos>     
     {
-        public void Add(IEntity entity)
+        public void Add(IEntityRepos entity)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(IEntity entity)
+        public void Delete(IEntityRepos entity)
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<IEntity> SaveChanges()
+        public IQueryable<IEntityRepos> SaveChanges()
         {
             throw new NotImplementedException();
         }
