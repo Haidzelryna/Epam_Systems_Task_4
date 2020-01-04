@@ -97,6 +97,8 @@
     <Compile Include="Entity.cs" />
     <Compile Include="IBaseEntity.cs" />
     <Compile Include="IEntity.cs" />
+    <Compile Include="Repository\GenericRepository.cs" />
+    <Compile Include="Repository\IGenericRepository.cs" />
     <Compile Include="Sale.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
