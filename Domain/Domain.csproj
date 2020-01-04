@@ -46,6 +46,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Entity.Design" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
@@ -100,6 +101,7 @@
     <Compile Include="Repository\GenericRepository.cs" />
     <Compile Include="Repository\IEntityRepos.cs" />
     <Compile Include="Repository\IGenericRepository.cs" />
+    <Compile Include="Repository\SaleRepository.cs" />
     <Compile Include="Sale.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>

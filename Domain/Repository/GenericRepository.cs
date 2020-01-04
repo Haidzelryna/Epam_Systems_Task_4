@@ -3,22 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
+using System.Data.Linq;
 
 namespace Domain.Repository
 {
-    public class GenericRepository<IEntityRepos> : IGenericRepository<IEntityRepos>     
+    public class GenericRepository<T> : IGenericRepository<T> where T: Entity    
     {
-        public void Add(IEntityRepos entity)
+        private DataContext _context;
+
+        public GenericRepository(DataContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public void Delete(IEntityRepos entity)
+        public void Add(T entity)
         {
-            throw new NotImplementedException();
+           _context.Set<Entity>().Add(entity as Entity);
         }
 
-        public IQueryable<IEntityRepos> SaveChanges()
+        public void Delete(T entity)
+        {
+            _context.Set<Entity>().Add(entity as Entity);
+        }
+
+        public IQueryable<T> SaveChanges()
         {
             throw new NotImplementedException();
         }
