@@ -5,16 +5,24 @@ using System.Text;
 using System.Threading.Tasks;
 
 using AutoMapper;
+using Models;
 
 namespace Domain.Mapper
 {
-    class Mapping
+    public static class Mapping
     {
-        private readonly MapperConfiguration TOADAPTERMAPPERCFG;
-        private readonly MapperConfiguration FROMADAPTERMAPPERCFG;
+        //private static readonly MapperConfiguration ADAPTERMAPPERCFG;
 
+        private static Domain.Sale _domainSale = null;
+        private static Models.Sale _modelsSale = null;
 
-
-
+        public static void Map(Domain.Sale domainSale, Models.Sale modelsSale)
+        {
+            _domainSale = domainSale;
+            _modelsSale = modelsSale;
+            var ADAPTERMAPPERCFG = new MapperConfiguration(cfg => cfg.CreateMap<Domain.Sale, Models.Sale>());
+            var mapper = ADAPTERMAPPERCFG.CreateMapper();
+            mapper.Map(_domainSale, _modelsSale);
+        }
     }
 }

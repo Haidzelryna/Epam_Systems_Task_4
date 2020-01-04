@@ -70,6 +70,10 @@
       <Project>{91edaac8-3844-4804-b88a-47b6272cc12a}</Project>
       <Name>Migrations</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Models\Models.csproj">
+      <Project>{54630f6c-6393-4f0f-a8b2-2105408ac742}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
