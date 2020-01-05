@@ -26,9 +26,9 @@ namespace Domain
 
         //public DataContext() : base("DBConnection")
         //{
-            Database.Connection.ConnectionString = String.Concat("Data Source=DROGON\\SQLEXPRESS;Integrated Security=True;",
-                                                    "Connect Timeout = 30; Encrypt = False; TrustServerCertificate = False;",
-                                                    "ApplicationIntent = ReadWrite; MultiSubnetFailover = False");
+            //Database.Connection.ConnectionString = String.Concat("Data Source=DROGON\\SQLEXPRESS;Integrated Security=True;",
+            //                                        "Connect Timeout = 30; Encrypt = False; TrustServerCertificate = False;",
+            //                                        "ApplicationIntent = ReadWrite; MultiSubnetFailover = False");
 
             
             Database.CreateIfNotExists();

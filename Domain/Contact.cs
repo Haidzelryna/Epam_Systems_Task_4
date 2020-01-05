@@ -12,7 +12,7 @@ namespace Domain
     using System;
     using System.Collections.Generic;
     
-    public partial class Contact
+    public partial class Contact: Entity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Contact()
@@ -21,7 +21,7 @@ namespace Domain
             this.Manager = new HashSet<Manager>();
         }
     
-        public System.Guid Id { get; set; }
+        //public System.Guid Id { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }

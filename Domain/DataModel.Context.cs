@@ -15,25 +15,20 @@ namespace Domain
     
     public partial class SalesEntities : DbContext
     {
+        public SalesEntities()
+            : base("name=SalesEntities")
+        {
+        }
+    
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            throw new UnintentionalCodeFirstException();
+        }
+    
         public virtual DbSet<Client> Client { get; set; }
         public virtual DbSet<Contact> Contact { get; set; }
         public virtual DbSet<Manager> Manager { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<Sale> Sale { get; set; }
-
-        public SalesEntities()
-            : base("SalesEntities")
-        {
-        }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Manager>().ToTable("Managers");
-            modelBuilder.Entity<Contact>().ToTable("Contacts");
-            modelBuilder.Entity<Client>().ToTable("Clients");
-            modelBuilder.Entity<Product>().ToTable("Products");
-            modelBuilder.Entity<Sale>().ToTable("Sales");
-        }       
     }
 }

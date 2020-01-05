@@ -12,7 +12,7 @@ namespace Domain
     using System;
     using System.Collections.Generic;
     
-    public partial class Client
+    public partial class Client: Entity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Client()
@@ -20,7 +20,7 @@ namespace Domain
             this.Sale = new HashSet<Sale>();
         }
     
-        public System.Guid Id { get; set; }
+        //public System.Guid Id { get; set; }
         public System.Guid ContactId { get; set; }
     
         public virtual Contact Contact { get; set; }

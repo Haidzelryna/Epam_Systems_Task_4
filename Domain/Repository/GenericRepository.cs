@@ -10,16 +10,18 @@ namespace Domain.Repository
 {
     public class GenericRepository<T> : IGenericRepository<T> where T: Entity    
     {
-        private DataContext _context;
+        private DbContext _context;
 
-        public GenericRepository(DataContext context)
+        public GenericRepository(DbContext context)
         {
             _context = context;
         }
 
-        public Guid Get(T entity)
+        public Guid? Get(Guid Id)
         {
-            return entity.Id;
+            var manager = ((SalesEntities)_context).Manager.Find(Id);
+            //if (manager == null) { return null; }
+            return manager.Id;
         }
 
         public void Add(T entity)

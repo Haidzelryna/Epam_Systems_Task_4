@@ -12,7 +12,7 @@ namespace Domain
     using System;
     using System.Collections.Generic;
     
-    public partial class Manager
+    public partial class Manager: Entity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Manager()
@@ -21,7 +21,7 @@ namespace Domain
             this.Sale1 = new HashSet<Sale>();
         }
     
-        public System.Guid Id { get; set; }
+        //public System.Guid Id { get; set; }
         public string Name { get; set; }
         public System.Guid ContactId { get; set; }
     
