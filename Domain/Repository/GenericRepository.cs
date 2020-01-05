@@ -17,6 +17,11 @@ namespace Domain.Repository
             _context = context;
         }
 
+        public Guid Get(T entity)
+        {
+            return entity.Id;
+        }
+
         public void Add(T entity)
         {
            _context.Set<Entity>().Add(entity as Entity);
