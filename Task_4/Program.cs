@@ -17,7 +17,7 @@ namespace Task_4
         private const string ADMINID = "80AB7036-5D4A-11E6-9903-0050569977A1";
 
         //@"w_[0-9]{2}[0-12]{1}[0-9]{4}"
-        public static string ValidateRegex = @"\w_\d{8}$";
+        public const string VALIDATEREGEX = @"\w_\d{8}$";
 
         static void Main(string[] args)
         {       
@@ -36,7 +36,7 @@ namespace Task_4
                     //            .FirstOrDefault();
 
 
-                    if (Regex.IsMatch(line,ValidateRegex))
+                    if (Regex.IsMatch(line, VALIDATEREGEX))
                     {
 
                         /*
