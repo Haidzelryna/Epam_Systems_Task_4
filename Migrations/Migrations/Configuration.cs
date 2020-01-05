@@ -24,7 +24,7 @@ namespace Migrations.Migrations
         {
             var adminGuid = Guid.Parse(ADMINID);
 
-            ParseResource(context.Sales, Resources.Resource.Ivanov_19112012,
+            ParseResource2(context.Sales, Resources.Resource.Ivanov_19112012,
                  sale =>
                  {
                      sale.CreatedByUserId = adminGuid;
@@ -37,13 +37,13 @@ namespace Migrations.Migrations
             });
         }
 
-            public void ParseResource<TDataType>(IDbSet<TDataType> dbSet, byte[] resourceName, Action<TDataType> action = null)
+            public void ParseResource2<TDataType>(IDbSet<TDataType> dbSet, byte[] resourceName, Action<TDataType> action = null)
            where TDataType : class
         {
-           // if (!dbSet.Any())
-           // {
-           //     return;
-           // }
+            if (!dbSet.Any())
+            {
+                return;
+            }
             ParseCollection(dbSet, ParseResource(resourceName, action).ToArray());
         }
 
@@ -83,6 +83,7 @@ namespace Migrations.Migrations
             csvReader.Configuration.IgnoreHeaderWhiteSpace = true;
             csvReader.Configuration.TrimFields = true;
             csvReader.Configuration.IgnoreReferences = true;
+            csvReader.Configuration.Delimiter = ";";
             return csvReader.GetRecords<T>().ToArray();
         }
 

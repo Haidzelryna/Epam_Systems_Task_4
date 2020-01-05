@@ -13,10 +13,20 @@ namespace Domain.Mapper
     {
         //private static readonly MapperConfiguration ADAPTERMAPPERCFG;
 
-        private static Domain.Sale _domainSale = null;
-        private static Models.Sale _modelsSale = null;
+        private static IEnumerable<Domain.Sales> _sales = null;
+        private static IEnumerable<Domain.Sale> _domainSale = null;
+        private static IEnumerable<Models.Sale> _modelsSale = null;
 
-        public static void Map(Domain.Sale domainSale, Models.Sale modelsSale)
+        public static void Map(IEnumerable<Domain.Sales> domainSales, IEnumerable<Domain.Sale> domainSale)
+        {
+            _sales = domainSales;
+            _domainSale = domainSale;
+            var ADAPTERMAPPERCFG = new MapperConfiguration(cfg => cfg.CreateMap<Domain.Sales, Domain.Sale>());
+            var mapper = ADAPTERMAPPERCFG.CreateMapper();
+            mapper.Map(_sales, _domainSale);
+        }
+
+        public static void Map(IEnumerable<Domain.Sale> domainSale, IEnumerable<Models.Sale> modelsSale)
         {
             _domainSale = domainSale;
             _modelsSale = modelsSale;
