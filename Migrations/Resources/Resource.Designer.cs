@@ -36,7 +36,7 @@ namespace Migrations.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Migrations.Resources.Resource", typeof(Resource).Assembly);
@@ -51,7 +51,7 @@ namespace Migrations.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,9 +63,9 @@ namespace Migrations.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        public static byte[] _11 {
+        public static byte[] Ivanov_19112012 {
             get {
-                object obj = ResourceManager.GetObject("_11", resourceCulture);
+                object obj = ResourceManager.GetObject("Ivanov_19112012", resourceCulture);
                 return ((byte[])(obj));
             }
         }

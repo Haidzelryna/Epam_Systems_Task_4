@@ -24,7 +24,7 @@ namespace Migrations.Migrations
         {
             var adminGuid = Guid.Parse(ADMINID);
 
-            ParseResource(context.Sales, Resources.Resource._11,
+            ParseResource(context.Sales, Resources.Resource.Ivanov_19112012,
                  sale =>
                  {
                      sale.CreatedByUserId = adminGuid;
