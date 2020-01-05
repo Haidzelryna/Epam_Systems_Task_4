@@ -8,5 +8,6 @@ namespace Domain
         public System.Guid ProductId { get; set; }
         public decimal Sum { get; set; }
         public System.DateTime Date { get; set; }
+        public System.Guid CreatedByUserId { get; set; }
     }
 }

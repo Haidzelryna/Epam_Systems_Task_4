@@ -59,9 +59,6 @@ namespace Task_4
                             dc.Product.Add(product); */
 
 
-
-
-
                         //    sale =>
                         //{
                         //    sale.CreatedByUserId = adminGuid;
@@ -90,31 +87,44 @@ namespace Task_4
                         //*/
 
 
-                        //проверка менеджера
-
                         //добавим менеджера "6acb9fb3-9213-49cd-abda-f9785a658d88"
-                        var manager = new Domain.Manager();
-                        manager.Id = Guid.Parse("6acb9fb3-9213-49cd-abda-f9785a658d88");
+                        //var manager = new Domain.Manager();
+                        //manager.Id = Guid.Parse("6acb9fb3-9213-49cd-abda-f9785a658d88");
                         //manager.ContactId = contact.Id;
                         //dc.Manager.Add(manager);
 
                         var repos = new GenericRepository<Domain.Manager>((DbContext)dc);
 
+                        //проверка менеджера
                         try
                         {
-                            var managerId = repos.Get(dc.Manager, manager.Id);
+                            var managerId = repos.Get(dc.Manager, sales.First().CreatedByUserId);
                         }
                         catch (Exception e)
                         {
                             Console.WriteLine($"Exception Handler: {e}");
                             MessageUtility.ShowErrorMessage(new Object(), "Данного менеджера нет в БД");
                         }
-
                         //проверка клиента
-
-
+                        try
+                        {
+                            var clientId = repos.Get(dc.Client, sales.First().ClientId);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine($"Exception Handler: {e}");
+                            MessageUtility.ShowErrorMessage(new Object(), "Данного клиента нет в БД");
+                        }
                         //проверка продукта
-
+                        try
+                        {
+                            var productId = repos.Get(dc.Product, sales.First().ProductId);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine($"Exception Handler: {e}");
+                            MessageUtility.ShowErrorMessage(new Object(), "Данного продукта нет в БД");
+                        }
 
 
                         //var ex = new Exception("Данного менеджера нет в БД");
