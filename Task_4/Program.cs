@@ -30,15 +30,8 @@ namespace Task_4
                 string line = Regex.Replace("Ivanov_19112012".Trim(), @"\s+", @" ");
                 if (line != "")
                 {
-
-                    //var lineRegexValidate = ValidateRegex.Split(line)
-                    //            .Select(x => Regex.Replace(x.Trim(), @"\s+", @" "))
-                    //            .FirstOrDefault();
-
-
                     if (Regex.IsMatch(line, VALIDATEREGEX))
                     {
-
                         /*
                        //добавим контакт "6acb9fb3-9213-49cd-abda-f9785a658d12"
                        var contact = new Domain.Contact();
@@ -78,9 +71,6 @@ namespace Task_4
                        });
 
 
-
-
-
                        var DomainSale = dc.Sale.First();
                        var ModelsSale = new Models.Sale();
 
@@ -101,7 +91,7 @@ namespace Task_4
 
                         try
                         {
-                            var managerId = repos.Get(manager.Id);
+                            var managerId = repos.Get(dc.Manager, manager.Id);
                         }
                         catch (Exception e)
                         {

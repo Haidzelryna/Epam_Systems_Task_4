@@ -37,7 +37,7 @@ namespace Domain.Exception
         public static void ShowValidationMessage(Object owner, string message)
         {
             //Abort();
-            Console.WriteLine(String.Concat(owner, ": ", message, "-", "Ошибка"));
+            Console.WriteLine(String.Concat(owner, ": ", message, "-", "Ошибка проверки данных"));
         }
     }
 }

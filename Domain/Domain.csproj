@@ -78,7 +78,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Exception\ExceptionUtility.cs" />
     <Compile Include="Exception\MessageUtility.cs" />
     <Compile Include="Mapper\Mapping.cs" />
     <Compile Include="Migrations\202001031052120_SampleMigrations.cs" />
