@@ -5,13 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 using AutoMapper;
-using Models;
 
 namespace Domain.Mapper
 {
     public static class Mapping
     {
-        //private static readonly MapperConfiguration ADAPTERMAPPERCFG;
+        private static MapperConfiguration AdapterMapperCfg;
 
         private static IEnumerable<Domain.Sales> _sales = null;
         private static IEnumerable<Domain.Sale> _domainSale = null;
@@ -21,8 +20,8 @@ namespace Domain.Mapper
         {
             _sales = domainSales;
             _domainSale = domainSale;
-            var ADAPTERMAPPERCFG = new MapperConfiguration(cfg => cfg.CreateMap<Domain.Sales, Domain.Sale>());
-            var mapper = ADAPTERMAPPERCFG.CreateMapper();
+            AdapterMapperCfg = new MapperConfiguration(cfg => cfg.CreateMap<Domain.Sales, Domain.Sale>());
+            var mapper = AdapterMapperCfg.CreateMapper();
             mapper.Map(_sales, _domainSale);
         }
 
@@ -30,8 +29,8 @@ namespace Domain.Mapper
         {
             _domainSale = domainSale;
             _modelsSale = modelsSale;
-            var ADAPTERMAPPERCFG = new MapperConfiguration(cfg => cfg.CreateMap<Domain.Sale, Models.Sale>());
-            var mapper = ADAPTERMAPPERCFG.CreateMapper();
+            AdapterMapperCfg = new MapperConfiguration(cfg => cfg.CreateMap<Domain.Sale, Models.Sale>());
+            var mapper = AdapterMapperCfg.CreateMapper();
             mapper.Map(_domainSale, _modelsSale);
         }
     }
