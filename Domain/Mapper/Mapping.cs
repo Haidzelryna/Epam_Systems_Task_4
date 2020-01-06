@@ -12,26 +12,28 @@ namespace BLL.Mapper
     {
         private static MapperConfiguration AdapterMapperCfg;
 
-        private static IEnumerable<BLL.Sales> _sales = null;
-        private static IEnumerable<BLL.Sale> _domainSale = null;
-        private static IEnumerable<DAL.Sale> _modelsSale = null;
-
-        public static void Map(IEnumerable<BLL.Sales> domainSales, IEnumerable<BLL.Sale> domainSale)
+        public static void StartMapping(IMapperConfigurationExpression mapperCfg)
         {
-            _sales = domainSales;
-            _domainSale = domainSale;
-            AdapterMapperCfg = new MapperConfiguration(cfg => cfg.CreateMap<BLL.Sales, BLL.Sale>());
-            var mapper = AdapterMapperCfg.CreateMapper();
-            mapper.Map(_sales, _domainSale);
+            mapperCfg.CreateMap<BLL.Sales, BLL.Sale>();
+            mapperCfg.CreateMap<BLL.Sale, DAL.Sale>();
         }
 
-        public static void Map(IEnumerable<BLL.Sale> domainSale, IEnumerable<DAL.Sale> modelsSale)
-        {
-            _domainSale = domainSale;
-            _modelsSale = modelsSale;
-            AdapterMapperCfg = new MapperConfiguration(cfg => cfg.CreateMap<BLL.Sale, DAL.Sale>());
-            var mapper = AdapterMapperCfg.CreateMapper();
-            mapper.Map(_domainSale, _modelsSale);
-        }
+        //public static void Map(IEnumerable<BLL.Sales> domainSales, IEnumerable<BLL.Sale> domainSale)
+        //{
+        //    _sales = domainSales;
+        //    _domainSale = domainSale;
+        //    AdapterMapperCfg = new MapperConfiguration(cfg => cfg.CreateMap<BLL.Sales, BLL.Sale>());
+        //    var mapper = AdapterMapperCfg.CreateMapper();
+        //    mapper.Map(_sales, _domainSale);
+        //}
+
+        //public static void Map(IEnumerable<BLL.Sale> domainSale, IEnumerable<DAL.Sale> modelsSale)
+        //{
+        //    _domainSale = domainSale;
+        //    _modelsSale = modelsSale;
+        //    AdapterMapperCfg = new MapperConfiguration(cfg => cfg.CreateMap<BLL.Sale, DAL.Sale>());
+        //    var mapper = AdapterMapperCfg.CreateMapper();
+        //    mapper.Map(_domainSale, _modelsSale);
+        //}
     }
 }
