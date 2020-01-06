@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Domain.Exception
+namespace BLL.Exception
 {
     public static class MessageUtility
     {

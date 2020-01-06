@@ -1,18 +1,18 @@
-﻿namespace Domain.Migrations
+﻿namespace BLL.Migrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Domain.DataContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<BLL.DataContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(Domain.DataContext context)
+        protected override void Seed(BLL.DataContext context)
         {
             //  This method will be called after migrating to the latest version.
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Models
+namespace DAL
 {
     [Table("Client")]
     public class Client : Entity

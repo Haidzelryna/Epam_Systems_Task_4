@@ -3,7 +3,7 @@ using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Configuration;
 
-namespace Domain
+namespace BLL
 {
     public class DataContext : DbContext
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Domain
+namespace BLL
 {
     public interface IBaseEntity
     {

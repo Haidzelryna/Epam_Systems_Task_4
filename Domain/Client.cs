@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Domain
+namespace BLL
 {
     using System;
     using System.Collections.Generic;

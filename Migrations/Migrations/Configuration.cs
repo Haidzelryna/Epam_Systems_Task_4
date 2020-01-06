@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using CsvHelper;
 using System.Data.Entity.Validation;
-using Domain;
+using BLL;
 using System.Data.Entity.Migrations;
 
 namespace Migrations.Migrations

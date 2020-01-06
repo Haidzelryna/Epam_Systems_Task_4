@@ -1,13 +1,13 @@
 ﻿using System;
-using Domain;
+using BLL;
 using Migrations.Migrations;
-using Domain.Mapper;
-using Models;
+using BLL.Mapper;
+using DAL;
 using System.Linq;
-using Domain.Repository;
+using BLL.Repository;
 using System.Data.Entity;
-using Domain;
-using Domain.Exception;
+using BLL;
+using BLL.Exception;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 
@@ -74,7 +74,7 @@ namespace Task_4
 
                         //2.IEnumerable<Sales>
                         IEnumerable<Sales> sales = conf.ParseResource<Sales>(Migrations.Resources.Resource.Ivanov_19112012);
-                        var DomainSale = new List<Domain.Sale>();//Enumerable.Empty<Domain.Sale>();
+                        var DomainSale = new List<BLL.Sale>();//Enumerable.Empty<Domain.Sale>();
                         Mapping.Map(sales, DomainSale);
 
 
@@ -93,7 +93,7 @@ namespace Task_4
                         //manager.ContactId = contact.Id;
                         //dc.Manager.Add(manager);
 
-                        var repos = new GenericRepository<Domain.Manager>((DbContext)dc);
+                        var repos = new GenericRepository<BLL.Manager>((DbContext)dc);
 
                         //проверка менеджера
                         try

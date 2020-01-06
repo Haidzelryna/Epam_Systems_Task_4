@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
 
-namespace Domain.Repository
+namespace BLL.Repository
 {
     public interface IGenericRepository<T> where T: Entity
     {
