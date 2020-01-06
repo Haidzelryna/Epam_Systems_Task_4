@@ -8,10 +8,8 @@ using AutoMapper;
 
 namespace BLL.Mapper
 {
-    public static class Mapping
+    public static class Facade
     {
-        private static MapperConfiguration AdapterMapperCfg;
-
         public static void StartMapping(IMapperConfigurationExpression mapperCfg)
         {
             mapperCfg.CreateMap<BLL.Sales, BLL.Sale>();

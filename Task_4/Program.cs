@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using AutoMapper;
 using BLL.Servises;
 using System.Threading.Tasks;
+using BLL.Mapper;
 
 namespace Task_4
 {
@@ -76,7 +77,11 @@ namespace Task_4
 
 
                         //2.IEnumerable<Sales>
-                        IEnumerable<Sales> sales = conf.ParseResource<Sales>(Migrations.Resources.Resource.Ivanov_19112012);
+                        IEnumerable<Sales> sales = conf.ParseResource<Sales>(Migrations.Resources.Resource.Ivanov_19112012, sale =>
+                        {
+                            sale.CreatedByUserId = adminGuid;
+                           // sales.CreatedDateTime = DateTime.UtcNow;
+                        });
                         var DomainSale = new List<BLL.Sale>();//Enumerable.Empty<Domain.Sale>();
                         //Mapping.Map(sales, DomainSale);
 
@@ -100,7 +105,7 @@ namespace Task_4
 
 
 
-                        var i = GetData(dc);
+                        var i = GetData(dc, sales);
 
 
                         //var outer = Task.Factory.StartNew(() =>      // внешняя задача
@@ -164,21 +169,27 @@ namespace Task_4
             }
         }
 
-        static async Task<IEnumerable<BLL.Sale>> GetData(DbContext dc)
+        static IEnumerable<BLL.Sale> GetData(DbContext dc, IEnumerable<Sales> sales)
         {
-            var salesRepos = new GenericRepository<BLL.Sale>((DbContext)dc);
-            var mappingConfig = new MapperConfiguration(mc =>{});
-            IMapper mapper = mappingConfig.CreateMapper();
-            SalesService salesService = new SalesService(salesRepos, mapper);
-            
+            var salesRepos = new GenericRepository<BLL.Sales>((DbContext)dc);
+            //var mappingConfig = new MapperConfiguration(mc =>{});
+            //var exp = new IMapperConfigurationExpression
+            //Mapping.StartMapping(mappingConfig);
+
+            IMapper mapper = BLL.Mapper.SetupMapping.SetupMapper();
+            mapper.Map<BLL.Sales, BLL.Sale>(sales);
+
+            //Facade.Mapper.Map<BLL.Sales,BLL.Sale>(sales);
+
+            //IMapper mapper = mappingConfig.CreateMapper();
+            //SalesService salesService = new SalesService(salesRepos, mapper);           
             try
             {
-                return await Task.Run(() => salesService.Get());
+                return salesService.Get(sales);
             }
             catch (Exception ex)
             {
-                //Console.WriteLine(ex.Message);
-                await Task.Run(() => Console.WriteLine(ex.Message));
+                Console.WriteLine(ex.Message);
             }
 
             return null;

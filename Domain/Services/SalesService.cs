@@ -10,19 +10,19 @@ namespace BLL.Servises
 {
     public class SalesService
     {
-        private readonly IGenericRepository<Sale> _saleRepository;
+        private readonly IGenericRepository<Sales> _salesRepository;
         private readonly IMapper _mapper;
 
-        public SalesService(IGenericRepository<Sale> saleRepository, IMapper mapper)
+        public SalesService(IGenericRepository<Sales> salesRepository, IMapper mapper)
         {
-            _saleRepository = saleRepository;
+            _salesRepository = salesRepository;
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Sale>> Get()
+        public IEnumerable<Sale> Get(IEnumerable<Sales> salesEntities)
         {
-            var saleEntities = await _saleRepository.GetAsync();
-            return _mapper.Map<IEnumerable<Sale>>(saleEntities);
+            //Task<IEnumerable<Sales>> salesEntities = _salesRepository.GetAllAsync();
+            return _mapper.Map<IEnumerable<Sale>>(salesEntities);
         }
     }
 }
