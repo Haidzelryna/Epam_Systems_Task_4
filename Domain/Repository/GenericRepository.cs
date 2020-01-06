@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Threading.Tasks;
 
 namespace BLL.Repository
 {
@@ -13,9 +14,9 @@ namespace BLL.Repository
             _context = context;
         }
 
-        public IEnumerable<T> Get()
+        public async Task<IEnumerable<T>> Get()
         {
-            return _context.
+            return await _context.Set<T>().ToListAsync<T>();
         }
 
         public Guid Find(DbSet dbSet, Guid Id)

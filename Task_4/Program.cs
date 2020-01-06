@@ -75,7 +75,7 @@ namespace Task_4
                         //2.IEnumerable<Sales>
                         IEnumerable<Sales> sales = conf.ParseResource<Sales>(Migrations.Resources.Resource.Ivanov_19112012);
                         var DomainSale = new List<BLL.Sale>();//Enumerable.Empty<Domain.Sale>();
-                        Mapping.Map(sales, DomainSale);
+                        //Mapping.Map(sales, DomainSale);
 
 
 
@@ -98,7 +98,7 @@ namespace Task_4
                         //проверка менеджера
                         try
                         {
-                            var managerId = repos.Get(dc.Manager, sales.First().CreatedByUserId);
+                            //var managerId = repos.Get(dc.Manager, sales.First().CreatedByUserId);
                         }
                         catch (Exception e)
                         {
@@ -108,7 +108,7 @@ namespace Task_4
                         //проверка клиента
                         try
                         {
-                            var clientId = repos.Get(dc.Client, sales.First().ClientId);
+                            //var clientId = repos.Get(dc.Client, sales.First().ClientId);
                         }
                         catch (Exception e)
                         {
@@ -118,7 +118,7 @@ namespace Task_4
                         //проверка продукта
                         try
                         {
-                            var productId = repos.Get(dc.Product, sales.First().ProductId);
+                            //var productId = repos.Get(dc.Product, sales.First().ProductId);
                         }
                         catch (Exception e)
                         {

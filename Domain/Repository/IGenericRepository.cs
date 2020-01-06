@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BLL.Repository
 {
     public interface IGenericRepository<T> where T: Entity
     {
-        IEnumerable<T> Get();
+        Task<IEnumerable<T>> Get();
 
         Guid Find(DbSet dbSet, Guid Id);
 

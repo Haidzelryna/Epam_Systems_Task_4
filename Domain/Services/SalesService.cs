@@ -21,8 +21,8 @@ namespace BLL.Servises
 
         public IEnumerable<Sale> Get()
         {
-            var saleEntities = _saleRepository.Get(Sale);
-            return _mapper.Map();
+            var saleEntities = _saleRepository.Get();
+            return _mapper.Map<IEnumerable<Sale>>(saleEntities);
         }
     }
 }
