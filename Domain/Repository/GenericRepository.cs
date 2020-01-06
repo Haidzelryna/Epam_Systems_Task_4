@@ -14,7 +14,7 @@ namespace BLL.Repository
             _context = context;
         }
 
-        public async Task<IEnumerable<T>> Get()
+        public async Task<IEnumerable<T>> GetAsync()
         {
             return await _context.Set<T>().ToListAsync<T>();
         }

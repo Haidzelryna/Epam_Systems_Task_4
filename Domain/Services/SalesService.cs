@@ -19,9 +19,9 @@ namespace BLL.Servises
             _mapper = mapper;
         }
 
-        public IEnumerable<Sale> Get()
+        public async Task<IEnumerable<Sale>> Get()
         {
-            var saleEntities = _saleRepository.Get();
+            var saleEntities = await _saleRepository.GetAsync();
             return _mapper.Map<IEnumerable<Sale>>(saleEntities);
         }
     }

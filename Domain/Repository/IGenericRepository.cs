@@ -7,7 +7,7 @@ namespace BLL.Repository
 {
     public interface IGenericRepository<T> where T: Entity
     {
-        Task<IEnumerable<T>> Get();
+        Task<IEnumerable<T>> GetAsync();
 
         Guid Find(DbSet dbSet, Guid Id);
 

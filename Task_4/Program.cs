@@ -10,6 +10,9 @@ using BLL;
 using BLL.Exception;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using AutoMapper;
+using BLL.Servises;
+using System.Threading.Tasks;
 
 namespace Task_4
 {
@@ -95,6 +98,29 @@ namespace Task_4
 
                         var repos = new GenericRepository<BLL.Manager>((DbContext)dc);
 
+
+
+                        var i = GetData(dc);
+
+
+                        //var outer = Task.Factory.StartNew(() =>      // внешняя задача
+                        //{
+                        //    await GetData(DbContext dc);
+
+                        //    //Console.WriteLine("Outer task starting...");
+                        //    //var inner = Task.Factory.StartNew(() =>  // вложенная задача
+                        //    //{
+                        //    //    Console.WriteLine("Inner task starting...");
+                        //    //    Thread.Sleep(2000);
+                        //    //    Console.WriteLine("Inner task finished.");
+                        //    //});
+                        //});
+                        //outer.Wait(); // ожидаем выполнения внешней задачи
+                        //Console.WriteLine("End of Main");
+
+
+
+
                         //проверка менеджера
                         try
                         {
@@ -130,10 +156,32 @@ namespace Task_4
                         //var ex = new Exception("Данного менеджера нет в БД");
                         //ExceptionUtility.ProcessException(new Object(), ex);
 
+                        Console.WriteLine(i);
+
                         Console.ReadLine();
                     }
                 }
             }
+        }
+
+        static async Task<IEnumerable<BLL.Sale>> GetData(DbContext dc)
+        {
+            var salesRepos = new GenericRepository<BLL.Sale>((DbContext)dc);
+            var mappingConfig = new MapperConfiguration(mc =>{});
+            IMapper mapper = mappingConfig.CreateMapper();
+            SalesService salesService = new SalesService(salesRepos, mapper);
+            
+            try
+            {
+                return await Task.Run(() => salesService.Get());
+            }
+            catch (Exception ex)
+            {
+                //Console.WriteLine(ex.Message);
+                await Task.Run(() => Console.WriteLine(ex.Message));
+            }
+
+            return null;
         }
     }
 }
