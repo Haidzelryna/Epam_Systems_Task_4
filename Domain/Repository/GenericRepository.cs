@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 
 namespace BLL.Repository
@@ -12,7 +13,12 @@ namespace BLL.Repository
             _context = context;
         }
 
-        public Guid Get(DbSet dbSet, Guid Id)
+        public IEnumerable<T> Get()
+        {
+            return _context.
+        }
+
+        public Guid Find(DbSet dbSet, Guid Id)
         {
             var entity = dbSet.Find(Id);
             return ((Entity)entity).Id;

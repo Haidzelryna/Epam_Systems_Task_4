@@ -14,7 +14,7 @@ namespace BLL
     
     public partial class Sale: Entity
     {
-        //public System.Guid Id { get; set; }
+        public System.Guid Id { get; set; }
         public System.Guid ClientId { get; set; }
         public System.Guid ProductId { get; set; }
         public decimal Sum { get; set; }

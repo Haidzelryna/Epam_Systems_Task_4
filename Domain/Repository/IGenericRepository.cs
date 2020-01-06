@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Collections.Generic;
 
 namespace BLL.Repository
 {
     public interface IGenericRepository<T> where T: Entity
     {
-        Guid Get(DbSet dbSet, Guid Id);
+        IEnumerable<T> Get();
+
+        Guid Find(DbSet dbSet, Guid Id);
 
         void Add(T entity);
 

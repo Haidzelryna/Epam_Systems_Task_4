@@ -21,7 +21,7 @@ namespace BLL
             this.Manager = new HashSet<Manager>();
         }
     
-        //public System.Guid Id { get; set; }
+        public System.Guid Id { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
