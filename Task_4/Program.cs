@@ -1,6 +1,6 @@
 ﻿using System;
 using BLL;
-using Migrations.Migrations;
+using Database.Migrations;
 using BLL.Mapper;
 using DAL;
 using System.Linq;
@@ -14,7 +14,7 @@ using AutoMapper;
 using BLL.Servises;
 using System.Threading.Tasks;
 using BLL.Mapper;
-using DAL;
+//using DAL;
 
 namespace Task_4
 {
@@ -97,7 +97,7 @@ namespace Task_4
                         IEnumerable<BLL.Sale> saleBLL = GetDataBLL(dc, sales);
 
                         //4.AutoMapper DAL
-                        IEnumerable<DAL.Sale> saleDAL = GetDataDAL(dc, saleBLL);
+                        var saleDAL = GetDataDAL(dc, saleBLL);
 
 
                         //var outer = Task.Factory.StartNew(() =>      // внешняя задача

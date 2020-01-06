@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BLL
+namespace DAL
 {
     using System;
     using System.Data.Entity;

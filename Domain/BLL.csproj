@@ -63,58 +63,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataModel.edmx</DependentUpon>
-    </Compile>
+    <Compile Include="Client.cs" />
+    <Compile Include="Contact.cs" />
     <Compile Include="Exception\MessageUtility.cs" />
+    <Compile Include="Manager.cs" />
     <Compile Include="Mapper\Facade.cs" />
     <Compile Include="Mapper\SetupMapping.cs" />
-    <Compile Include="Migrations\202001031052120_SampleMigrations.cs" />
-    <Compile Include="Migrations\202001031052120_SampleMigrations.designer.cs">
-      <DependentUpon>202001031052120_SampleMigrations.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202001031105164_202001031052120_SampleMigrations.cs" />
-    <Compile Include="Migrations\202001031105164_202001031052120_SampleMigrations.designer.cs">
-      <DependentUpon>202001031105164_202001031052120_SampleMigrations.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Manager.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="BaseEntity.cs" />
-    <Compile Include="DataContext.cs" />
-    <Compile Include="Product.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Client.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Contact.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entity.cs" />
     <Compile Include="IBaseEntity.cs" />
     <Compile Include="IEntity.cs" />
+    <Compile Include="Product.cs" />
     <Compile Include="Repository\GenericRepository.cs" />
     <Compile Include="Repository\IEntityRepos.cs" />
     <Compile Include="Repository\IGenericRepository.cs" />
     <Compile Include="Repository\SaleRepository.cs" />
-    <Compile Include="Sale.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sale.cs" />
     <Compile Include="Sales.cs" />
     <Compile Include="Services\SaleService.cs" />
     <Compile Include="Services\SalesService.cs" />
@@ -123,34 +88,7 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <EntityDeploy Include="DataModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DataModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="DataModel.edmx.diagram">
-      <DependentUpon>DataModel.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202001031052120_SampleMigrations.resx">
-      <DependentUpon>202001031052120_SampleMigrations.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001031105164_202001031052120_SampleMigrations.resx">
-      <DependentUpon>202001031105164_202001031052120_SampleMigrations.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="DataModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DataModel.edmx</DependentUpon>
-      <LastGenOutput>DataModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="DataModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DataModel.edmx</DependentUpon>
-      <LastGenOutput>DataModel.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

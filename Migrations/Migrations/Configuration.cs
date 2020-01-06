@@ -6,36 +6,36 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using CsvHelper;
 using System.Data.Entity.Validation;
-using BLL;
 using System.Data.Entity.Migrations;
+using DAL;
 
-namespace Migrations.Migrations
+namespace Database.Migrations
 {
-    public class Configuration : DbMigrationsConfiguration<DataContext>
+    public class Configuration //: DbMigrationsConfiguration<SalesEntities>
     {
         private const string ADMINID = "80AB7036-5D4A-11E6-9903-0050569977A1";
 
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            //AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(DataContext context)
-        {
-            var adminGuid = Guid.Parse(ADMINID);
+        //protected override void Seed(SalesEntities context)
+        //{
+        //    var adminGuid = Guid.Parse(ADMINID);
 
-            ParseResource2(context.Sales, Resources.Resource.Ivanov_19112012,
-                 sale =>
-                 {
-                     sale.CreatedByUserId = adminGuid;
-                     sale.CreatedDateTime = DateTime.UtcNow;
-                 });
+        //    ParseResource2(context.Sale, Resources.Resource.Ivanov_19112012,
+        //         sale =>
+        //         {
+        //             sale.CreatedByUserId = adminGuid;
+        //             sale.CreatedDateTime = DateTime.UtcNow;
+        //         });
 
-            RunEntityValidationException(() =>
-            {
-                context.SaveChanges();
-            });
-        }
+        //    RunEntityValidationException(() =>
+        //    {
+        //        context.SaveChanges();
+        //    });
+        //}
 
             public void ParseResource2<TDataType>(IDbSet<TDataType> dbSet, byte[] resourceName, Action<TDataType> action = null)
            where TDataType : class
