@@ -19,10 +19,10 @@ namespace BLL.Servises
             _mapper = mapper;
         }
 
-        public IEnumerable<Sale> Get()
+        public IEnumerable<DAL.Sale> Get(IEnumerable<Sale> saleEntities)
         {
-            Task<IEnumerable<Sale>> saleEntities = _saleRepository.GetAllAsync();
-            return _mapper.Map<IEnumerable<Sale>>(saleEntities);
+            //Task<IEnumerable<Sale>> saleEntities = _saleRepository.GetAllAsync();
+            return _mapper.Map<IEnumerable<DAL.Sale>>(saleEntities);
         }
     }
 }

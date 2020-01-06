@@ -14,6 +14,7 @@ using AutoMapper;
 using BLL.Servises;
 using System.Threading.Tasks;
 using BLL.Mapper;
+using DAL;
 
 namespace Task_4
 {
@@ -75,24 +76,12 @@ namespace Task_4
                         // });
 
 
-
                         //2.IEnumerable<Sales>
                         IEnumerable<Sales> sales = conf.ParseResource<Sales>(Migrations.Resources.Resource.Ivanov_19112012, sale =>
                         {
                             sale.CreatedByUserId = adminGuid;
                            // sales.CreatedDateTime = DateTime.UtcNow;
                         });
-                        var DomainSale = new List<BLL.Sale>();//Enumerable.Empty<Domain.Sale>();
-                        //Mapping.Map(sales, DomainSale);
-
-
-
-                        //IEnumerable<Domain.Sale> DomainSale = conf.ParseResource<Domain.Sale>(Migrations.Resources.Resource.Ivanov_19112012);
-                        //var ModelsSale = new List<Models.Sale>();
-
-                        //Mapping.Map(DomainSale, ModelsSale);
-
-                        //*/
 
 
                         //добавим менеджера "6acb9fb3-9213-49cd-abda-f9785a658d88"
@@ -104,8 +93,11 @@ namespace Task_4
                         var repos = new GenericRepository<BLL.Manager>((DbContext)dc);
 
 
+                        //3.AutoMapper BLL
+                        IEnumerable<BLL.Sale> saleBLL = GetDataBLL(dc, sales);
 
-                        var i = GetData(dc, sales);
+                        //4.AutoMapper DAL
+                        IEnumerable<DAL.Sale> saleDAL = GetDataDAL(dc, saleBLL);
 
 
                         //var outer = Task.Factory.StartNew(() =>      // внешняя задача
@@ -161,7 +153,7 @@ namespace Task_4
                         //var ex = new Exception("Данного менеджера нет в БД");
                         //ExceptionUtility.ProcessException(new Object(), ex);
 
-                        Console.WriteLine(i);
+                        Console.WriteLine();
 
                         Console.ReadLine();
                     }
@@ -169,23 +161,17 @@ namespace Task_4
             }
         }
 
-        static IEnumerable<BLL.Sale> GetData(DbContext dc, IEnumerable<Sales> sales)
+        static IEnumerable<BLL.Sale> GetDataBLL(DbContext dc, IEnumerable<Sales> sales)
         {
             var salesRepos = new GenericRepository<BLL.Sales>((DbContext)dc);
-            //var mappingConfig = new MapperConfiguration(mc =>{});
-            //var exp = new IMapperConfigurationExpression
-            //Mapping.StartMapping(mappingConfig);
 
             IMapper mapper = BLL.Mapper.SetupMapping.SetupMapper();
-            mapper.Map<BLL.Sales, BLL.Sale>(sales);
 
-            //Facade.Mapper.Map<BLL.Sales,BLL.Sale>(sales);
-
-            //IMapper mapper = mappingConfig.CreateMapper();
-            //SalesService salesService = new SalesService(salesRepos, mapper);           
+            SalesService salesService = new SalesService(salesRepos, mapper);           
             try
             {
-                return salesService.Get(sales);
+                var i = salesService.Get(sales);
+                return i;
             }
             catch (Exception ex)
             {
@@ -194,5 +180,26 @@ namespace Task_4
 
             return null;
         }
+
+        static IEnumerable<DAL.Sale> GetDataDAL(DbContext dc, IEnumerable<BLL.Sale> sales)
+        {
+            var saleRepos = new GenericRepository<BLL.Sale>((DbContext)dc);
+
+            IMapper mapper = BLL.Mapper.SetupMapping.SetupMapper();
+
+            SaleService saleService = new SaleService(saleRepos, mapper);
+            try
+            {
+                var i = saleService.Get(sales);
+                return i;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return null;
+        }
+
     }
 }
