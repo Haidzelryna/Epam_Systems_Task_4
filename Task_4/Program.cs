@@ -53,10 +53,11 @@ namespace Task_4
                 SaleService saleService = new SaleService(mapper);
                 var saleDAL = MappingForDALEntities<DAL.Sale, BLL.Sale>(saleService, saleBLL);
 
+                //запись в БД sales из файла
                 saleService.Add(saleDAL);
                 SaveChangesWithException(saleService, "заказа");
 
-
+                
                 Console.ReadLine();
             }
         }
