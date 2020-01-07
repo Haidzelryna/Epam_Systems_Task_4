@@ -12,10 +12,6 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using AutoMapper;
 using BLL.Services;
-using System.Threading.Tasks;
-using BLL.Mapper;
-using System.Collections.Generic;
-//using DAL;
 
 namespace Task_4
 {
@@ -36,13 +32,12 @@ namespace Task_4
             {
                 IMapper mapper = BLL.Mapper.SetupMapping.SetupMapper();
 
-               
-
                 string line = Regex.Replace("Ivanov_19112012".Trim(), @"\s+", @" ");
                 if (line != "")
                 {
                     if (Regex.IsMatch(line, VALIDATEREGEX))
                     {
+                        //Стартовые данные, заполняем БД - начало
 
                         //добавим контакт "6acb9fb3-9213-49cd-abda-f9785a658d12"
                         var contactRepos = new GenericRepository<DAL.Contact>((DbContext)dc);
@@ -54,14 +49,7 @@ namespace Task_4
                         //AutoMapper DAL
                         var contactDAL = MappingForDALEntity(contactService, contact);
                         contactService.Add(contactDAL);
-                        try
-                        {
-                            contactService.SaveChanges();
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageUtility.ShowErrorMessage(new Object(), "Ошибка при добавлении контакта! Возможно контакт уже существует");
-                        }
+                        SaveChangesWithException(contactService, "контакта");
 
 
                         //добавим менеджера "6acb9fb3-9213-49cd-abda-f9785a658d88"
@@ -73,14 +61,7 @@ namespace Task_4
                         //AutoMapper DAL
                         var managerDAL = MappingForDALEntity(managerService, manager);
                         managerService.Add(managerDAL);
-                        try
-                        {
-                            managerService.SaveChanges();
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageUtility.ShowErrorMessage(new Object(), "Ошибка при добавлении менеджера! Возможно менеджер уже существует");
-                        }
+                        SaveChangesWithException(managerService, "менеджера");
 
 
                         //добавим клиента 6acb9fb3-9213-49cd-abda-f9785a658d55
@@ -92,14 +73,7 @@ namespace Task_4
                         //AutoMapper DAL
                         var clientDAL = MappingForDALEntity(clientService, client);
                         clientService.Add(clientDAL);
-                        try
-                        {
-                            clientService.SaveChanges();
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageUtility.ShowErrorMessage(new Object(), "Ошибка при добавлении клиента! Возможно клиент уже существует");
-                        }
+                        SaveChangesWithException(clientService, "клиента");
 
 
                         //добавим продукт
@@ -110,26 +84,9 @@ namespace Task_4
                         //AutoMapper DAL
                         var productDAL = MappingForDALEntity(productService, product);
                         productService.Add(productDAL);
-                        try
-                        {
-                            productService.SaveChanges();
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageUtility.ShowErrorMessage(new Object(), "Ошибка при добавлении продукта! Возможно продукт уже существует");
-                        }
+                        SaveChangesWithException(productService, "продукта");
 
-
-                        //    sale =>
-                        //{
-                        //    sale.CreatedByUserId = adminGuid;
-                        //    sale.CreatedDateTime = DateTime.UtcNow;
-                        //});
-
-                        //conf.RunEntityValidationException(() =>
-                        // {
-                        //     dc.SaveChanges();
-                        // });
+                        //Стартовые данные, заполняем БД - конец
 
 
                         //2.IEnumerable<Sales>
@@ -139,18 +96,7 @@ namespace Task_4
                            // sales.CreatedDateTime = DateTime.UtcNow;
                         });
 
-
-                        //добавим менеджера "6acb9fb3-9213-49cd-abda-f9785a658d88"
-                        //var manager = new Domain.Manager();
-                        //manager.Id = Guid.Parse("6acb9fb3-9213-49cd-abda-f9785a658d88");
-                        //manager.ContactId = contact.Id;
-                        //dc.Manager.Add(manager);
-
-                        //var repos = new GenericRepository<BLL.Manager>((DbContext)dc);
-
-
                         //3.AutoMapper BLL
-
                         SalesService salesService = new SalesService(mapper);
                         var saleBLL = MappingForBLLEntities<BLL.Sale, BLL.Sales>(salesService, sales);
 
@@ -158,24 +104,6 @@ namespace Task_4
                         var saleRepos = new GenericRepository<DAL.Sale>((DbContext)dc);
                         SaleService saleService = new SaleService(saleRepos, mapper);
                         var saleDAL = MappingForDALEntities<DAL.Sale, BLL.Sale>(saleService, saleBLL);
-
-
-                        //var outer = Task.Factory.StartNew(() =>      // внешняя задача
-                        //{
-                        //    await GetData(DbContext dc);
-
-                        //    //Console.WriteLine("Outer task starting...");
-                        //    //var inner = Task.Factory.StartNew(() =>  // вложенная задача
-                        //    //{
-                        //    //    Console.WriteLine("Inner task starting...");
-                        //    //    Thread.Sleep(2000);
-                        //    //    Console.WriteLine("Inner task finished.");
-                        //    //});
-                        //});
-                        //outer.Wait(); // ожидаем выполнения внешней задачи
-                        //Console.WriteLine("End of Main");
-
-
 
 
                         //проверка менеджера
@@ -264,6 +192,18 @@ namespace Task_4
             }
 
             return null;
+        }
+
+        static void SaveChangesWithException(IService service, string text)
+        {
+            try
+            {
+                service.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                MessageUtility.ShowErrorMessage(new Object(), "Ошибка при добавлении " + text + "! Возможно " + text.Remove(text.Length-1,1) + " уже существует");
+            }
         }
 
     }

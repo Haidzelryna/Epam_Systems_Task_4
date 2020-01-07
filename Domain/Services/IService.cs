@@ -2,20 +2,8 @@
 
 namespace BLL.Services
 {
-    public interface IService<T,V>
+    public interface IService
     {
-        T Get(V Entity);
-
-        IEnumerable<T> Get(IEnumerable<V> Entities);
-
-        void Add(T Entity);
-
-        void Add(IEnumerable<T> Entities);
-
-        void Remove(T Entity);
-
-        void Remove(IEnumerable<T> Entities);
-
         void SaveChanges();
     }
 }

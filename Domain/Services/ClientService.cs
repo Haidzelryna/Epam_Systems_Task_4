@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
-using DAL;
 using DAL.Repository;
 
 namespace BLL.Services
