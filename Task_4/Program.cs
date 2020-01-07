@@ -35,16 +35,16 @@ namespace Task_4
             if (ValidateFileName("Ivanov_19112012"))
             {
                 //обработка файла
-                WorkWithFile();
+                WorkWithFile(BLL.Resources.Resource.Ivanov_19112012);
 
                 Console.ReadLine();
             }
         }
 
-        static void WorkWithFile()
+        static void WorkWithFile(Byte[] file)
         {
             //1-2.IEnumerable<Sales>
-            IEnumerable<Sales> sales = ParseCsv.ParseResource<Sales>(BLL.Resources.Resource.Ivanov_19112012, sale =>
+            IEnumerable<Sales> sales = ParseCsv.ParseResource<Sales>(file, sale =>
             {
                 sale.CreatedByUserId = adminGuid;
                 // sales.CreatedDateTime = DateTime.UtcNow;
