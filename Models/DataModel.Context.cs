@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DAL.Models
+namespace DAL
 {
     using System;
     using System.Data.Entity;
@@ -16,8 +16,9 @@ namespace DAL.Models
     public partial class SalesEntities : DbContext
     {
         public SalesEntities()
-            : base("name=SalesEntities")
+            : base("SalesEntities")
         {
+            Database.CreateIfNotExists();
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
