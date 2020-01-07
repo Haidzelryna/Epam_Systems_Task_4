@@ -36,43 +36,88 @@ namespace Task_4
             {
                 IMapper mapper = BLL.Mapper.SetupMapping.SetupMapper();
 
-                var contactRepos = new GenericRepository<DAL.Contact>((DbContext)dc);
-                ContactService contactService = new ContactService(contactRepos, mapper);
+               
 
                 string line = Regex.Replace("Ivanov_19112012".Trim(), @"\s+", @" ");
                 if (line != "")
                 {
                     if (Regex.IsMatch(line, VALIDATEREGEX))
                     {
-                        
-                            //добавим контакт "6acb9fb3-9213-49cd-abda-f9785a658d12"
-                            var contact = new BLL.Contact();
-                            contact.Id = Guid.Parse("6acb9fb3-9213-49cd-abda-f9785a658d12");
-                            contact.FirstName = "Гайдель";
-                            contact.LastName = "Ирина";
-                            //dc.Contact.Add(contact);
-                            //AutoMapper DAL
-                            var contactDAL = MappingForDALEntity(contactService, contact);
-                            contactService.Add(contactDAL);
 
+                        //добавим контакт "6acb9fb3-9213-49cd-abda-f9785a658d12"
+                        var contactRepos = new GenericRepository<DAL.Contact>((DbContext)dc);
+                        ContactService contactService = new ContactService(contactRepos, mapper);
+                        var contact = new BLL.Contact();
+                        contact.Id = Guid.Parse("6acb9fb3-9213-49cd-abda-f9785a658d12");
+                        contact.FirstName = "Гайдель";
+                        contact.LastName = "Ирина";
+                        //AutoMapper DAL
+                        var contactDAL = MappingForDALEntity(contactService, contact);
+                        contactService.Add(contactDAL);
+                        try
+                        {
                             contactService.SaveChanges();
-                        /*
-                            //добавим менеджера "6acb9fb3-9213-49cd-abda-f9785a658d88"
-                            var manager = new Domain.Manager();
-                            manager.Id = Guid.Parse("6acb9fb3-9213-49cd-abda-f9785a658d88");
-                            manager.ContactId = contact.Id;
-                            dc.Manager.Add(manager);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageUtility.ShowErrorMessage(new Object(), "Ошибка при добавлении контакта! Возможно контакт уже существует");
+                        }
 
-                            //добавим клиента 6acb9fb3-9213-49cd-abda-f9785a658d55
-                            var client = new Domain.Client();
-                            client.Id = Guid.Parse("6acb9fb3-9213-49cd-abda-f9785a658d55");
-                            client.ContactId = contact.Id;
-                            dc.Client.Add(client);
 
-                            //добавим продукт
-                            var product = new Domain.Product();
-                            product.Id = Guid.Parse("89a5c4a4-6d02-412f-bb58-55a09f8afc7d");
-                            dc.Product.Add(product); */
+                        //добавим менеджера "6acb9fb3-9213-49cd-abda-f9785a658d88"
+                        var managerRepos = new GenericRepository<DAL.Manager>((DbContext)dc);
+                        ManagerService managerService = new ManagerService(managerRepos, mapper);
+                        var manager = new BLL.Manager();
+                        manager.Id = Guid.Parse("6acb9fb3-9213-49cd-abda-f9785a658d88");
+                        manager.ContactId = contact.Id;
+                        //AutoMapper DAL
+                        var managerDAL = MappingForDALEntity(managerService, manager);
+                        managerService.Add(managerDAL);
+                        try
+                        {
+                            managerService.SaveChanges();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageUtility.ShowErrorMessage(new Object(), "Ошибка при добавлении менеджера! Возможно менеджер уже существует");
+                        }
+
+
+                        //добавим клиента 6acb9fb3-9213-49cd-abda-f9785a658d55
+                        var clientRepos = new GenericRepository<DAL.Client>((DbContext)dc);
+                        ClientService clientService = new ClientService(clientRepos, mapper);
+                        var client = new BLL.Client();
+                        client.Id = Guid.Parse("6acb9fb3-9213-49cd-abda-f9785a658d55");
+                        client.ContactId = contact.Id;
+                        //AutoMapper DAL
+                        var clientDAL = MappingForDALEntity(clientService, client);
+                        clientService.Add(clientDAL);
+                        try
+                        {
+                            clientService.SaveChanges();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageUtility.ShowErrorMessage(new Object(), "Ошибка при добавлении клиента! Возможно клиент уже существует");
+                        }
+
+
+                        //добавим продукт
+                        var productRepos = new GenericRepository<DAL.Product>((DbContext)dc);
+                        ProductService productService = new ProductService(productRepos, mapper);
+                        var product = new BLL.Product();
+                        product.Id = Guid.Parse("89a5c4a4-6d02-412f-bb58-55a09f8afc7d");
+                        //AutoMapper DAL
+                        var productDAL = MappingForDALEntity(productService, product);
+                        productService.Add(productDAL);
+                        try
+                        {
+                            productService.SaveChanges();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageUtility.ShowErrorMessage(new Object(), "Ошибка при добавлении продукта! Возможно продукт уже существует");
+                        }
 
 
                         //    sale =>
