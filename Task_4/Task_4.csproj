@@ -70,7 +70,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Domain\BLL.csproj">
+    <ProjectReference Include="..\BLL\BLL.csproj">
       <Project>{d0f743f0-ed5e-4138-a3a1-7b21f0cb0b9f}</Project>
       <Name>BLL</Name>
     </ProjectReference>
