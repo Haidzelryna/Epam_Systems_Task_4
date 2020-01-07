@@ -21,7 +21,7 @@ namespace Task_4
 
         private static ContactService contactService = new ContactService(mapper);
         private static ManagerService managerService = new ManagerService(mapper);
-        private static ClientService clientService = new ClientService(mapper);
+        private static ClientService  clientService  = new ClientService (mapper);
         private static ProductService productService = new ProductService(mapper);
 
         static void Main(string[] args)
