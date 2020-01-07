@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repository
 {
-    public interface IGenericRepository<T> //where T: Entity
+    public interface IGenericRepository<T> where T: Entity
     {
         Task<IEnumerable<T>> GetAllAsync();
 

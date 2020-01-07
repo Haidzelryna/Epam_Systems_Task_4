@@ -183,11 +183,11 @@ namespace Task_4
 
         static IEnumerable<DAL.Sale> GetDataDAL(DbContext dc, IEnumerable<BLL.Sale> sales)
         {
-            //var saleRepos = new GenericRepository<BLL.Sale>((DbContext)dc);
+            var saleRepos = new GenericRepository<DAL.Sale>((DbContext)dc);
 
             IMapper mapper = BLL.Mapper.SetupMapping.SetupMapper();
 
-            SaleService saleService = new SaleService(mapper);
+            SaleService saleService = new SaleService(saleRepos, mapper);
             try
             {
                 var i = saleService.Get(sales);

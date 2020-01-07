@@ -10,12 +10,12 @@ namespace BLL.Servises
 {
     public class SaleService
     {
-        //private readonly IGenericRepository<BLL.Sale> _saleRepository;
+        private readonly IGenericRepository<DAL.Sale> _saleRepository;
         private readonly IMapper _mapper;
 
-        public SaleService(IMapper mapper)//(IGenericRepository<BLL.Sale> saleRepository, IMapper mapper)
+        public SaleService(IGenericRepository<DAL.Sale> saleRepository, IMapper mapper)
         {
-            //_saleRepository = saleRepository;
+            _saleRepository = saleRepository;
             _mapper = mapper;
         }
 
