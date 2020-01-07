@@ -123,12 +123,16 @@ namespace Task_4
                         try
                         {
                             IEnumerable<Guid> clients = sales.Select(s => s.ClientId).ToList();
-                            bool i = CheckAsync(clientService, clients);
+                            bool check = clientService.Check(clients).Result;
+                            if (check == false)
+                            {
+                                MessageUtility.ShowErrorMessage(new Object(), "Одного или нескольких клиентов нет в БД");
+                            }
                         }
                         catch (Exception e)
                         {
                             Console.WriteLine($"Exception Handler: {e}");
-                            MessageUtility.ShowErrorMessage(new Object(), "Данного клиента нет в БД");
+                            MessageUtility.ShowErrorMessage(new Object(), "ERROR IN CLIENTS CHECKING");
                         }
 
                         //проверка продуктов
@@ -205,12 +209,5 @@ namespace Task_4
                 MessageUtility.ShowErrorMessage(new Object(), "Ошибка при добавлении " + text + "! Возможно " + text.Remove(text.Length-1,1) + " уже существует");
             }
         }
-
-        static async Task<bool> CheckAsync(ClientService service, IEnumerable<Guid> clients)
-        {
-            bool result = await service.Check(clients);
-            return result;
-        }
-
     }
 }

@@ -38,7 +38,10 @@ namespace BLL.Services
             IEnumerable<DAL.Client> clients = await GetAll();
             foreach (Guid clientId in clientsCheck)
             {
-                clients.Select(c=>c.Id).ToList().Contains(clientId);
+                if (clients.Select(c => c.Id).ToList().Contains(clientId) == false)
+                {
+                    return false;
+                };
             }
             return true;
         }
