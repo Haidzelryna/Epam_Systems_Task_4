@@ -16,7 +16,7 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
-        public DAL.Contact Get(Contact Entity)
+        public DAL.Contact Get(BLL.Contact Entity)
         {
             return _mapper.Map<DAL.Contact>(Entity);
         }
@@ -38,7 +38,7 @@ namespace BLL.Services
 
         public void Add(DAL.Contact Entity)
         {
-            throw new System.NotImplementedException();
+            _contactRepository.Add(Entity);
         }
 
         public void Add(IEnumerable<DAL.Contact> Entities)

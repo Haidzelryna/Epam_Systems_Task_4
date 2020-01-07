@@ -8,6 +8,7 @@ namespace BLL.Mapper
         {
             mapperCfg.CreateMap<BLL.Sales, BLL.Sale>();
             mapperCfg.CreateMap<BLL.Sale, DAL.Sale>();
+            mapperCfg.CreateMap<BLL.Contact, DAL.Contact>();
         }
     }
 }

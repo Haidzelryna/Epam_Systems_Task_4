@@ -29,7 +29,7 @@ namespace DAL.Repository
 
         public void Add(T entity)
         {
-           _context.Set<Entity>().Add(entity);
+           _context.Set<Contact>().Add(entity as DAL.Contact);
         }
 
         public void Add(IEnumerable<T> entity)
