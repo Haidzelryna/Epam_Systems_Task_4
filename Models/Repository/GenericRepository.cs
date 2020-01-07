@@ -24,27 +24,27 @@ namespace DAL.Repository
         public Guid Find(DbSet dbSet, Guid Id)
         {
             var entity = dbSet.Find(Id);
-            return ((Entity)entity).Id;
+            return ((T)entity).Id;
         }
 
         public void Add(T entity)
         {
-           _context.Set<Contact>().Add(entity as DAL.Contact);
+           _context.Set<T>().Add(entity);
         }
 
         public void Add(IEnumerable<T> entity)
         {
-            _context.Set<Entity>().AddRange(entity);
+            _context.Set<T>().AddRange(entity);
         }
 
         public void Delete(T entity)
         {
-            _context.Set<Entity>().Add(entity);
+            _context.Set<T>().Add(entity);
         }
 
         public void Delete(IEnumerable<T> entity)
         {
-            _context.Set<Entity>().RemoveRange(entity);
+            _context.Set<T>().RemoveRange(entity);
         }
 
         public void SaveChanges()
