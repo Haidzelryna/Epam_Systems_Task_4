@@ -10,6 +10,7 @@ using BLL.Classes.Mapper;
 using System.Configuration;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Task_4
 {
@@ -34,26 +35,32 @@ namespace Task_4
             //Стартовые данные, заполняем БД
             StartData();
 
-            //Проверка формата названия файла
+            //Проверка формата названия 1 файла
             if (ValidateFileName("Ivanov_19112012"))
             {
-                //обработка файла
-                using (StreamReader streamReader = new StreamReader(ConfigurationSettings.AppSettings["file"], Encoding.Default))
+                //обработка 1 файла
+                Task.Factory.StartNew(() =>
                 {
-                    byte[] bytes = streamReader.CurrentEncoding.GetBytes(streamReader.ReadToEnd());
-                    WorkWithFile(bytes);
-                }
+                    using (StreamReader streamReader = new StreamReader(ConfigurationSettings.AppSettings["file"], Encoding.Default))
+                    {
+                        byte[] bytes = streamReader.CurrentEncoding.GetBytes(streamReader.ReadToEnd());
+                        WorkWithFile(bytes);
+                    }
+                });
             }
 
-            //Проверка формата названия файла
+            //Проверка формата названия 2 файла
             if (ValidateFileName("Ivanov_07012020"))
             {
-                //обработка файла
-                using (StreamReader streamReader = new StreamReader(ConfigurationSettings.AppSettings["file"], Encoding.Default))
+                //обработка 2 файла
+                Task.Factory.StartNew(() =>
                 {
-                    byte[] bytes = streamReader.CurrentEncoding.GetBytes(streamReader.ReadToEnd());
-                    WorkWithFile(bytes);
-                }
+                    using (StreamReader streamReader = new StreamReader(ConfigurationSettings.AppSettings["file"], Encoding.Default))
+                    {
+                        byte[] bytes = streamReader.CurrentEncoding.GetBytes(streamReader.ReadToEnd());
+                        WorkWithFile(bytes);
+                    }
+                });
             }
 
             Console.ReadLine();
