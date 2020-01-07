@@ -63,20 +63,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Client.cs" />
-    <Compile Include="Contact.cs" />
+    <Compile Include="Data\Client.cs" />
+    <Compile Include="Data\Contact.cs" />
     <Compile Include="Exception\MessageUtility.cs" />
-    <Compile Include="Manager.cs" />
+    <Compile Include="Data\Manager.cs" />
     <Compile Include="Mapper\Facade.cs" />
     <Compile Include="Mapper\SetupMapping.cs" />
-    <Compile Include="BaseEntity.cs" />
-    <Compile Include="Entity.cs" />
-    <Compile Include="IBaseEntity.cs" />
-    <Compile Include="IEntity.cs" />
-    <Compile Include="Product.cs" />
+    <Compile Include="Data\Base\BaseEntity.cs" />
+    <Compile Include="Data\Base\Entity.cs" />
+    <Compile Include="Data\Base\IBaseEntity.cs" />
+    <Compile Include="Data\Base\IEntity.cs" />
+    <Compile Include="Data\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sale.cs" />
-    <Compile Include="Sales.cs" />
+    <Compile Include="Data\Sale.cs" />
+    <Compile Include="Data\Sales.cs" />
     <Compile Include="Services\SaleService.cs" />
     <Compile Include="Services\SalesService.cs" />
   </ItemGroup>

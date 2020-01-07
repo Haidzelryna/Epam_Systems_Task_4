@@ -77,7 +77,7 @@ namespace Task_4
 
 
                         //2.IEnumerable<Sales>
-                        IEnumerable<Sales> sales = conf.ParseResource<Sales>(Migrations.Resources.Resource.Ivanov_19112012, sale =>
+                        IEnumerable<Sales> sales = conf.ParseResource<Sales>(DAL.Resources.Resource.Ivanov_19112012, sale =>
                         {
                             sale.CreatedByUserId = adminGuid;
                            // sales.CreatedDateTime = DateTime.UtcNow;
