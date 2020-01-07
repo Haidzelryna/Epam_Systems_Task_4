@@ -109,14 +109,16 @@ namespace Task_4
                         //проверка менеджера
                         try
                         {
-                            //var managerId = repos.Get(dc.Manager, sales.First().CreatedByUserId);
+                            var managerActive = managerService.Find(sales.First().CreatedByUserId);
+                            MessageUtility.ShowValidationMessage(new Object(), "Менеджер найден:" + managerActive.Name);
                         }
                         catch (Exception e)
                         {
                             Console.WriteLine($"Exception Handler: {e}");
                             MessageUtility.ShowErrorMessage(new Object(), "Данного менеджера нет в БД");
                         }
-                        //проверка клиента
+
+                        //проверка клиентов
                         try
                         {
                             //var clientId = repos.Get(dc.Client, sales.First().ClientId);
@@ -126,7 +128,8 @@ namespace Task_4
                             Console.WriteLine($"Exception Handler: {e}");
                             MessageUtility.ShowErrorMessage(new Object(), "Данного клиента нет в БД");
                         }
-                        //проверка продукта
+
+                        //проверка продуктов
                         try
                         {
                             //var productId = repos.Get(dc.Product, sales.First().ProductId);
@@ -137,11 +140,6 @@ namespace Task_4
                             MessageUtility.ShowErrorMessage(new Object(), "Данного продукта нет в БД");
                         }
 
-
-                        //var ex = new Exception("Данного менеджера нет в БД");
-                        //ExceptionUtility.ProcessException(new Object(), ex);
-
-                        Console.WriteLine();
 
                         Console.ReadLine();
                     }

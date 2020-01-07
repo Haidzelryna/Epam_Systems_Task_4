@@ -19,10 +19,9 @@ namespace DAL.Repository
             return await _context.Set<T>().ToListAsync();
         }
 
-        public Guid Find(DbSet dbSet, Guid Id)
+        public T Find(Guid Id)
         {
-            var entity = dbSet.Find(Id);
-            return ((T)entity).Id;
+            return _context.Set<T>().Find(Id);
         }
 
         public void Add(T entity)

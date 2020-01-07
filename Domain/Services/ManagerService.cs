@@ -1,18 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
-using DAL;
 using DAL.Repository;
 
 namespace BLL.Services
 {
     public class ManagerService: IService<DAL.Manager, BLL.Manager>
     {
-        private readonly IGenericRepository<DAL.Manager> _cmanagerRepository;
+        private readonly IGenericRepository<DAL.Manager> _managerRepository;
         private readonly IMapper _mapper;
 
-        public ManagerService(IGenericRepository<DAL.Manager> cmanagerRepository, IMapper mapper)
+        public ManagerService(IGenericRepository<DAL.Manager> managerRepository, IMapper mapper)
         {
-            _cmanagerRepository = cmanagerRepository;
+            _managerRepository = managerRepository;
             _mapper = mapper;
         }
 
@@ -28,27 +28,32 @@ namespace BLL.Services
 
         public void Remove(DAL.Manager Entity)
         {
-            _cmanagerRepository.Delete(Entity);
+            _managerRepository.Delete(Entity);
         }
 
         public void Remove(IEnumerable<DAL.Manager> Entities)
         {
-            _cmanagerRepository.Delete(Entities);
+            _managerRepository.Delete(Entities);
         }
 
         public void Add(DAL.Manager Entity)
         {
-            _cmanagerRepository.Add(Entity);
+            _managerRepository.Add(Entity);
         }
 
         public void Add(IEnumerable<DAL.Manager> Entities)
         {
-            _cmanagerRepository.Add(Entities);
+            _managerRepository.Add(Entities);
         }
 
         public void SaveChanges()
         {
-            _cmanagerRepository.SaveChanges();
+            _managerRepository.SaveChanges();
+        }
+
+        public DAL.Manager Find(Guid managerId)
+        {
+            return _managerRepository.Find(managerId);
         }
     }
 }

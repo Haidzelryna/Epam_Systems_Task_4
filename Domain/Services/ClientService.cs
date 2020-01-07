@@ -49,5 +49,10 @@ namespace BLL.Services
         {
             _clientRepository.SaveChanges();
         }
+
+        //public DAL.Manager Find(Guid clientId)
+        //{
+        //    return _managerRepository.Find(managerId);
+        //}
     }
 }

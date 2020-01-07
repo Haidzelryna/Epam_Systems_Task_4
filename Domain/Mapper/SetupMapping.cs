@@ -10,9 +10,6 @@ namespace BLL.Mapper
             {
                 Facade.StartMapping(cfg);
 
-                cfg.CreateMap<BLL.Sales, BLL.Sale>();
-                cfg.CreateMap<BLL.Sale, DAL.Sale>();
-
                 //cfg.CreateMap<BLL.Sales, BLL.Sale>();
                 //cfg.CreateMap<BLL.Sale, DAL.Sale>();
             });

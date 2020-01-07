@@ -10,7 +10,7 @@ namespace DAL.Repository
     {
         Task<IEnumerable<T>> GetAllAsync();
 
-        Guid Find(DbSet dbSet, Guid Id);
+        T Find(Guid Id);
 
         void Add(T entity);
 
