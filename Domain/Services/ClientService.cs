@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 using DAL.Repository;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace BLL.Services
 {
@@ -23,6 +26,21 @@ namespace BLL.Services
         public IEnumerable<DAL.Client> Get(IEnumerable<BLL.Client> Entities)
         {
             return _mapper.Map<IEnumerable<DAL.Client>>(Entities);
+        }
+
+        public async Task<IEnumerable<DAL.Client>> GetAll()
+        {
+            return await _clientRepository.GetAllAsync();
+        }
+
+        public async Task<bool> Check(IEnumerable<Guid> clientsCheck)
+        {
+            IEnumerable<DAL.Client> clients = await GetAll();
+            foreach (Guid clientId in clientsCheck)
+            {
+                clients.Select(c=>c.Id).ToList().Contains(clientId);
+            }
+            return true;
         }
 
         public void Remove(DAL.Client Entity)
@@ -50,9 +68,9 @@ namespace BLL.Services
             _clientRepository.SaveChanges();
         }
 
-        //public DAL.Manager Find(Guid clientId)
-        //{
-        //    return _managerRepository.Find(managerId);
-        //}
+        public DAL.Client Find(Guid clientId)
+        {
+            return _clientRepository.Find(clientId);
+        }
     }
 }

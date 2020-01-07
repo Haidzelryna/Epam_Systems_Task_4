@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using AutoMapper;
 using BLL.Services;
+using System.Threading.Tasks;
 
 namespace Task_4
 {
@@ -121,7 +122,8 @@ namespace Task_4
                         //проверка клиентов
                         try
                         {
-                            //var clientId = repos.Get(dc.Client, sales.First().ClientId);
+                            IEnumerable<Guid> clients = sales.Select(s => s.ClientId).ToList();
+                            bool i = CheckAsync(clientService, clients);
                         }
                         catch (Exception e)
                         {
@@ -202,6 +204,12 @@ namespace Task_4
             {
                 MessageUtility.ShowErrorMessage(new Object(), "Ошибка при добавлении " + text + "! Возможно " + text.Remove(text.Length-1,1) + " уже существует");
             }
+        }
+
+        static async Task<bool> CheckAsync(ClientService service, IEnumerable<Guid> clients)
+        {
+            bool result = await service.Check(clients);
+            return result;
         }
 
     }

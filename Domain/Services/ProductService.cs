@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
-using DAL;
 using DAL.Repository;
+using System.Threading.Tasks;
 
 namespace BLL.Services
 {
@@ -24,6 +25,11 @@ namespace BLL.Services
         public IEnumerable<DAL.Product> Get(IEnumerable<BLL.Product> Entities)
         {
             return _mapper.Map<IEnumerable<DAL.Product>>(Entities);
+        }
+
+        public async Task<IEnumerable<DAL.Product>> GetAll()
+        {
+            return await _productRepository.GetAllAsync();
         }
 
         public void Remove(DAL.Product Entity)
@@ -49,6 +55,11 @@ namespace BLL.Services
         public void SaveChanges()
         {
             _productRepository.SaveChanges();
+        }
+
+        public DAL.Product Find(Guid productId)
+        {
+            return _productRepository.Find(productId);
         }
     }
 }
