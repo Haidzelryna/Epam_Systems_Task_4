@@ -10,9 +10,9 @@ namespace BLL.Services
         private readonly IGenericRepository<DAL.Manager> _managerRepository;
         private readonly IMapper _mapper;
 
-        public ManagerService(IGenericRepository<DAL.Manager> managerRepository, IMapper mapper)
+        public ManagerService(IMapper mapper)
         {
-            _managerRepository = managerRepository;
+            _managerRepository = new GenericRepository<DAL.Manager>();
             _mapper = mapper;
         }
 

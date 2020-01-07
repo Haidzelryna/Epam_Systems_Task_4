@@ -9,9 +9,9 @@ namespace DAL.Repository
     {
         private DbContext _context;
 
-        public GenericRepository(DbContext context)
+        public GenericRepository()
         {
-            _context = context;
+            _context = new SalesEntities();
         }
 
         public virtual async Task<IEnumerable<T>> GetAllAsync()

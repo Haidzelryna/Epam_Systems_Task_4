@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Collections.Generic;
 using CsvHelper;
 
-namespace DAL
+namespace BLL
 {
     public static class ParseCsv
     {

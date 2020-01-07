@@ -12,9 +12,9 @@ namespace BLL.Services
         private readonly IGenericRepository<DAL.Client> _clientRepository;
         private readonly IMapper _mapper;
 
-        public ClientService(IGenericRepository<DAL.Client> clientRepository, IMapper mapper)
+        public ClientService(IMapper mapper)
         {
-            _clientRepository = clientRepository;
+            _clientRepository = new GenericRepository<DAL.Client>();
             _mapper = mapper;
         }
 

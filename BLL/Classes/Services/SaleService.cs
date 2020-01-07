@@ -14,9 +14,9 @@ namespace BLL.Services
         private readonly IGenericRepository<DAL.Sale> _saleRepository;
         private readonly IMapper _mapper;
 
-        public SaleService(IGenericRepository<DAL.Sale> saleRepository, IMapper mapper)
+        public SaleService(IMapper mapper)
         {
-            _saleRepository = saleRepository;
+            _saleRepository = new GenericRepository<DAL.Sale>(); ;
             _mapper = mapper;
         }
 

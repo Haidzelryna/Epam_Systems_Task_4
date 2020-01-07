@@ -12,9 +12,9 @@ namespace BLL.Services
         private readonly IGenericRepository<DAL.Product> _productRepository;
         private readonly IMapper _mapper;
 
-        public ProductService(IGenericRepository<DAL.Product> productRepository, IMapper mapper)
+        public ProductService(IMapper mapper)
         {
-            _productRepository = productRepository;
+            _productRepository = new GenericRepository<DAL.Product>();
             _mapper = mapper;
         }
 

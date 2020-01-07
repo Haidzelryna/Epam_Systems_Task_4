@@ -10,9 +10,9 @@ namespace BLL.Services
         private readonly IGenericRepository<DAL.Contact> _contactRepository;
         private readonly IMapper _mapper;
 
-        public ContactService(IGenericRepository<DAL.Contact> contactRepository, IMapper mapper)
+        public ContactService(IMapper mapper)
         {
-            _contactRepository = contactRepository;
+            _contactRepository = new GenericRepository<DAL.Contact>();
             _mapper = mapper;
         }
 

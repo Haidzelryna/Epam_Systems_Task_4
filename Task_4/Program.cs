@@ -7,8 +7,6 @@ using AutoMapper;
 using BLL;
 using BLL.Services;
 using BLL.Exception;
-using DAL;
-using DAL.Repository;
 
 namespace Task_4
 {
@@ -23,8 +21,8 @@ namespace Task_4
         {       
             var adminGuid = Guid.Parse(ADMINID);
 
-            using (SalesEntities dc = new SalesEntities())
-            {
+            //using (SalesEntities dc = new SalesEntities())
+            //{
                 IMapper mapper = BLL.Mapper.SetupMapping.SetupMapper();
 
                 string line = Regex.Replace("Ivanov_19112012".Trim(), @"\s+", @" ");
@@ -35,8 +33,7 @@ namespace Task_4
                         //Стартовые данные, заполняем БД - начало
 
                         //добавим контакт "6acb9fb3-9213-49cd-abda-f9785a658d12"
-                        var contactRepos = new GenericRepository<DAL.Contact>((DbContext)dc);
-                        ContactService contactService = new ContactService(contactRepos, mapper);
+                        ContactService contactService = new ContactService(mapper);
                         var contact = new BLL.Contact();
                         contact.Id = Guid.Parse("6acb9fb3-9213-49cd-abda-f9785a658d12");
                         contact.FirstName = "Гайдель";
@@ -49,8 +46,7 @@ namespace Task_4
 
                         //добавим менеджера "6acb9fb3-9213-49cd-abda-f9785a658d88"
                         //80AB7036-5D4A-11E6-9903-0050569977A1
-                        var managerRepos = new GenericRepository<DAL.Manager>((DbContext)dc);
-                        ManagerService managerService = new ManagerService(managerRepos, mapper);
+                        ManagerService managerService = new ManagerService(mapper);
                         var manager = new BLL.Manager();
                         manager.Id = Guid.Parse("80AB7036-5D4A-11E6-9903-0050569977A1");
                         manager.ContactId = contact.Id;
@@ -61,8 +57,7 @@ namespace Task_4
 
 
                         //добавим клиента 6acb9fb3-9213-49cd-abda-f9785a658d55
-                        var clientRepos = new GenericRepository<DAL.Client>((DbContext)dc);
-                        ClientService clientService = new ClientService(clientRepos, mapper);
+                        ClientService clientService = new ClientService(mapper);
                         var client = new BLL.Client();
                         client.Id = Guid.Parse("6acb9fb3-9213-49cd-abda-f9785a658d55");
                         client.ContactId = contact.Id;
@@ -73,8 +68,7 @@ namespace Task_4
 
 
                         //добавим продукт
-                        var productRepos = new GenericRepository<DAL.Product>((DbContext)dc);
-                        ProductService productService = new ProductService(productRepos, mapper);
+                        ProductService productService = new ProductService(mapper);
                         var product = new BLL.Product();
                         product.Id = Guid.Parse("89a5c4a4-6d02-412f-bb58-55a09f8afc7d");
                         //AutoMapper DAL
@@ -151,8 +145,7 @@ namespace Task_4
                         var saleBLL = MappingForBLLEntities<BLL.Sale, BLL.Sales>(salesService, sales);
 
                         //4.AutoMapper DAL
-                        var saleRepos = new GenericRepository<DAL.Sale>((DbContext)dc);
-                        SaleService saleService = new SaleService(saleRepos, mapper);
+                        SaleService saleService = new SaleService(mapper);
                         var saleDAL = MappingForDALEntities<DAL.Sale, BLL.Sale>(saleService, saleBLL);
 
                         saleService.Add(saleDAL);
@@ -162,7 +155,7 @@ namespace Task_4
                         Console.ReadLine();
                     }
                 }
-            }
+            //}
         }
 
         static IEnumerable<T> MappingForBLLEntities<T,V>(IService<T, V> service, IEnumerable<V> entities)
