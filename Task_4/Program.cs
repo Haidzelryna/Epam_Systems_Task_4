@@ -138,13 +138,22 @@ namespace Task_4
                         //проверка продуктов
                         try
                         {
-                            //var productId = repos.Get(dc.Product, sales.First().ProductId);
+                            IEnumerable<Guid> products = sales.Select(s => s.ProductId).ToList();
+                            bool check = productService.Check(products).Result;
+                            if (check == false)
+                            {
+                                MessageUtility.ShowErrorMessage(new Object(), "Одного или нескольких продуктов нет в БД");
+                            }
                         }
                         catch (Exception e)
                         {
                             Console.WriteLine($"Exception Handler: {e}");
-                            MessageUtility.ShowErrorMessage(new Object(), "Данного продукта нет в БД");
+                            MessageUtility.ShowErrorMessage(new Object(), "ERROR IN PRODUCTS CHECKING");
                         }
+
+
+                        //запись в БД Sales
+
 
 
                         Console.ReadLine();

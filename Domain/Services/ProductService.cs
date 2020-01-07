@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using AutoMapper;
 using DAL.Repository;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace BLL.Services
 {
@@ -30,6 +31,19 @@ namespace BLL.Services
         public async Task<IEnumerable<DAL.Product>> GetAll()
         {
             return await _productRepository.GetAllAsync();
+        }
+
+        public async Task<bool> Check(IEnumerable<Guid> productsCheck)
+        {
+            IEnumerable<DAL.Product> products = await GetAll();
+            foreach (Guid productId in productsCheck)
+            {
+                if (products.Select(p => p.Id).ToList().Contains(productId) == false)
+                {
+                    return false;
+                };
+            }
+            return true;
         }
 
         public void Remove(DAL.Product Entity)
