@@ -5,9 +5,9 @@ using System.Data.Entity;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace BLL.Repository
+namespace DAL.Repository
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T: Entity    
+    public class GenericRepository<T> : IGenericRepository<T> where T: Entity  
     {
         private DbContext _context;
 

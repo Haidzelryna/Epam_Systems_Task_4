@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using BLL.Repository;
+using DAL.Repository;
 
 namespace BLL.Servises
 {
     public class SalesService
     {
-        private readonly IGenericRepository<Sales> _salesRepository;
+        //private readonly IGenericRepository<Sales> _salesRepository;
         private readonly IMapper _mapper;
 
-        public SalesService(IGenericRepository<Sales> salesRepository, IMapper mapper)
+        public SalesService(IMapper mapper)//(IGenericRepository<Sales> salesRepository, IMapper mapper)
         {
-            _salesRepository = salesRepository;
+            //_salesRepository = salesRepository;
             _mapper = mapper;
         }
 

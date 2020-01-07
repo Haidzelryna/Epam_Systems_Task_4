@@ -74,10 +74,6 @@
     <Compile Include="IBaseEntity.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="Product.cs" />
-    <Compile Include="Repository\GenericRepository.cs" />
-    <Compile Include="Repository\IEntityRepos.cs" />
-    <Compile Include="Repository\IGenericRepository.cs" />
-    <Compile Include="Repository\SaleRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sale.cs" />
     <Compile Include="Sales.cs" />

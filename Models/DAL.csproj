@@ -99,6 +99,8 @@
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\GenericRepository.cs" />
+    <Compile Include="Repository\IGenericRepository.cs" />
     <Compile Include="Sale.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>

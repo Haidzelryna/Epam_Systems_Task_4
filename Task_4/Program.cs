@@ -4,7 +4,7 @@ using Database.Migrations;
 using BLL.Mapper;
 using DAL;
 using System.Linq;
-using BLL.Repository;
+using DAL.Repository;
 using System.Data.Entity;
 using BLL;
 using BLL.Exception;
@@ -90,7 +90,7 @@ namespace Task_4
                         //manager.ContactId = contact.Id;
                         //dc.Manager.Add(manager);
 
-                        var repos = new GenericRepository<BLL.Manager>((DbContext)dc);
+                        //var repos = new GenericRepository<BLL.Manager>((DbContext)dc);
 
 
                         //3.AutoMapper BLL
@@ -163,11 +163,11 @@ namespace Task_4
 
         static IEnumerable<BLL.Sale> GetDataBLL(DbContext dc, IEnumerable<Sales> sales)
         {
-            var salesRepos = new GenericRepository<BLL.Sales>((DbContext)dc);
+            //var salesRepos = new GenericRepository<DAL.Sale>((DbContext)dc);
 
             IMapper mapper = BLL.Mapper.SetupMapping.SetupMapper();
 
-            SalesService salesService = new SalesService(salesRepos, mapper);           
+            SalesService salesService = new SalesService(mapper);           
             try
             {
                 var i = salesService.Get(sales);
@@ -183,11 +183,11 @@ namespace Task_4
 
         static IEnumerable<DAL.Sale> GetDataDAL(DbContext dc, IEnumerable<BLL.Sale> sales)
         {
-            var saleRepos = new GenericRepository<BLL.Sale>((DbContext)dc);
+            //var saleRepos = new GenericRepository<BLL.Sale>((DbContext)dc);
 
             IMapper mapper = BLL.Mapper.SetupMapping.SetupMapper();
 
-            SaleService saleService = new SaleService(saleRepos, mapper);
+            SaleService saleService = new SaleService(mapper);
             try
             {
                 var i = saleService.Get(sales);

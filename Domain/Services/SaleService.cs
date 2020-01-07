@@ -4,22 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using BLL.Repository;
+using DAL.Repository;
 
 namespace BLL.Servises
 {
     public class SaleService
     {
-        private readonly IGenericRepository<Sale> _saleRepository;
+        //private readonly IGenericRepository<BLL.Sale> _saleRepository;
         private readonly IMapper _mapper;
 
-        public SaleService(IGenericRepository<Sale> saleRepository, IMapper mapper)
+        public SaleService(IMapper mapper)//(IGenericRepository<BLL.Sale> saleRepository, IMapper mapper)
         {
-            _saleRepository = saleRepository;
+            //_saleRepository = saleRepository;
             _mapper = mapper;
         }
 
-        public IEnumerable<DAL.Sale> Get(IEnumerable<Sale> saleEntities)
+        public IEnumerable<DAL.Sale> Get(IEnumerable<BLL.Sale> saleEntities)
         {
             //Task<IEnumerable<Sale>> saleEntities = _saleRepository.GetAllAsync();
             return _mapper.Map<IEnumerable<DAL.Sale>>(saleEntities);

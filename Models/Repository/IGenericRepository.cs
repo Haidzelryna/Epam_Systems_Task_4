@@ -4,9 +4,9 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BLL.Repository
+namespace DAL.Repository
 {
-    public interface IGenericRepository<T> where T: Entity
+    public interface IGenericRepository<T> //where T: Entity
     {
         Task<IEnumerable<T>> GetAllAsync();
 
