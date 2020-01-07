@@ -37,7 +37,6 @@ namespace Task_4
                 IMapper mapper = BLL.Mapper.SetupMapping.SetupMapper();
 
                 var contactRepos = new GenericRepository<DAL.Contact>((DbContext)dc);
-
                 ContactService contactService = new ContactService(contactRepos, mapper);
 
                 string line = Regex.Replace("Ivanov_19112012".Trim(), @"\s+", @" ");
@@ -53,8 +52,10 @@ namespace Task_4
                             contact.LastName = "Ирина";
                             //dc.Contact.Add(contact);
                             //AutoMapper DAL
-                            var contactDAL = MappingForDAL(contactService, contact);
+                            var contactDAL = MappingForDALEntity(contactService, contact);
                             contactService.Add(contactDAL);
+
+                            contactService.SaveChanges();
                         /*
                             //добавим менеджера "6acb9fb3-9213-49cd-abda-f9785a658d88"
                             var manager = new Domain.Manager();
@@ -104,10 +105,14 @@ namespace Task_4
 
 
                         //3.AutoMapper BLL
-                        IEnumerable<BLL.Sale> saleBLL = GetDataBLL(dc, sales);
+
+                        SalesService salesService = new SalesService(mapper);
+                        var saleBLL = MappingForBLLEntities<BLL.Sale, BLL.Sales>(salesService, sales);
 
                         //4.AutoMapper DAL
-                        var saleDAL = GetDataDAL(dc, saleBLL);
+                        var saleRepos = new GenericRepository<DAL.Sale>((DbContext)dc);
+                        SaleService saleService = new SaleService(saleRepos, mapper);
+                        var saleDAL = MappingForDALEntities<DAL.Sale, BLL.Sale>(saleService, saleBLL);
 
 
                         //var outer = Task.Factory.StartNew(() =>      // внешняя задача
@@ -171,7 +176,7 @@ namespace Task_4
             }
         }
 
-        static IEnumerable<T> GetDataBLL<T,V>(IService<T,V> service, IEnumerable<V> entities)
+        static IEnumerable<T> MappingForBLLEntities<T,V>(IService<T, V> service, IEnumerable<V> entities)
         {          
             try
             {
@@ -186,22 +191,22 @@ namespace Task_4
             return null;
         }
 
-        static IEnumerable<T> MappingForDAL<T, V>(IService<T, V> service, V entity)
+        static T MappingForDALEntity<T, V>(IService<T, V> service, V entity)
         {
-            try
-            {
+            //try
+            //{
                 var i = service.Get(entity);
                 return i;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+           // }
+          //  catch (Exception ex)
+           // {
+          //      Console.WriteLine(ex.Message);
+          //  }
 
-            return null;
+          //  return ;
         }
 
-        static IEnumerable<T> GetDataDAL<T,V>(IService<T, V> service, IEnumerable<V> entities)
+        static IEnumerable<T> MappingForDALEntities<T,V>(IService<T, V> service, IEnumerable<V> entities)
         {
             try
             {

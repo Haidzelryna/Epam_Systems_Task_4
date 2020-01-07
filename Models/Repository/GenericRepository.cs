@@ -47,9 +47,9 @@ namespace DAL.Repository
             _context.Set<Entity>().RemoveRange(entity);
         }
 
-        //public IQueryable<T> SaveChanges()
-        //{
-        //    // _context.SaveChanges();
-        //}
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
+        }
     }
 }

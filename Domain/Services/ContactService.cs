@@ -45,5 +45,10 @@ namespace BLL.Services
         {
             _contactRepository.Add(Entities);
         }
+
+        public void SaveChanges()
+        {
+            _contactRepository.SaveChanges();
+        }
     }
 }

@@ -49,5 +49,10 @@ namespace BLL.Services
         {
             throw new NotImplementedException();
         }
+
+        public void SaveChanges()
+        {
+            _saleRepository.SaveChanges();
+        }
     }
 }
