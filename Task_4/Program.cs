@@ -9,6 +9,7 @@ using BLL.Services;
 using BLL.Exception;
 using DAL;
 using DAL.Repository;
+using DAL.Models;
 
 namespace Task_4
 {
