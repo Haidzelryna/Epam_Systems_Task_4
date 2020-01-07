@@ -33,13 +33,13 @@ namespace Task_4
             adminGuid = Guid.Parse(ADMINID);
 
             //Стартовые данные, заполняем БД
-            StartData();
+            //StartData();
 
             //Проверка формата названия 1 файла
             if (ValidateFileName("Ivanov_19112012"))
             {
                 //обработка 1 файла
-                Task.Factory.StartNew(() =>
+                Task.Run(() =>
                 {
                     using (StreamReader streamReader = new StreamReader(ConfigurationSettings.AppSettings["file"], Encoding.Default))
                     {
@@ -53,7 +53,7 @@ namespace Task_4
             if (ValidateFileName("Ivanov_07012020"))
             {
                 //обработка 2 файла
-                Task.Factory.StartNew(() =>
+                Task.Run(() =>
                 {
                     using (StreamReader streamReader = new StreamReader(ConfigurationSettings.AppSettings["file"], Encoding.Default))
                     {
@@ -113,7 +113,6 @@ namespace Task_4
             {
                 var managerActive = managerService.Find(sales.First().CreatedByUserId);
                 MessageUtility.ShowValidationMessage(new Object(), "Менеджер найден:" + managerActive.Name);
-
             }
             catch (Exception e)
             {

@@ -9,9 +9,14 @@ namespace DAL.Repository
     {
         private DbContext _context;
 
+        static object locker = new object();
+
         public GenericRepository()
         {
-            _context = new SalesEntities();
+            lock (locker)
+            {
+                _context = new SalesEntities();
+            }
         }
 
         public virtual async Task<IEnumerable<T>> GetAllAsync()
@@ -21,7 +26,10 @@ namespace DAL.Repository
 
         public T Find(Guid Id)
         {
-            return _context.Set<T>().Find(Id);
+            lock (locker)
+            {
+                return _context.Set<T>().Find(Id);
+            }
         }
 
         public void Add(T entity)

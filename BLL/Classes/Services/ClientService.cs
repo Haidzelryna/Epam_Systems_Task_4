@@ -4,6 +4,7 @@ using AutoMapper;
 using DAL.Repository;
 using System.Threading.Tasks;
 using System.Linq;
+using BLL.Classes.Services;
 
 namespace BLL.Services
 {
@@ -11,6 +12,10 @@ namespace BLL.Services
     {
         private readonly IGenericRepository<DAL.Client> _clientRepository;
         private readonly IMapper _mapper;
+
+        private static readonly SemaphoreLocker _locker = new SemaphoreLocker();
+
+        static object locker = new object();
 
         public ClientService(IMapper mapper)
         {
@@ -30,7 +35,13 @@ namespace BLL.Services
 
         public async Task<IEnumerable<DAL.Client>> GetAll()
         {
-            return await _clientRepository.GetAllAsync();
+            IEnumerable<DAL.Client> result = Enumerable.Empty<DAL.Client>();
+            await _locker.LockAsync(async () =>
+            {
+                result = await _clientRepository.GetAllAsync();
+            });
+
+            return result;
         }
 
         public async Task<bool> Check(IEnumerable<Guid> clientsCheck)

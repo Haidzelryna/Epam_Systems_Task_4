@@ -17,8 +17,8 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Manager()
         {
-            this.Sale = new HashSet<Sale>();
-            this.Sale1 = new HashSet<Sale>();
+                this.Sale = new HashSet<Sale>();
+                this.Sale1 = new HashSet<Sale>();
         }
     
         public System.Guid Id { get; set; }
