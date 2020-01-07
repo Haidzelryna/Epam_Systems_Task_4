@@ -32,9 +32,19 @@ namespace DAL.Repository
            _context.Set<Entity>().Add(entity);
         }
 
+        public void Add(IEnumerable<T> entity)
+        {
+            _context.Set<Entity>().AddRange(entity);
+        }
+
         public void Delete(T entity)
         {
             _context.Set<Entity>().Add(entity);
+        }
+
+        public void Delete(IEnumerable<T> entity)
+        {
+            _context.Set<Entity>().RemoveRange(entity);
         }
 
         //public IQueryable<T> SaveChanges()

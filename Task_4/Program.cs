@@ -11,9 +11,10 @@ using BLL.Exception;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using AutoMapper;
-using BLL.Servises;
+using BLL.Services;
 using System.Threading.Tasks;
 using BLL.Mapper;
+using System.Collections.Generic;
 //using DAL;
 
 namespace Task_4
@@ -33,19 +34,28 @@ namespace Task_4
 
             using (SalesEntities dc = new SalesEntities())
             {
+                IMapper mapper = BLL.Mapper.SetupMapping.SetupMapper();
+
+                var contactRepos = new GenericRepository<DAL.Contact>((DbContext)dc);
+
+                ContactService contactService = new ContactService(contactRepos, mapper);
+
                 string line = Regex.Replace("Ivanov_19112012".Trim(), @"\s+", @" ");
                 if (line != "")
                 {
                     if (Regex.IsMatch(line, VALIDATEREGEX))
                     {
-                        /*
+                        
                             //добавим контакт "6acb9fb3-9213-49cd-abda-f9785a658d12"
-                            var contact = new Domain.Contact();
+                            var contact = new BLL.Contact();
                             contact.Id = Guid.Parse("6acb9fb3-9213-49cd-abda-f9785a658d12");
                             contact.FirstName = "Гайдель";
                             contact.LastName = "Ирина";
-                            dc.Contact.Add(contact);
-
+                            //dc.Contact.Add(contact);
+                            //AutoMapper DAL
+                            var contactDAL = MappingForDAL(contactService, contact);
+                            contactService.Add(contactDAL);
+                        /*
                             //добавим менеджера "6acb9fb3-9213-49cd-abda-f9785a658d88"
                             var manager = new Domain.Manager();
                             manager.Id = Guid.Parse("6acb9fb3-9213-49cd-abda-f9785a658d88");
@@ -161,16 +171,11 @@ namespace Task_4
             }
         }
 
-        static IEnumerable<BLL.Sale> GetDataBLL(DbContext dc, IEnumerable<Sales> sales)
-        {
-            //var salesRepos = new GenericRepository<DAL.Sale>((DbContext)dc);
-
-            IMapper mapper = BLL.Mapper.SetupMapping.SetupMapper();
-
-            SalesService salesService = new SalesService(mapper);           
+        static IEnumerable<T> GetDataBLL<T,V>(IService<T,V> service, IEnumerable<V> entities)
+        {          
             try
             {
-                var i = salesService.Get(sales);
+                var i = service.Get(entities);
                 return i;
             }
             catch (Exception ex)
@@ -181,16 +186,26 @@ namespace Task_4
             return null;
         }
 
-        static IEnumerable<DAL.Sale> GetDataDAL(DbContext dc, IEnumerable<BLL.Sale> sales)
+        static IEnumerable<T> MappingForDAL<T, V>(IService<T, V> service, V entity)
         {
-            var saleRepos = new GenericRepository<DAL.Sale>((DbContext)dc);
-
-            IMapper mapper = BLL.Mapper.SetupMapping.SetupMapper();
-
-            SaleService saleService = new SaleService(saleRepos, mapper);
             try
             {
-                var i = saleService.Get(sales);
+                var i = service.Get(entity);
+                return i;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return null;
+        }
+
+        static IEnumerable<T> GetDataDAL<T,V>(IService<T, V> service, IEnumerable<V> entities)
+        {
+            try
+            {
+                var i = service.Get(entities);
                 return i;
             }
             catch (Exception ex)
