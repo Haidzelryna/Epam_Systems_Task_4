@@ -7,30 +7,24 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DAL
+namespace DAL.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Contact: Entity
+    public partial class Client
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Contact()
+        public Client()
         {
-            this.Client = new HashSet<Client>();
-            this.Manager = new HashSet<Manager>();
+            this.Sale = new HashSet<Sale>();
         }
     
         public System.Guid Id { get; set; }
-        public string FirstName { get; set; }
-        public string MiddleName { get; set; }
-        public string LastName { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
+        public System.Guid ContactId { get; set; }
     
+        public virtual Contact Contact { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Client> Client { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Manager> Manager { get; set; }
+        public virtual ICollection<Sale> Sale { get; set; }
     }
 }

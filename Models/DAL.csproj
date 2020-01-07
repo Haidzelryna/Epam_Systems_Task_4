@@ -58,60 +58,60 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseData\BaseEntity.cs" />
-    <Compile Include="Client.cs">
+    <Compile Include="Models\BaseData\BaseEntity.cs" />
+    <Compile Include="Models\Client.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Contact.cs">
+    <Compile Include="Models\Contact.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel.Context.cs">
+    <Compile Include="Models\DataModel.Context.cs">
       <DependentUpon>DataModel.Context.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="DataModel.cs">
+    <Compile Include="Models\DataModel.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="DataModel.Designer.cs">
+    <Compile Include="Models\DataModel.Designer.cs">
       <DependentUpon>DataModel.edmx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="BaseData\Entity.cs" />
-    <Compile Include="Manager.cs">
+    <Compile Include="Models\BaseData\Entity.cs" />
+    <Compile Include="Interfaces\Repository\IGenericRepository.cs" />
+    <Compile Include="Models\Manager.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Product.cs">
+    <Compile Include="Models\Product.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\GenericRepository.cs" />
-    <Compile Include="Repository\IGenericRepository.cs" />
-    <Compile Include="Sale.cs">
+    <Compile Include="Classes\Repository\GenericRepository.cs" />
+    <Compile Include="Models\Sale.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="DataModel.edmx">
+    <EntityDeploy Include="Models\DataModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DataModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="App.Config" />
-    <None Include="DataModel.edmx.diagram">
+    <None Include="Models\DataModel.edmx.diagram">
       <DependentUpon>DataModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DataModel.Context.tt">
+    <Content Include="Models\DataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DataModel.edmx</DependentUpon>
       <LastGenOutput>DataModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="DataModel.tt">
+    <Content Include="Models\DataModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DataModel.edmx</DependentUpon>
       <LastGenOutput>DataModel.cs</LastGenOutput>

@@ -7,12 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DAL
+namespace DAL.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Sale: Entity
+    public partial class Sale
     {
         public System.Guid Id { get; set; }
         public System.Guid ClientId { get; set; }
