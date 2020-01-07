@@ -46,11 +46,15 @@ namespace Task_4
             }
 
             //Проверка формата названия файла
-            //if (ValidateFileName("Ivanov_19112012"))
-            //{
-            //    //обработка файла
-            //    WorkWithFile(BLL.Resources.Resource.Ivanov_19112012);
-            //}
+            if (ValidateFileName("Ivanov_07012020"))
+            {
+                //обработка файла
+                using (StreamReader streamReader = new StreamReader(ConfigurationSettings.AppSettings["file"], Encoding.Default))
+                {
+                    byte[] bytes = streamReader.CurrentEncoding.GetBytes(streamReader.ReadToEnd());
+                    WorkWithFile(bytes);
+                }
+            }
 
             Console.ReadLine();
         }
@@ -149,40 +153,65 @@ namespace Task_4
         static void StartData()
         {
             //добавим контакт "6acb9fb3-9213-49cd-abda-f9785a658d12"
+            //var contact = new BLL.Contact();
+            //contact.Id = Guid.Parse("6acb9fb3-9213-49cd-abda-f9785a658d12");
+            //contact.FirstName = "Гайдель";
+            //contact.LastName = "Ирина";
+            ////AutoMapper DAL
+            //var contactDAL = MappingService.MappingForDALEntity(contactService, contact);
+            //contactService.Add(contactDAL);
+            //SaveChangesWithException(contactService, "контакта");
             var contact = new BLL.Contact();
-            contact.Id = Guid.Parse("6acb9fb3-9213-49cd-abda-f9785a658d12");
+            contact.Id = Guid.Parse("6acb9fb3-9213-49cd-abda-f9785a658d22");
             contact.FirstName = "Гайдель";
-            contact.LastName = "Ирина";
+            contact.LastName = "Лев";
             //AutoMapper DAL
             var contactDAL = MappingService.MappingForDALEntity(contactService, contact);
             contactService.Add(contactDAL);
             SaveChangesWithException(contactService, "контакта");
 
-
             //добавим менеджера "6acb9fb3-9213-49cd-abda-f9785a658d88"
             //80AB7036-5D4A-11E6-9903-0050569977A1
+            //var manager = new BLL.Manager();
+            //manager.Id = Guid.Parse("80AB7036-5D4A-11E6-9903-0050569977A1");
+            //manager.ContactId = contact.Id;
+            ////AutoMapper DAL
+            //var managerDAL = MappingService.MappingForDALEntity(managerService, manager);
+            //managerService.Add(managerDAL);
+            //SaveChangesWithException(managerService, "менеджера");
             var manager = new BLL.Manager();
-            manager.Id = Guid.Parse("80AB7036-5D4A-11E6-9903-0050569977A1");
+            manager.Id = Guid.Parse("80AB7036-5D4A-11E6-9903-005056997722");
             manager.ContactId = contact.Id;
             //AutoMapper DAL
             var managerDAL = MappingService.MappingForDALEntity(managerService, manager);
             managerService.Add(managerDAL);
             SaveChangesWithException(managerService, "менеджера");
 
-
             //добавим клиента 6acb9fb3-9213-49cd-abda-f9785a658d55
+            //var client = new BLL.Client();
+            //client.Id = Guid.Parse("6acb9fb3-9213-49cd-abda-f9785a658d55");
+            //client.ContactId = contact.Id;
+            ////AutoMapper DAL
+            //var clientDAL = MappingService.MappingForDALEntity(clientService, client);
+            //clientService.Add(clientDAL);
+            //SaveChangesWithException(clientService, "клиента");
             var client = new BLL.Client();
-            client.Id = Guid.Parse("6acb9fb3-9213-49cd-abda-f9785a658d55");
+            client.Id = Guid.Parse("6acb9fb3-9213-49cd-abda-f9785a658d22");
             client.ContactId = contact.Id;
             //AutoMapper DAL
             var clientDAL = MappingService.MappingForDALEntity(clientService, client);
             clientService.Add(clientDAL);
             SaveChangesWithException(clientService, "клиента");
 
-
             //добавим продукт
+            //var product = new BLL.Product();
+            //product.Id = Guid.Parse("89a5c4a4-6d02-412f-bb58-55a09f8afc7d");
+            ////AutoMapper DAL
+            //var productDAL = MappingService.MappingForDALEntity(productService, product);
+            //productService.Add(productDAL);
+            //SaveChangesWithException(productService, "продукта");
             var product = new BLL.Product();
-            product.Id = Guid.Parse("89a5c4a4-6d02-412f-bb58-55a09f8afc7d");
+            product.Id = Guid.Parse("89a5c4a4-6d02-412f-bb58-55a09f8afc22");
             //AutoMapper DAL
             var productDAL = MappingService.MappingForDALEntity(productService, product);
             productService.Add(productDAL);
