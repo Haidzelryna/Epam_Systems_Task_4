@@ -14,6 +14,8 @@ namespace Task_4
     {
         private const string ADMINID = "80AB7036-5D4A-11E6-9903-0050569977A1";
 
+        private static Guid adminGuid;
+
         private const string VALIDATEREGEX = @"\w_\d{8}$";
 
         private static IMapper mapper = BLL.Mapper.SetupMapping.SetupMapper();
@@ -24,40 +26,18 @@ namespace Task_4
         private static ProductService productService = new ProductService(mapper);
 
         static void Main(string[] args)
-        {       
-            var adminGuid = Guid.Parse(ADMINID);
+        {
+            adminGuid = Guid.Parse(ADMINID);
 
             //Стартовые данные, заполняем БД
             StartData();
 
             //Проверка формата названия файла
             if (ValidateFileName("Ivanov_19112012"))
-            {                  
-                //1-2.IEnumerable<Sales>
-                IEnumerable<Sales> sales = ParseCsv.ParseResource<Sales>(BLL.Resources.Resource.Ivanov_19112012, sale =>
-                {
-                    sale.CreatedByUserId = adminGuid;
-                    // sales.CreatedDateTime = DateTime.UtcNow;
-                });
+            {
+                //обработка файла
+                WorkWithFile();
 
-                //Проверка данных, есть ли в БД
-                ValidateData(sales);
-
-                //запись в БД Sales
-
-                //3.AutoMapper BLL
-                SalesService salesService = new SalesService(mapper);
-                var saleBLL = MappingForBLLEntities<BLL.Sale, BLL.Sales>(salesService, sales);
-
-                //4.AutoMapper DAL
-                SaleService saleService = new SaleService(mapper);
-                var saleDAL = MappingForDALEntities<DAL.Sale, BLL.Sale>(saleService, saleBLL);
-
-                //запись в БД sales из файла
-                saleService.Add(saleDAL);
-                SaveChangesWithException(saleService, "заказа");
-
-                
                 Console.ReadLine();
             }
         }
@@ -121,7 +101,29 @@ namespace Task_4
 
         static void WorkWithFile()
         {
+            //1-2.IEnumerable<Sales>
+            IEnumerable<Sales> sales = ParseCsv.ParseResource<Sales>(BLL.Resources.Resource.Ivanov_19112012, sale =>
+            {
+                sale.CreatedByUserId = adminGuid;
+                // sales.CreatedDateTime = DateTime.UtcNow;
+            });
 
+            //Проверка данных, есть ли в БД
+            ValidateData(sales);
+
+            //запись в БД Sales
+
+            //3.AutoMapper BLL
+            SalesService salesService = new SalesService(mapper);
+            var saleBLL = MappingForBLLEntities<BLL.Sale, BLL.Sales>(salesService, sales);
+
+            //4.AutoMapper DAL
+            SaleService saleService = new SaleService(mapper);
+            var saleDAL = MappingForDALEntities<DAL.Sale, BLL.Sale>(saleService, saleBLL);
+
+            //запись в БД sales из файла
+            saleService.Add(saleDAL);
+            SaveChangesWithException(saleService, "заказа");
         }
 
         static bool ValidateFileName(string fileName)
