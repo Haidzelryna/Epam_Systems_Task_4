@@ -7,6 +7,9 @@ using BLL;
 using BLL.Services;
 using BLL.Exception;
 using BLL.Classes.Mapper;
+using System.Configuration;
+using System.IO;
+using System.Text;
 
 namespace Task_4
 {
@@ -35,10 +38,21 @@ namespace Task_4
             if (ValidateFileName("Ivanov_19112012"))
             {
                 //обработка файла
-                WorkWithFile(BLL.Resources.Resource.Ivanov_19112012);
-
-                Console.ReadLine();
+                using (StreamReader streamReader = new StreamReader(ConfigurationSettings.AppSettings["file"], Encoding.Default))
+                {
+                    byte[] bytes = streamReader.CurrentEncoding.GetBytes(streamReader.ReadToEnd());
+                    WorkWithFile(bytes);
+                }
             }
+
+            //Проверка формата названия файла
+            //if (ValidateFileName("Ivanov_19112012"))
+            //{
+            //    //обработка файла
+            //    WorkWithFile(BLL.Resources.Resource.Ivanov_19112012);
+            //}
+
+            Console.ReadLine();
         }
 
         static void WorkWithFile(Byte[] file)
@@ -186,6 +200,5 @@ namespace Task_4
                 MessageUtility.ShowErrorMessage(new Object(), "Ошибка при добавлении " + text + "! Возможно " + text.Remove(text.Length - 1, 1) + " уже существует");
             }
         }
-
     }
 }
