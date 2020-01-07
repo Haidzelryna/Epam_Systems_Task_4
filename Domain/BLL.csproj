@@ -37,6 +37,9 @@
     <Reference Include="AutoMapper, Version=7.0.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.7.0.1\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="CsvHelper">
+      <HintPath>..\packages\CsvHelper.2.16.0.0\lib\net45\CsvHelper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -70,12 +73,16 @@
     <Compile Include="Mapper\SetupMapping.cs" />
     <Compile Include="Data\Base\BaseEntity.cs" />
     <Compile Include="Data\Base\Entity.cs" />
-    <Compile Include="Data\Base\IBaseEntity.cs" />
-    <Compile Include="Data\Base\IEntity.cs" />
     <Compile Include="Data\Product.cs" />
+    <Compile Include="ParseCsv.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Sale.cs" />
     <Compile Include="Data\Sales.cs" />
+    <Compile Include="Resources\Resource.Designer.cs">
+      <DependentUpon>Resource.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Services\IService.cs" />
     <Compile Include="Services\ProductService.cs" />
     <Compile Include="Services\ClientService.cs" />
@@ -90,6 +97,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+    <None Include="Resources\28.12.2019_23-27_11" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -99,6 +107,12 @@
       <Project>{54630f6c-6393-4f0f-a8b2-2105408ac742}</Project>
       <Name>DAL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Resource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

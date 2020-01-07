@@ -32,22 +32,22 @@ namespace BLL.Services
 
         public void Add(DAL.Sale Entity)
         {
-            throw new NotImplementedException();
+            _saleRepository.Add(Entity);
         }
 
         public void Add(IEnumerable<DAL.Sale> Entities)
         {
-            throw new NotImplementedException();
+            _saleRepository.Add(Entities);
         }
 
         public void Remove(DAL.Sale Entity)
         {
-            throw new NotImplementedException();
+            _saleRepository.Delete(Entity);
         }
 
         public void Remove(IEnumerable<DAL.Sale> Entities)
         {
-            throw new NotImplementedException();
+            _saleRepository.Delete(Entities);
         }
 
         public void SaveChanges()

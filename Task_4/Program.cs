@@ -1,18 +1,14 @@
 ﻿using System;
-using BLL;
-using Database.Migrations;
-using BLL.Mapper;
-using DAL;
 using System.Linq;
-using DAL.Repository;
 using System.Data.Entity;
-using BLL;
-using BLL.Exception;
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using AutoMapper;
+using BLL;
 using BLL.Services;
-using System.Threading.Tasks;
+using BLL.Exception;
+using DAL;
+using DAL.Repository;
 
 namespace Task_4
 {
@@ -25,8 +21,6 @@ namespace Task_4
 
         static void Main(string[] args)
         {       
-            Configuration conf = new Configuration();
-
             var adminGuid = Guid.Parse(ADMINID);
 
             using (SalesEntities dc = new SalesEntities())
@@ -54,10 +48,11 @@ namespace Task_4
 
 
                         //добавим менеджера "6acb9fb3-9213-49cd-abda-f9785a658d88"
+                        //80AB7036-5D4A-11E6-9903-0050569977A1
                         var managerRepos = new GenericRepository<DAL.Manager>((DbContext)dc);
                         ManagerService managerService = new ManagerService(managerRepos, mapper);
                         var manager = new BLL.Manager();
-                        manager.Id = Guid.Parse("6acb9fb3-9213-49cd-abda-f9785a658d88");
+                        manager.Id = Guid.Parse("80AB7036-5D4A-11E6-9903-0050569977A1");
                         manager.ContactId = contact.Id;
                         //AutoMapper DAL
                         var managerDAL = MappingForDALEntity(managerService, manager);
@@ -91,20 +86,13 @@ namespace Task_4
 
 
                         //2.IEnumerable<Sales>
-                        IEnumerable<Sales> sales = conf.ParseResource<Sales>(DAL.Resources.Resource.Ivanov_19112012, sale =>
+                        IEnumerable<Sales> sales = ParseCsv.ParseResource<Sales>(BLL.Resources.Resource.Ivanov_19112012, sale =>
                         {
                             sale.CreatedByUserId = adminGuid;
                            // sales.CreatedDateTime = DateTime.UtcNow;
                         });
 
-                        //3.AutoMapper BLL
-                        SalesService salesService = new SalesService(mapper);
-                        var saleBLL = MappingForBLLEntities<BLL.Sale, BLL.Sales>(salesService, sales);
-
-                        //4.AutoMapper DAL
-                        var saleRepos = new GenericRepository<DAL.Sale>((DbContext)dc);
-                        SaleService saleService = new SaleService(saleRepos, mapper);
-                        var saleDAL = MappingForDALEntities<DAL.Sale, BLL.Sale>(saleService, saleBLL);
+                       
 
 
                         //проверка менеджера
@@ -112,11 +100,13 @@ namespace Task_4
                         {
                             var managerActive = managerService.Find(sales.First().CreatedByUserId);
                             MessageUtility.ShowValidationMessage(new Object(), "Менеджер найден:" + managerActive.Name);
+                            
                         }
                         catch (Exception e)
                         {
                             Console.WriteLine($"Exception Handler: {e}");
                             MessageUtility.ShowErrorMessage(new Object(), "Данного менеджера нет в БД");
+                            throw new Exception("Данного менеджера нет в БД");
                         }
 
                         //проверка клиентов
@@ -127,6 +117,7 @@ namespace Task_4
                             if (check == false)
                             {
                                 MessageUtility.ShowErrorMessage(new Object(), "Одного или нескольких клиентов нет в БД");
+                                throw new Exception("Одного или нескольких клиентов нет в БД");
                             }
                         }
                         catch (Exception e)
@@ -143,6 +134,7 @@ namespace Task_4
                             if (check == false)
                             {
                                 MessageUtility.ShowErrorMessage(new Object(), "Одного или нескольких продуктов нет в БД");
+                                throw new Exception("Одного или нескольких продуктов нет в БД");
                             }
                         }
                         catch (Exception e)
@@ -154,6 +146,17 @@ namespace Task_4
 
                         //запись в БД Sales
 
+                        //3.AutoMapper BLL
+                        SalesService salesService = new SalesService(mapper);
+                        var saleBLL = MappingForBLLEntities<BLL.Sale, BLL.Sales>(salesService, sales);
+
+                        //4.AutoMapper DAL
+                        var saleRepos = new GenericRepository<DAL.Sale>((DbContext)dc);
+                        SaleService saleService = new SaleService(saleRepos, mapper);
+                        var saleDAL = MappingForDALEntities<DAL.Sale, BLL.Sale>(saleService, saleBLL);
+
+                        saleService.Add(saleDAL);
+                        SaveChangesWithException(saleService, "заказа");
 
 
                         Console.ReadLine();

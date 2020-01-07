@@ -37,9 +37,6 @@
     <Reference Include="AutoMapper, Version=7.0.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.7.0.1\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
-    <Reference Include="CsvHelper">
-      <HintPath>..\packages\CsvHelper.2.16.0.0\lib\net45\CsvHelper.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -61,7 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base Data\BaseEntity.cs" />
+    <Compile Include="BaseData\BaseEntity.cs" />
     <Compile Include="Client.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
@@ -83,32 +80,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Base Data\Entity.cs" />
-    <Compile Include="Base Data\IBaseEntity.cs" />
-    <Compile Include="Base Data\IEntity.cs" />
+    <Compile Include="BaseData\Entity.cs" />
     <Compile Include="Manager.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202001031052120_SampleMigrations.cs" />
-    <Compile Include="Migrations\202001031052120_SampleMigrations.Designer.cs">
-      <DependentUpon>202001031052120_SampleMigrations.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202001031105164_202001031052120_SampleMigrations.cs" />
-    <Compile Include="Migrations\202001031105164_202001031052120_SampleMigrations.Designer.cs">
-      <DependentUpon>202001031105164_202001031052120_SampleMigrations.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Product.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\GenericRepository.cs" />
     <Compile Include="Repository\IGenericRepository.cs" />
-    <Compile Include="Resources\Resource.Designer.cs">
-      <DependentUpon>Resource.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Sale.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
@@ -123,12 +104,8 @@
       <DependentUpon>DataModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
-    <None Include="Resources\28.12.2019_23-27_11" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="d:\задание 4\111.txt">
-      <Link>Resources\111.txt</Link>
-    </None>
     <Content Include="DataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DataModel.edmx</DependentUpon>
@@ -142,18 +119,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202001031052120_SampleMigrations.resx">
-      <DependentUpon>202001031052120_SampleMigrations.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001031105164_202001031052120_SampleMigrations.resx">
-      <DependentUpon>202001031105164_202001031052120_SampleMigrations.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Resource.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
