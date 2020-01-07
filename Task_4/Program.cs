@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
-using System.Data.Entity;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using AutoMapper;
 using BLL;
 using BLL.Services;
 using BLL.Exception;
+using BLL.Classes.Mapper;
 
 namespace Task_4
 {
@@ -41,63 +41,6 @@ namespace Task_4
             }
         }
 
-        static IEnumerable<T> MappingForBLLEntities<T,V>(IService<T, V> service, IEnumerable<V> entities)
-        {          
-            try
-            {
-                var i = service.Get(entities);
-                return i;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            return null;
-        }
-
-        static T MappingForDALEntity<T, V>(IService<T, V> service, V entity)
-        {
-            //try
-            //{
-                var i = service.Get(entity);
-                return i;
-           // }
-          //  catch (Exception ex)
-           // {
-          //      Console.WriteLine(ex.Message);
-          //  }
-
-          //  return ;
-        }
-
-        static IEnumerable<T> MappingForDALEntities<T,V>(IService<T, V> service, IEnumerable<V> entities)
-        {
-            try
-            {
-                var i = service.Get(entities);
-                return i;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            return null;
-        }
-
-        static void SaveChangesWithException(IService service, string text)
-        {
-            try
-            {
-                service.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                MessageUtility.ShowErrorMessage(new Object(), "Ошибка при добавлении " + text + "! Возможно " + text.Remove(text.Length-1,1) + " уже существует");
-            }
-        }
-
         static void WorkWithFile()
         {
             //1-2.IEnumerable<Sales>
@@ -114,11 +57,11 @@ namespace Task_4
 
             //3.AutoMapper BLL
             SalesService salesService = new SalesService(mapper);
-            var saleBLL = MappingForBLLEntities<BLL.Sale, BLL.Sales>(salesService, sales);
+            var saleBLL = MappingService.MappingForBLLEntities<BLL.Sale, BLL.Sales>(salesService, sales);
 
             //4.AutoMapper DAL
             SaleService saleService = new SaleService(mapper);
-            var saleDAL = MappingForDALEntities<DAL.Sale, BLL.Sale>(saleService, saleBLL);
+            var saleDAL = MappingService.MappingForDALEntities<DAL.Sale, BLL.Sale>(saleService, saleBLL);
 
             //запись в БД sales из файла
             saleService.Add(saleDAL);
@@ -197,7 +140,7 @@ namespace Task_4
             contact.FirstName = "Гайдель";
             contact.LastName = "Ирина";
             //AutoMapper DAL
-            var contactDAL = MappingForDALEntity(contactService, contact);
+            var contactDAL = MappingService.MappingForDALEntity(contactService, contact);
             contactService.Add(contactDAL);
             SaveChangesWithException(contactService, "контакта");
 
@@ -208,7 +151,7 @@ namespace Task_4
             manager.Id = Guid.Parse("80AB7036-5D4A-11E6-9903-0050569977A1");
             manager.ContactId = contact.Id;
             //AutoMapper DAL
-            var managerDAL = MappingForDALEntity(managerService, manager);
+            var managerDAL = MappingService.MappingForDALEntity(managerService, manager);
             managerService.Add(managerDAL);
             SaveChangesWithException(managerService, "менеджера");
 
@@ -218,7 +161,7 @@ namespace Task_4
             client.Id = Guid.Parse("6acb9fb3-9213-49cd-abda-f9785a658d55");
             client.ContactId = contact.Id;
             //AutoMapper DAL
-            var clientDAL = MappingForDALEntity(clientService, client);
+            var clientDAL = MappingService.MappingForDALEntity(clientService, client);
             clientService.Add(clientDAL);
             SaveChangesWithException(clientService, "клиента");
 
@@ -227,9 +170,22 @@ namespace Task_4
             var product = new BLL.Product();
             product.Id = Guid.Parse("89a5c4a4-6d02-412f-bb58-55a09f8afc7d");
             //AutoMapper DAL
-            var productDAL = MappingForDALEntity(productService, product);
+            var productDAL = MappingService.MappingForDALEntity(productService, product);
             productService.Add(productDAL);
             SaveChangesWithException(productService, "продукта");
         }
+
+        static void SaveChangesWithException(IService service, string text)
+        {
+            try
+            {
+                service.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                MessageUtility.ShowErrorMessage(new Object(), "Ошибка при добавлении " + text + "! Возможно " + text.Remove(text.Length - 1, 1) + " уже существует");
+            }
+        }
+
     }
 }
