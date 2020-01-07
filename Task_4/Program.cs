@@ -39,55 +39,9 @@ namespace Task_4
                     sale.CreatedByUserId = adminGuid;
                     // sales.CreatedDateTime = DateTime.UtcNow;
                 });
-                     
-                //проверка менеджера
-                try
-                {
-                    var managerActive = managerService.Find(sales.First().CreatedByUserId);
-                    MessageUtility.ShowValidationMessage(new Object(), "Менеджер найден:" + managerActive.Name);
-                            
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"Exception Handler: {e}");
-                    MessageUtility.ShowErrorMessage(new Object(), "Данного менеджера нет в БД");
-                    throw new Exception("Данного менеджера нет в БД");
-                }
 
-                //проверка клиентов
-                try
-                {
-                    IEnumerable<Guid> clients = sales.Select(s => s.ClientId).ToList();
-                    bool check = clientService.Check(clients).Result;
-                    if (check == false)
-                    {
-                        MessageUtility.ShowErrorMessage(new Object(), "Одного или нескольких клиентов нет в БД");
-                        throw new Exception("Одного или нескольких клиентов нет в БД");
-                    }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"Exception Handler: {e}");
-                    MessageUtility.ShowErrorMessage(new Object(), "ERROR IN CLIENTS CHECKING");
-                }
-
-                //проверка продуктов
-                try
-                {
-                    IEnumerable<Guid> products = sales.Select(s => s.ProductId).ToList();
-                    bool check = productService.Check(products).Result;
-                    if (check == false)
-                    {
-                        MessageUtility.ShowErrorMessage(new Object(), "Одного или нескольких продуктов нет в БД");
-                        throw new Exception("Одного или нескольких продуктов нет в БД");
-                    }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"Exception Handler: {e}");
-                    MessageUtility.ShowErrorMessage(new Object(), "ERROR IN PRODUCTS CHECKING");
-                }
-
+                //Проверка данных, есть ли в БД
+                ValidateData(sales);
 
                 //запись в БД Sales
 
@@ -180,6 +134,57 @@ namespace Task_4
                 }
             }
             return false;
+        }
+
+        static void ValidateData(IEnumerable<Sales> sales)
+        {
+            //проверка менеджера
+            try
+            {
+                var managerActive = managerService.Find(sales.First().CreatedByUserId);
+                MessageUtility.ShowValidationMessage(new Object(), "Менеджер найден:" + managerActive.Name);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Exception Handler: {e}");
+                MessageUtility.ShowErrorMessage(new Object(), "Данного менеджера нет в БД");
+                throw new Exception("Данного менеджера нет в БД");
+            }
+
+            //проверка клиентов
+            try
+            {
+                IEnumerable<Guid> clients = sales.Select(s => s.ClientId).ToList();
+                bool check = clientService.Check(clients).Result;
+                if (check == false)
+                {
+                    MessageUtility.ShowErrorMessage(new Object(), "Одного или нескольких клиентов нет в БД");
+                    throw new Exception("Одного или нескольких клиентов нет в БД");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Exception Handler: {e}");
+                MessageUtility.ShowErrorMessage(new Object(), "ERROR IN CLIENTS CHECKING");
+            }
+
+            //проверка продуктов
+            try
+            {
+                IEnumerable<Guid> products = sales.Select(s => s.ProductId).ToList();
+                bool check = productService.Check(products).Result;
+                if (check == false)
+                {
+                    MessageUtility.ShowErrorMessage(new Object(), "Одного или нескольких продуктов нет в БД");
+                    throw new Exception("Одного или нескольких продуктов нет в БД");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Exception Handler: {e}");
+                MessageUtility.ShowErrorMessage(new Object(), "ERROR IN PRODUCTS CHECKING");
+            }
         }
 
         static void StartData()
