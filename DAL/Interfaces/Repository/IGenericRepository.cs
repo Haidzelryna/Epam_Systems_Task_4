@@ -10,6 +10,8 @@ namespace DAL.Repository
 
         T Find(Guid Id);
 
+        Task<T> FindAsync(Guid Id);
+
         void Add(T entity);
 
         void Add(IEnumerable<T> entity);

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using AutoMapper;
 using DAL.Repository;
+using System.Threading.Tasks;
+using BLL.Classes.Services;
 
 namespace BLL.Services
 {
@@ -9,6 +11,8 @@ namespace BLL.Services
     {
         private readonly IGenericRepository<DAL.Manager> _managerRepository;
         private readonly IMapper _mapper;
+
+        private static readonly SemaphoreLocker _locker = new SemaphoreLocker();
 
         public ManagerService(IMapper mapper)
         {
@@ -51,9 +55,14 @@ namespace BLL.Services
             _managerRepository.SaveChanges();
         }
 
-        public DAL.Manager Find(Guid managerId)
+        public async Task<DAL.Manager> FindAsync(Guid managerId)
         {
-            return _managerRepository.Find(managerId);
+            DAL.Manager result = new DAL.Manager();
+            await _locker.LockAsync(async () =>
+            {
+                result = await _managerRepository.FindAsync(managerId);
+            });
+            return result;
         }
     }
 }

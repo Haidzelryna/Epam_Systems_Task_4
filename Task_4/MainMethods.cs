@@ -126,12 +126,13 @@ namespace Task_4
             return false;
         }
 
-        internal static void ValidateData(IEnumerable<Sales> sales)
+        internal static async void ValidateData(IEnumerable<Sales> sales)
         {
             //проверка менеджера
             try
             {
-                var managerActive = managerService.Find(sales.First().CreatedByUserId);
+                var managerActiveTask = managerService.FindAsync(sales.First().CreatedByUserId);
+                var managerActive = await managerActiveTask;
                 MessageUtility.ShowValidationMessage(new Object(), "Менеджер найден:" + managerActive.Name);
             }
             catch (Exception e)
