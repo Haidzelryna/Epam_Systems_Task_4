@@ -26,12 +26,21 @@ namespace DAL.Repository
 
         public T Find(Guid Id)
         {
-            //rwl.AcquireReaderLock(50);
+            //T result;
+            //rwl.AcquireReaderLock(2000);
             lock (locker)
             {
                 return _context.Set<T>().Find(Id);
             }
-            //rwl.ReleaseReaderLock();
+            //try
+            //{
+            //    result = _context.Set<T>().Find(Id);
+            //}
+            // }
+            //finally
+            //{
+            //    rwl.ReleaseReaderLock();
+            //}
             //return result;
         }
 

@@ -16,6 +16,8 @@ namespace Task_4
 {
     internal static class MainMethods
     {
+        #region private static fields
+
         private const string ADMINID = "80AB7036-5D4A-11E6-9903-0050569977A1";
         private static Guid adminGuid = Guid.Parse(ADMINID);
 
@@ -29,6 +31,10 @@ namespace Task_4
         private static ManagerService managerService = new ManagerService(mapper);
         private static ClientService clientService = new ClientService(mapper);
         private static ProductService productService = new ProductService(mapper);
+
+        #endregion
+
+        #region static methods for Main
 
         internal static void watcherCreated()
         {
@@ -280,5 +286,7 @@ namespace Task_4
                 });
             }
         }
+
+        #endregion
     }
 }
