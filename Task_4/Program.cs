@@ -3,9 +3,9 @@ using System.Configuration;
 
 namespace Task_4
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {          
             MainMethods.watcherCreated();
 
