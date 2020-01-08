@@ -11,7 +11,6 @@ using System.Configuration;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using System.Diagnostics;
 
 namespace Task_4
 {
@@ -29,17 +28,28 @@ namespace Task_4
         private static ClientService  clientService  = new ClientService (mapper);
         private static ProductService productService = new ProductService(mapper);
 
-        private static string PATH; 
+        private static string PATH = ConfigurationSettings.AppSettings["file"]; 
 
         static void Main(string[] args)
         {
             adminGuid = Guid.Parse(ADMINID);
 
-            PATH = ConfigurationSettings.AppSettings["file"];
+            watcherCreated();
 
+            //Стартовые данные, заполняем БД
+            //StartData();
+
+            //Для работы с двумя уже существующими файлами из папки Task4\Files
+            //WorkWithSomeFiles();
+
+            Console.ReadLine();
+        }
+
+        static void watcherCreated()
+        {
             using (FileSystemWatcher watcher = new FileSystemWatcher())
             {
-                watcher.Path = System.IO.Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
+                watcher.Path = ConfigurationSettings.AppSettings["folder"];
 
                 // Watch for changes in LastAccess and LastWrite times, and
                 // the renaming of files or directories.
@@ -61,51 +71,29 @@ namespace Task_4
                 Console.WriteLine("Press 'q' to quit the sample.");
                 while (Console.Read() != 'q') ;
             }
-
-
-            //Стартовые данные, заполняем БД
-            //StartData();
-
-            //Проверка формата названия 1 файла
-            if (ValidateFileName("Ivanov_19112012"))
-            {
-                //обработка 1 файла
-                Task.Run(() =>
-                {
-                    using (StreamReader streamReader = new StreamReader(PATH, Encoding.Default))
-                    {
-                        byte[] bytes = streamReader.CurrentEncoding.GetBytes(streamReader.ReadToEnd());
-                        WorkWithFile(bytes);
-                    }
-                });
-            }
-
-            //Проверка формата названия 2 файла
-            if (ValidateFileName("Ivanov_07012020"))
-            {
-                //обработка 2 файла
-                Task.Run(() =>
-                {
-                    using (StreamReader streamReader = new StreamReader(PATH, Encoding.Default))
-                    {
-                        byte[] bytes = streamReader.CurrentEncoding.GetBytes(streamReader.ReadToEnd());
-                        WorkWithFile(bytes);
-                    }
-                });
-            }
-
-            Console.ReadLine();
         }
 
-
-
         // Define the event handlers.
-        private static void OnChanged(object source, FileSystemEventArgs e) =>
-            // Specify what is done when a file is changed, created, or deleted.
-            Console.WriteLine($"File: {e.FullPath} {e.ChangeType}");
-
-
-
+        static void OnChanged(object source, FileSystemEventArgs e) =>
+        //действия при добавлении нового файла
+        //обработка файла
+        Task.Run(() =>
+        {
+            using (StreamReader streamReader = new StreamReader(e.FullPath, Encoding.Default))
+            {
+                byte[] bytes = streamReader.CurrentEncoding.GetBytes(streamReader.ReadToEnd());
+                FileInfo fileInfo = new FileInfo(e.FullPath);
+                //Проверка формата названия 1 файла
+                if (ValidateFileName("Ivanov_19112012"))
+                {
+                    WorkWithFile(bytes);
+                }
+                else
+                {
+                    MessageUtility.ShowValidationMessage(new Object(), "Неверный формат файла!");
+                }
+            }
+        });
 
         static void WorkWithFile(Byte[] file)
         {
@@ -274,6 +262,37 @@ namespace Task_4
             catch (Exception ex)
             {
                 MessageUtility.ShowErrorMessage(new Object(), "Ошибка при добавлении " + text + "! Возможно " + text.Remove(text.Length - 1, 1) + " уже существует");
+            }
+        }
+
+        static void WorkWithSomeFiles()
+        {
+            //Проверка формата названия 1 файла
+            if (ValidateFileName("Ivanov_19112012"))
+            {
+                //обработка 1 файла
+                Task.Run(() =>
+                {
+                    using (StreamReader streamReader = new StreamReader(PATH, Encoding.Default))
+                    {
+                        byte[] bytes = streamReader.CurrentEncoding.GetBytes(streamReader.ReadToEnd());
+                        WorkWithFile(bytes);
+                    }
+                });
+            }
+
+            //Проверка формата названия 2 файла
+            if (ValidateFileName("Ivanov_07012020"))
+            {
+                //обработка 2 файла
+                Task.Run(() =>
+                {
+                    using (StreamReader streamReader = new StreamReader(PATH, Encoding.Default))
+                    {
+                        byte[] bytes = streamReader.CurrentEncoding.GetBytes(streamReader.ReadToEnd());
+                        WorkWithFile(bytes);
+                    }
+                });
             }
         }
     }
