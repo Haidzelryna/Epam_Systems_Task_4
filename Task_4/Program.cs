@@ -11,6 +11,7 @@ using System.Configuration;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Task_4
 {
@@ -28,9 +29,39 @@ namespace Task_4
         private static ClientService  clientService  = new ClientService (mapper);
         private static ProductService productService = new ProductService(mapper);
 
+        private static string PATH; 
+
         static void Main(string[] args)
         {
             adminGuid = Guid.Parse(ADMINID);
+
+            PATH = ConfigurationSettings.AppSettings["file"];
+
+            using (FileSystemWatcher watcher = new FileSystemWatcher())
+            {
+                watcher.Path = System.IO.Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
+
+                // Watch for changes in LastAccess and LastWrite times, and
+                // the renaming of files or directories.
+                watcher.NotifyFilter = NotifyFilters.LastAccess
+                                     | NotifyFilters.LastWrite
+                                     | NotifyFilters.FileName
+                                     | NotifyFilters.DirectoryName;
+
+                // Only watch text files.
+                watcher.Filter = "*.csv";
+
+                // Add event handlers.
+                watcher.Created += OnChanged;
+
+                // Begin watching.
+                watcher.EnableRaisingEvents = true;
+
+                // Wait for the user to quit the program.
+                Console.WriteLine("Press 'q' to quit the sample.");
+                while (Console.Read() != 'q') ;
+            }
+
 
             //Стартовые данные, заполняем БД
             //StartData();
@@ -41,7 +72,7 @@ namespace Task_4
                 //обработка 1 файла
                 Task.Run(() =>
                 {
-                    using (StreamReader streamReader = new StreamReader(ConfigurationSettings.AppSettings["file"], Encoding.Default))
+                    using (StreamReader streamReader = new StreamReader(PATH, Encoding.Default))
                     {
                         byte[] bytes = streamReader.CurrentEncoding.GetBytes(streamReader.ReadToEnd());
                         WorkWithFile(bytes);
@@ -55,7 +86,7 @@ namespace Task_4
                 //обработка 2 файла
                 Task.Run(() =>
                 {
-                    using (StreamReader streamReader = new StreamReader(ConfigurationSettings.AppSettings["file"], Encoding.Default))
+                    using (StreamReader streamReader = new StreamReader(PATH, Encoding.Default))
                     {
                         byte[] bytes = streamReader.CurrentEncoding.GetBytes(streamReader.ReadToEnd());
                         WorkWithFile(bytes);
@@ -65,6 +96,16 @@ namespace Task_4
 
             Console.ReadLine();
         }
+
+
+
+        // Define the event handlers.
+        private static void OnChanged(object source, FileSystemEventArgs e) =>
+            // Specify what is done when a file is changed, created, or deleted.
+            Console.WriteLine($"File: {e.FullPath} {e.ChangeType}");
+
+
+
 
         static void WorkWithFile(Byte[] file)
         {

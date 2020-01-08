@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+//using System.Threading;
 using System.Threading.Tasks;
 
 namespace DAL.Repository
@@ -9,14 +10,13 @@ namespace DAL.Repository
     {
         private DbContext _context;
 
+        //static ReaderWriterLock rwl = new ReaderWriterLock();
+
         static object locker = new object();
 
         public GenericRepository()
         {
-            lock (locker)
-            {
-                _context = new SalesEntities();
-            }
+            _context = new SalesEntities();
         }
 
         public virtual async Task<IEnumerable<T>> GetAllAsync()
@@ -26,10 +26,13 @@ namespace DAL.Repository
 
         public T Find(Guid Id)
         {
+            //rwl.AcquireReaderLock(50);
             lock (locker)
             {
                 return _context.Set<T>().Find(Id);
             }
+            //rwl.ReleaseReaderLock();
+            //return result;
         }
 
         public void Add(T entity)
