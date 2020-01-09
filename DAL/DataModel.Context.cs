@@ -16,13 +16,13 @@ namespace DAL
     public partial class SalesEntities : DbContext
     {
         public SalesEntities()
-            : base("name=SalesEntities")
+            : base("SalesEntities")
         {
+            Database.CreateIfNotExists();
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            throw new UnintentionalCodeFirstException();
+        {           
         }
     
         public virtual DbSet<Client> Client { get; set; }

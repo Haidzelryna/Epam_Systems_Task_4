@@ -10,7 +10,7 @@ namespace Task_4
             //MainMethods.watcherCreated();
 
             //Стартовые данные, заполняем БД
-            //MainMethods.StartData();
+            MainMethods.StartData();
 
             //Для работы с двумя уже существующими файлами из папки Task4\Files
             MainMethods.WorkWithSomeFiles();

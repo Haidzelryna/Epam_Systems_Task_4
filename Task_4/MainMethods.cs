@@ -116,6 +116,9 @@ namespace Task_4
             SaleService saleService = new SaleService(mapper);
             var saleDAL = MappingService.MappingForDALEntities<DAL.Sale, BLL.Sale>(saleService, saleBLL);
 
+            //найти клиентов и продукты их ID и сопоставить, если нет, создать новые ID
+
+
             //запись в БД sales из файла
             saleService.Add(saleDAL);
             SaveChangesWithException(saleService, "заказа");
@@ -136,19 +139,19 @@ namespace Task_4
 
         internal static async void ValidateData(IEnumerable<Sales> sales)
         {
-            //проверка менеджера
-            try
-            {
-                var managerActiveTask = managerService.FindAsync(sales.First().CreatedByUserId);
-                var managerActive = await managerActiveTask;
-                MessageUtility.ShowValidationMessage(new Object(), "Менеджер найден:" + managerActive.Name);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Exception Handler: {e}");
-                MessageUtility.ShowErrorMessage(new Object(), "Данного менеджера нет в БД");
-                throw new Exception("Данного менеджера нет в БД");
-            }
+            ////проверка менеджера
+            //try
+            //{
+            //    var managerActiveTask = managerService.FindAsync(sales.First().CreatedByUserId);
+            //    var managerActive = await managerActiveTask;
+            //    MessageUtility.ShowValidationMessage(new Object(), "Менеджер найден:" + managerActive.Name);
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine($"Exception Handler: {e}");
+            //    MessageUtility.ShowErrorMessage(new Object(), "Данного менеджера нет в БД");
+            //    throw new Exception("Данного менеджера нет в БД");
+            //}
 
             ////проверка клиентов
             //try
