@@ -92,7 +92,7 @@ namespace Task_4
             IEnumerable<Sales> sales = ParseCsv.ParseResource<Sales>(file, sale =>
             {
                 sale.CreatedByUserId = adminGuid;
-                // sales.CreatedDateTime = DateTime.UtcNow;
+                sale.CreatedDateTime = DateTime.UtcNow;
             });
 
             //Проверка данных, есть ли в БД
@@ -117,11 +117,22 @@ namespace Task_4
             var saleDAL = MappingService.MappingForDALEntities<DAL.Sale, BLL.Sale>(saleService, saleBLL);
 
             //найти клиентов и продукты их ID и сопоставить, если нет, создать новые ID
-            //clientService.Find
+            saleDAL = NameToIdClient(saleDAL).Result;
+            saleDAL = NameToIdProduct(saleDAL).Result;
 
             //запись в БД sales из файла
             saleService.Add(saleDAL);
             SaveChangesWithException(saleService, "заказа");
+        }
+
+        internal static async Task<IEnumerable<DAL.Sale>> NameToIdClient(IEnumerable<DAL.Sale> sales)
+        {
+            return clientService.CheckNameId(sales).Result;
+        }
+
+        internal static async Task<IEnumerable<DAL.Sale>> NameToIdProduct(IEnumerable<DAL.Sale> sales)
+        {
+            return productService.CheckNameId(sales).Result;
         }
 
         internal static bool ValidateFileName(string fileName)
@@ -153,39 +164,39 @@ namespace Task_4
             //    throw new Exception("Данного менеджера нет в БД");
             //}
 
-            ////проверка клиентов
-            //try
-            //{
-            //    IEnumerable<Guid> clients = sales.Select(s => s.ClientId).ToList();
-            //    bool check = clientService.Check(clients).Result;
-            //    if (check == false)
-            //    {
-            //        MessageUtility.ShowErrorMessage(new Object(), "Одного или нескольких клиентов нет в БД");
-            //        throw new Exception("Одного или нескольких клиентов нет в БД");
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine($"Exception Handler: {e}");
-            //    MessageUtility.ShowErrorMessage(new Object(), "ERROR IN CLIENTS CHECKING");
-            //}
+            //проверка клиентов
+            try
+            {
+                var clients = sales.Select(s => s.ClientName).ToList();
+                bool check = clientService.Check(clients).Result;
+                if (check == false)
+                {
+                    MessageUtility.ShowErrorMessage(new Object(), "Одного или нескольких клиентов нет в БД");
+                    throw new Exception("Одного или нескольких клиентов нет в БД");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Exception Handler: {e}");
+                MessageUtility.ShowErrorMessage(new Object(), "ERROR IN CLIENTS CHECKING");
+            }
 
-            ////проверка продуктов
-            //try
-            //{
-            //    IEnumerable<Guid> products = sales.Select(s => s.ProductId).ToList();
-            //    bool check = productService.Check(products).Result;
-            //    if (check == false)
-            //    {
-            //        MessageUtility.ShowErrorMessage(new Object(), "Одного или нескольких продуктов нет в БД");
-            //        throw new Exception("Одного или нескольких продуктов нет в БД");
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine($"Exception Handler: {e}");
-            //    MessageUtility.ShowErrorMessage(new Object(), "ERROR IN PRODUCTS CHECKING");
-            //}
+            //проверка продуктов
+            try
+            {
+                var products = sales.Select(s => s.ProductName).ToList();
+                bool check = productService.Check(products).Result;
+                if (check == false)
+                {
+                    MessageUtility.ShowErrorMessage(new Object(), "Одного или нескольких продуктов нет в БД");
+                    throw new Exception("Одного или нескольких продуктов нет в БД");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Exception Handler: {e}");
+                MessageUtility.ShowErrorMessage(new Object(), "ERROR IN PRODUCTS CHECKING");
+            }
         }
 
         internal static void StartData()
@@ -236,6 +247,7 @@ namespace Task_4
             var client = new BLL.Client();
             client.Id = Guid.Parse("6acb9fb3-9213-49cd-abda-f9785a658d22");
             client.ContactId = contact.Id;
+            client.Name = "Haidzel Iryna Ivanovna";
             //AutoMapper DAL
             var clientDAL = MappingService.MappingForDALEntity(clientService, client);
             clientService.Add(clientDAL);
@@ -250,6 +262,7 @@ namespace Task_4
             //SaveChangesWithException(productService, "продукта");
             var product = new BLL.Product();
             product.Id = Guid.Parse("89a5c4a4-6d02-412f-bb58-55a09f8afc22");
+            product.Name = "boots";
             //AutoMapper DAL
             var productDAL = MappingService.MappingForDALEntity(productService, product);
             productService.Add(productDAL);

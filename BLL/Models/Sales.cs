@@ -13,5 +13,7 @@ namespace BLL
         public DateTime Date { get; set; }
 
         public Guid CreatedByUserId { get; set; }
+
+        public DateTime CreatedDateTime { get; set; }
     }
 }

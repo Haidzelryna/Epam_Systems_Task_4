@@ -40,16 +40,15 @@ namespace BLL.Services
             {
                 result = await _clientRepository.GetAllAsync();
             });
-
             return result;
         }
 
-        public async Task<bool> Check(IEnumerable<Guid> clientsCheck)
+        public async Task<bool> Check(IEnumerable<string> clientsCheck)
         {
             IEnumerable<DAL.Client> clients = await GetAll();
-            foreach (Guid clientId in clientsCheck)
+            foreach (string clientName in clientsCheck)
             {
-                if (clients.Select(c => c.Id).ToList().Contains(clientId) == false)
+                if (clients.Select(c => c.Name).ToList().Contains(clientName) == false)
                 {
                     return false;
                 };
@@ -58,17 +57,23 @@ namespace BLL.Services
         }
 
         //для сопоставления Id - name
-        public async Task<bool> CheckNameId(IEnumerable<string> clientsCheck)
+        public async Task<IEnumerable<DAL.Sale>> CheckNameId(IEnumerable<DAL.Sale> Entities)
         {
             IEnumerable<DAL.Client> clients = await GetAll();
-            foreach (string clientName in clientsCheck)
+            if (clients.Any())
             {
-                //if (clients.Select(c => c.Na).ToList().Contains(clientId) == false)
-                //{
-                //    return false;
-                //};
+                foreach (var sale in Entities)
+                {
+                    var clients1 = clients.Where(c => c.Name == sale.ClientName);
+                    var i = clients1.Where(x => x != null).Select(c => c.Id);
+                    if (i.Count() > 0)
+                    {
+                        var idClient = i.Where(x => x != null).First();
+                        sale.ClientId = idClient;
+                    }
+                }
             }
-            return true;
+            return Entities;
         }
 
         public void Remove(DAL.Client Entity)
