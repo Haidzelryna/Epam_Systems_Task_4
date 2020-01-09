@@ -8,6 +8,8 @@ namespace BLL.Mapper
         {
             mapperCfg.CreateMap<BLL.Sales, BLL.Sale>();
             mapperCfg.CreateMap<BLL.Sale, DAL.Sale>();
+                //.ForMember("Name", opt => opt.MapFrom(c => c.FirstName + " " + c.LastName))
+                //.ForMember("Email", opt => opt.MapFrom(src => src.Login)));
             mapperCfg.CreateMap<BLL.Contact, DAL.Contact>();
             mapperCfg.CreateMap<BLL.Manager, DAL.Manager>();
             mapperCfg.CreateMap<BLL.Client, DAL.Client>();

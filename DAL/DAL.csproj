@@ -58,13 +58,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\BaseData\BaseEntity.cs" />
     <Compile Include="Client.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Contact.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Manager.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BaseData\BaseEntity.cs" />
     <Compile Include="DataModel.Context.cs">
       <DependentUpon>DataModel.Context.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -82,9 +85,6 @@
     </Compile>
     <Compile Include="Models\BaseData\Entity.cs" />
     <Compile Include="Interfaces\Repository\IGenericRepository.cs" />
-    <Compile Include="Manager.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Product.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>

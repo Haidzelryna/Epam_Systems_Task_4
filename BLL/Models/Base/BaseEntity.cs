@@ -14,12 +14,5 @@ namespace BLL
 
         [Required]
         public DateTime? CreatedDateTime { get; set; }
-
-        public Guid? UpdatedByUserId { get; set; }
-
-        [ForeignKey(nameof(UpdatedByUserId))]
-        public virtual Manager UpdatedByUser { get; set; }
-
-        public DateTime? UpdatedDateTime { get; set; }
     }
 }

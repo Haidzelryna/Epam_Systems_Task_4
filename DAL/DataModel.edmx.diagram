@@ -13,8 +13,7 @@
         <AssociationConnector Association="SalesModel.FK_Client_Contact" ManuallyRouted="false" />
         <AssociationConnector Association="SalesModel.FK_Sale_Client" ManuallyRouted="false" />
         <AssociationConnector Association="SalesModel.FK_Manager_Contact" ManuallyRouted="false" />
-        <AssociationConnector Association="SalesModel.FK_Sale_Manager_Created" ManuallyRouted="false" />
-        <AssociationConnector Association="SalesModel.FK_Sale_Manager_Updated" ManuallyRouted="false" />
+        <AssociationConnector ManuallyRouted="false" Association="SalesModel.FK_Sale_Manager_Created" />
         <AssociationConnector Association="SalesModel.FK_Sale_Product" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>

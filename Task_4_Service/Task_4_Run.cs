@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
 using Task_4;
 //using System.Timers;
-using System.Diagnostics;
 
 namespace Task_4_Service
 {
@@ -31,7 +23,8 @@ namespace Task_4_Service
         {
             eventLog.WriteEntry("In OnStart.");
             string[] str = new string[3];
-            Task_4.Program.Main(str);
+            //Task_4.Program.Main(str);
+            MainMethods.watcherCreated();
         }
 
         protected override void OnStop()

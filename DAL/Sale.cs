@@ -21,12 +21,11 @@ namespace DAL
         public System.DateTime Date { get; set; }
         public System.Guid CreatedByUserId { get; set; }
         public System.DateTime CreatedDateTime { get; set; }
-        public Nullable<System.Guid> UpdatedByUserId { get; set; }
-        public Nullable<System.DateTime> UpdatedDateTime { get; set; }
+        public string ClientName { get; set; }
+        public string ProductName { get; set; }
     
         public virtual Client Client { get; set; }
         public virtual Manager Manager { get; set; }
-        public virtual Manager Manager1 { get; set; }
         public virtual Product Product { get; set; }
     }
 }

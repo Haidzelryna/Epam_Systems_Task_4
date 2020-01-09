@@ -17,8 +17,7 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Manager()
         {
-                this.Sale = new HashSet<Sale>();
-                this.Sale1 = new HashSet<Sale>();
+            this.Sale = new HashSet<Sale>();
         }
     
         public System.Guid Id { get; set; }
@@ -28,7 +27,5 @@ namespace DAL
         public virtual Contact Contact { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Sale> Sale { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Sale> Sale1 { get; set; }
     }
 }

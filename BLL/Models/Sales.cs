@@ -4,9 +4,9 @@ namespace BLL
 {
     public class Sales: Entity
     {
-        public Guid ClientId { get; set; }
+        public string ClientName { get; set; }
 
-        public Guid ProductId { get; set; }
+        public string ProductName { get; set; }
 
         public decimal Sum { get; set; }
 

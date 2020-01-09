@@ -47,10 +47,10 @@
           <Property Name="ProductId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Sum" Type="money" Nullable="false" />
           <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="ClientName" Type="nvarchar" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar" Nullable="false" />
           <Property Name="CreatedByUserId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
-          <Property Name="UpdatedByUserId" Type="uniqueidentifier" />
-          <Property Name="UpdatedDateTime" Type="datetime" />
         </EntityType>
         <Association Name="FK_Client_Contact">
           <End Role="Contact" Type="Self.Contact" Multiplicity="1" />
@@ -100,18 +100,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Sale_Manager_Updated">
-          <End Role="Manager" Type="Self.Manager" Multiplicity="0..1" />
-          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Manager">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Sale">
-              <PropertyRef Name="UpdatedByUserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Sale_Product">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
@@ -143,10 +131,6 @@
             <End Role="Sale" EntitySet="Sale" />
           </AssociationSet>
           <AssociationSet Name="FK_Sale_Manager_Created" Association="Self.FK_Sale_Manager_Created">
-            <End Role="Manager" EntitySet="Manager" />
-            <End Role="Sale" EntitySet="Sale" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Sale_Manager_Updated" Association="Self.FK_Sale_Manager_Updated">
             <End Role="Manager" EntitySet="Manager" />
             <End Role="Sale" EntitySet="Sale" />
           </AssociationSet>
@@ -191,7 +175,6 @@
           <Property Name="ContactId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Contact" Relationship="Self.FK_Manager_Contact" FromRole="Manager" ToRole="Contact" />
           <NavigationProperty Name="Sale" Relationship="Self.FK_Sale_Manager_Created" FromRole="Manager" ToRole="Sale" />
-          <NavigationProperty Name="Sale1" Relationship="Self.FK_Sale_Manager_Updated" FromRole="Manager" ToRole="Sale" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -212,12 +195,11 @@
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CreatedByUserId" Type="Guid" Nullable="false" />
           <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedByUserId" Type="Guid" />
-          <Property Name="UpdatedDateTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Client" Relationship="Self.FK_Sale_Client" FromRole="Sale" ToRole="Client" />
           <NavigationProperty Name="Manager" Relationship="Self.FK_Sale_Manager_Created" FromRole="Sale" ToRole="Manager" />
-          <NavigationProperty Name="Manager1" Relationship="Self.FK_Sale_Manager_Updated" FromRole="Sale" ToRole="Manager" />
           <NavigationProperty Name="Product" Relationship="Self.FK_Sale_Product" FromRole="Sale" ToRole="Product" />
+          <Property Name="ClientName" Type="String" Nullable="false" />
+          <Property Name="ProductName" Type="String" Nullable="false" />
         </EntityType>
         <Association Name="FK_Client_Contact">
           <End Role="Contact" Type="Self.Contact" Multiplicity="1" />
@@ -256,26 +238,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Sale_Manager_Created">
-          <End Role="Manager" Type="Self.Manager" Multiplicity="1" />
-          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
+          <End Type="Self.Manager" Multiplicity="1" Role="Manager" />
+          <End Type="Self.Sale" Multiplicity="*" Role="Sale" />
           <ReferentialConstraint>
             <Principal Role="Manager">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Sale">
               <PropertyRef Name="CreatedByUserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Sale_Manager_Updated">
-          <End Role="Manager" Type="Self.Manager" Multiplicity="0..1" />
-          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Manager">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Sale">
-              <PropertyRef Name="UpdatedByUserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -310,12 +280,8 @@
             <End Role="Manager" EntitySet="Manager" />
           </AssociationSet>
           <AssociationSet Name="FK_Sale_Manager_Created" Association="Self.FK_Sale_Manager_Created">
-            <End Role="Manager" EntitySet="Manager" />
-            <End Role="Sale" EntitySet="Sale" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Sale_Manager_Updated" Association="Self.FK_Sale_Manager_Updated">
-            <End Role="Manager" EntitySet="Manager" />
-            <End Role="Sale" EntitySet="Sale" />
+            <End EntitySet="Manager" Role="Manager" />
+            <End EntitySet="Sale" Role="Sale" />
           </AssociationSet>
           <AssociationSet Name="FK_Sale_Product" Association="Self.FK_Sale_Product">
             <End Role="Product" EntitySet="Product" />
@@ -373,10 +339,10 @@
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="Sum" ColumnName="Sum" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
                 <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
-                <ScalarProperty Name="UpdatedByUserId" ColumnName="UpdatedByUserId" />
-                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Task_4
 {
-    internal static class MainMethods
+    public static class MainMethods
     {
         #region private static fields
 
@@ -29,14 +29,14 @@ namespace Task_4
 
         private static ContactService contactService = new ContactService(mapper);
         private static ManagerService managerService = new ManagerService(mapper);
-        private static ClientService clientService = new ClientService(mapper);
+        private static ClientService  clientService  = new ClientService (mapper);
         private static ProductService productService = new ProductService(mapper);
 
         #endregion
 
         #region static methods for Main
 
-        internal static void watcherCreated()
+        public static void watcherCreated()
         {
             using (FileSystemWatcher watcher = new FileSystemWatcher())
             {
@@ -59,7 +59,7 @@ namespace Task_4
                 watcher.EnableRaisingEvents = true;
 
                 // Wait for the user to quit the program.
-                Console.WriteLine("Press 'q' to quit the sample.");
+                Console.WriteLine("Press 'q' to quit.");
                 while (Console.Read() != 'q') ;
             }
         }
@@ -75,7 +75,7 @@ namespace Task_4
                 byte[] bytes = streamReader.CurrentEncoding.GetBytes(streamReader.ReadToEnd());
                 FileInfo fileInfo = new FileInfo(e.FullPath);
                 //Проверка формата названия 1 файла
-                if (ValidateFileName("Ivanov_19112012"))
+                if (ValidateFileName("Ivanov_08012020"))
                 {
                     WorkWithFile(bytes);
                 }
@@ -103,6 +103,14 @@ namespace Task_4
             //3.AutoMapper BLL
             SalesService salesService = new SalesService(mapper);
             var saleBLL = MappingService.MappingForBLLEntities<BLL.Sale, BLL.Sales>(salesService, sales);
+
+            //находим клиентов и продукты по Name, берем ID-шники
+
+
+            //пример маппинга // сопоставление
+            //var users =
+            //    Mapper.Map<IEnumerable<User>, List<IndexUserViewModel>>(repo.GetAll());
+
 
             //4.AutoMapper DAL
             SaleService saleService = new SaleService(mapper);
@@ -142,39 +150,39 @@ namespace Task_4
                 throw new Exception("Данного менеджера нет в БД");
             }
 
-            //проверка клиентов
-            try
-            {
-                IEnumerable<Guid> clients = sales.Select(s => s.ClientId).ToList();
-                bool check = clientService.Check(clients).Result;
-                if (check == false)
-                {
-                    MessageUtility.ShowErrorMessage(new Object(), "Одного или нескольких клиентов нет в БД");
-                    throw new Exception("Одного или нескольких клиентов нет в БД");
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Exception Handler: {e}");
-                MessageUtility.ShowErrorMessage(new Object(), "ERROR IN CLIENTS CHECKING");
-            }
+            ////проверка клиентов
+            //try
+            //{
+            //    IEnumerable<Guid> clients = sales.Select(s => s.ClientId).ToList();
+            //    bool check = clientService.Check(clients).Result;
+            //    if (check == false)
+            //    {
+            //        MessageUtility.ShowErrorMessage(new Object(), "Одного или нескольких клиентов нет в БД");
+            //        throw new Exception("Одного или нескольких клиентов нет в БД");
+            //    }
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine($"Exception Handler: {e}");
+            //    MessageUtility.ShowErrorMessage(new Object(), "ERROR IN CLIENTS CHECKING");
+            //}
 
-            //проверка продуктов
-            try
-            {
-                IEnumerable<Guid> products = sales.Select(s => s.ProductId).ToList();
-                bool check = productService.Check(products).Result;
-                if (check == false)
-                {
-                    MessageUtility.ShowErrorMessage(new Object(), "Одного или нескольких продуктов нет в БД");
-                    throw new Exception("Одного или нескольких продуктов нет в БД");
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Exception Handler: {e}");
-                MessageUtility.ShowErrorMessage(new Object(), "ERROR IN PRODUCTS CHECKING");
-            }
+            ////проверка продуктов
+            //try
+            //{
+            //    IEnumerable<Guid> products = sales.Select(s => s.ProductId).ToList();
+            //    bool check = productService.Check(products).Result;
+            //    if (check == false)
+            //    {
+            //        MessageUtility.ShowErrorMessage(new Object(), "Одного или нескольких продуктов нет в БД");
+            //        throw new Exception("Одного или нескольких продуктов нет в БД");
+            //    }
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine($"Exception Handler: {e}");
+            //    MessageUtility.ShowErrorMessage(new Object(), "ERROR IN PRODUCTS CHECKING");
+            //}
         }
 
         internal static void StartData()
@@ -260,7 +268,7 @@ namespace Task_4
         internal static void WorkWithSomeFiles()
         {
             //Проверка формата названия 1 файла
-            if (ValidateFileName("Ivanov_19112012"))
+            if (ValidateFileName("Ivanov_08012020"))
             {
                 //обработка 1 файла
                 Task.Run(() =>
@@ -273,19 +281,19 @@ namespace Task_4
                 });
             }
 
-            //Проверка формата названия 2 файла
-            if (ValidateFileName("Ivanov_07012020"))
-            {
-                //обработка 2 файла
-                Task.Run(() =>
-                {
-                    using (StreamReader streamReader = new StreamReader(PATH, Encoding.Default))
-                    {
-                        byte[] bytes = streamReader.CurrentEncoding.GetBytes(streamReader.ReadToEnd());
-                        WorkWithFile(bytes);
-                    }
-                });
-            }
+            ////Проверка формата названия 2 файла
+            //if (ValidateFileName("Ivanov_07012020"))
+            //{
+            //    //обработка 2 файла
+            //    Task.Run(() =>
+            //    {
+            //        using (StreamReader streamReader = new StreamReader(PATH, Encoding.Default))
+            //        {
+            //            byte[] bytes = streamReader.CurrentEncoding.GetBytes(streamReader.ReadToEnd());
+            //            WorkWithFile(bytes);
+            //        }
+            //    });
+            //}
         }
 
         #endregion
