@@ -229,7 +229,8 @@ namespace Task_4
             //managerService.Add(managerDAL);
             //SaveChangesWithException(managerService, "менеджера");
             var manager = new BLL.Manager();
-            manager.Id = Guid.Parse("80AB7036-5D4A-11E6-9903-005056997722");
+            //manager.Id = Guid.Parse("80AB7036-5D4A-11E6-9903-005056997722");
+            manager.Id = Guid.Parse("80AB7036-5D4A-11E6-9903-0050569977A1");
             manager.ContactId = contact.Id;
             //AutoMapper DAL
             var managerDAL = MappingService.MappingForDALEntity(managerService, manager);
