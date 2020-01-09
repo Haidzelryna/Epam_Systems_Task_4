@@ -22,6 +22,7 @@ namespace DAL
     
         public System.Guid Id { get; set; }
         public System.Guid ContactId { get; set; }
+        public string Name { get; set; }
     
         public virtual Contact Contact { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

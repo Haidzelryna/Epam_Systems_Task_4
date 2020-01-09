@@ -117,7 +117,7 @@ namespace Task_4
             var saleDAL = MappingService.MappingForDALEntities<DAL.Sale, BLL.Sale>(saleService, saleBLL);
 
             //найти клиентов и продукты их ID и сопоставить, если нет, создать новые ID
-
+            //clientService.Find
 
             //запись в БД sales из файла
             saleService.Add(saleDAL);

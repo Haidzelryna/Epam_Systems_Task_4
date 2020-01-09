@@ -57,6 +57,20 @@ namespace BLL.Services
             return true;
         }
 
+        //для сопоставления Id - name
+        public async Task<bool> CheckNameId(IEnumerable<string> clientsCheck)
+        {
+            IEnumerable<DAL.Client> clients = await GetAll();
+            foreach (string clientName in clientsCheck)
+            {
+                //if (clients.Select(c => c.Na).ToList().Contains(clientId) == false)
+                //{
+                //    return false;
+                //};
+            }
+            return true;
+        }
+
         public void Remove(DAL.Client Entity)
         {
             _clientRepository.Delete(Entity);

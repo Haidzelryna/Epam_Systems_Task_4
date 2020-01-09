@@ -11,6 +11,7 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ContactId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" />
         </EntityType>
         <EntityType Name="Contact">
           <Key>
@@ -37,6 +38,7 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Price" Type="money" />
+          <Property Name="Name" Type="nvarchar" />
         </EntityType>
         <EntityType Name="Sale">
           <Key>
@@ -152,6 +154,7 @@
           <Property Name="ContactId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Contact" Relationship="Self.FK_Client_Contact" FromRole="Client" ToRole="Contact" />
           <NavigationProperty Name="Sale" Relationship="Self.FK_Sale_Client" FromRole="Client" ToRole="Sale" />
+          <Property Name="Name" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="Contact">
           <Key>
@@ -183,6 +186,7 @@
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
           <NavigationProperty Name="Sale" Relationship="Self.FK_Sale_Product" FromRole="Product" ToRole="Sale" />
+          <Property Name="Name" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="Sale">
           <Key>
@@ -299,6 +303,7 @@
               <MappingFragment StoreEntitySet="Client">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -328,6 +333,7 @@
               <MappingFragment StoreEntitySet="Product">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
