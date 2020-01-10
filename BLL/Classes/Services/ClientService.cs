@@ -68,31 +68,34 @@ namespace BLL.Services
             foreach (var sale in Entities)
             {
                 Guid idClient = new Guid();
-                if (clients.Any())
+                if (clients != null)
                 {
-                    var clients1 = clients.Where(c => c.Name == sale.ClientName);
-                    var i = clients1.Where(x => x != null).Select(c => c.Id);
-                    if (i.Count() > 0)
+                    if (clients.Any())
                     {
-                        idClient = i.Where(x => x != null).First();
-                    }
-                    //создать в БД
-                    else
-                    {
-                        //контакт
-                        DAL.Contact contact = new DAL.Contact();
-                        contact.Id = Guid.NewGuid();
-                        contact.LastName = sale.ClientName;
-                        _contactRepository.Add(contact);
-                        SaveChanges();
-                        //клиент
-                        DAL.Client client = new DAL.Client();
-                        client.Id = Guid.NewGuid();
-                        client.Name = sale.ClientName;
-                        client.ContactId = contact.Id;
-                        Add(client);
-                        SaveChanges();
-                        idClient = client.Id;
+                        var clients1 = clients.Where(c => c.Name == sale.ClientName);
+                        var i = clients1.Where(x => x != null).Select(c => c.Id);
+                        if (i.Count() > 0)
+                        {
+                            idClient = i.Where(x => x != null).First();
+                        }
+                        //создать в БД
+                        else
+                        {
+                            //контакт
+                            DAL.Contact contact = new DAL.Contact();
+                            contact.Id = Guid.NewGuid();
+                            contact.LastName = sale.ClientName;
+                            _contactRepository.Add(contact);
+                            //SaveChanges();
+                            //клиент
+                            DAL.Client client = new DAL.Client();
+                            client.Id = Guid.NewGuid();
+                            client.Name = sale.ClientName;
+                            client.ContactId = contact.Id;
+                            Add(client);
+                            //SaveChanges();
+                            idClient = client.Id;
+                        }
                     }
                 }
                 //создать в БД
@@ -103,14 +106,12 @@ namespace BLL.Services
                     contact.Id = Guid.NewGuid();
                     contact.LastName = sale.ClientName;
                     _contactRepository.Add(contact);
-                    _contactRepository.SaveChanges();
                     //клиент
                     DAL.Client client = new DAL.Client();
                     client.Id = Guid.NewGuid();
                     client.Name = sale.ClientName;
                     client.ContactId = contact.Id;
                     Add(client);
-                    SaveChanges();
                     idClient = client.Id;
                 }
 
@@ -133,6 +134,7 @@ namespace BLL.Services
 
         public void Add(DAL.Client Entity)
         {
+            //Task.WaitAll();
             _clientRepository.Add(Entity);
         }
 

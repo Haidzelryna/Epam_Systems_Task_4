@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
 using DAL.Repository;
+using System.Threading.Tasks;
 
 namespace BLL.Services
 {
@@ -47,7 +48,11 @@ namespace BLL.Services
 
         public void SaveChanges()
         {
-            _saleRepository.SaveChanges();
+            var banner = new Task(() => _saleRepository.SaveChanges());
+            Task.WaitAll();
+            Task.WhenAll(banner);
+
+            //_saleRepository.SaveChanges();
         }
     }
 }

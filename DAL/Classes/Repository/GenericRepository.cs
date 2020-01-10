@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
-using DAL;
+//using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repository
 {
     public class GenericRepository<T> : IGenericRepository<T> where T: Entity  
     {
-        private DbContext _context;
+        private SalesEntities _context;
 
         static object locker = new object();
 
@@ -19,7 +19,23 @@ namespace DAL.Repository
 
         public virtual async Task<IEnumerable<T>> GetAllAsync()
         {
-            return await _context.Set<T>().ToListAsync();
+            try
+            {
+
+                //return await _context.Set<T>().ToListAsync();
+
+                var banner = _context.Set<T>().ToListAsync();
+                Task.WaitAll();
+                await Task.WhenAll(banner);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return null;
+
         }
 
         public T Find(Guid Id)
@@ -37,13 +53,41 @@ namespace DAL.Repository
 
         public void Add(T entity)
         {
-           _context.Set<T>().Add(entity);
+
+            var banner = new Task(() => _context.Set<T>().Add(entity));
+            Task.WaitAll();
+            Task.WhenAll(banner);
+           
+            SaveChanges();
         }
 
         public void Add(IEnumerable<T> entity)
         {
-            _context.Set<T>().AddRange(entity);
+            //_context.Set<T>().AddRange(entity);
+
+            var banner = new Task(() => _context.Set<T>().AddRange(entity));
+            Task.WaitAll();
+            Task.WhenAll(banner);
+
+            SaveChanges();
         }
+
+        //public async Task AddRangeAsync(IEnumerable<T> entities)
+        //{
+        //    //var entityEntries = new List<EntityEntry>();
+        //    foreach (var item in entities)
+        //    {
+        //        var addedEntity = await _context[""].AddAsync(item);
+        //        entityEntries.Add(addedEntity);
+        //    }
+
+        //    await _weatherDbContext.SaveChangesAsync();
+
+        //    foreach (var item in entityEntries)
+        //    {
+        //        item.State = EntityState.Detached;
+        //    }
+        //}
 
         public void Delete(T entity)
         {
@@ -57,7 +101,11 @@ namespace DAL.Repository
 
         public void SaveChanges()
         {
-            _context.SaveChanges();
+            var banner = new Task(() => _context.SaveChanges());
+            Task.WaitAll();
+            Task.WhenAll(banner);
+
+            //_context.SaveChanges();
         }
     }
 }

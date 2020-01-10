@@ -63,7 +63,7 @@ namespace BLL.Services
 
             foreach (var sale in Entities)
             {
-                if (products.Any())
+                if (products!=null)
                 {
                     var products1 = products.Where(c => c.Name == sale.ProductName);
                     var i = products1.Where(x => x != null).Select(c => c.Id);
