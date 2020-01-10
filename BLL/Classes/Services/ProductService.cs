@@ -21,11 +21,11 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
-        //public ProductService(IMapper mapper, IGenericRepository<DAL.Product> productRepository)
-        //{
-        //    _productRepository = productRepository;
-        //    _mapper = mapper;
-        //}
+        public ProductService(IMapper mapper, IGenericRepository<DAL.Product> productRepository)
+        {
+            _productRepository = productRepository;
+            _mapper = mapper;
+        }
 
         public DAL.Product Get(BLL.Product Entity)
         {

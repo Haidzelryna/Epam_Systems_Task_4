@@ -15,11 +15,11 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
-        //public SaleService(IMapper mapper, IGenericRepository<DAL.Sale> saleRepository)
-        //{
-        //    _saleRepository = saleRepository;
-        //    _mapper = mapper;
-        //}
+        public SaleService(IMapper mapper, IGenericRepository<DAL.Sale> saleRepository)
+        {
+            _saleRepository = saleRepository;
+            _mapper = mapper;
+        }
 
         public DAL.Sale Get(Sale Entity)
         {

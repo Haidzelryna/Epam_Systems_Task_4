@@ -11,7 +11,7 @@ namespace Task_4
 
             MainMethods.watcherCreated();
 
-            // To work with two already existing files from the Task4 \ Files folder
+            // To work with two already existing files from the Task4\Files folder
             //MainMethods.WorkWithSomeFiles();
 
             Console.ReadLine();

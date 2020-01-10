@@ -20,11 +20,11 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
-        //public ManagerService(IMapper mapper, IGenericRepository<DAL.Manager> managerRepository)
-        //{
-        //    _managerRepository = managerRepository;
-        //    _mapper = mapper;
-        //}
+        public ManagerService(IMapper mapper, IGenericRepository<DAL.Manager> managerRepository)
+        {
+            _managerRepository = managerRepository;
+            _mapper = mapper;
+        }
 
         public DAL.Manager Get(BLL.Manager Entity)
         {

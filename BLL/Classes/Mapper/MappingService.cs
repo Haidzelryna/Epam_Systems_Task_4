@@ -7,13 +7,6 @@ namespace BLL.Classes.Mapper
 {
     public static class MappingService
     {
-        //public SalesEntities _context;
-
-        //public MappingService()
-        //{
-        //    _context = new SalesEntities();
-        //}
-
         public static IEnumerable<T> MappingForBLLEntities<T, V>(IService<T, V> service, IEnumerable<V> entities)
         {
             try

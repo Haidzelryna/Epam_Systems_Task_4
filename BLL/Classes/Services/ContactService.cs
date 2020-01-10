@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
-using DAL;
 using DAL.Repository;
-using BLL.Classes.Mapper;
 
 namespace BLL.Services
 {
@@ -17,11 +15,11 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
-        //public ContactService(IMapper mapper, IGenericRepository<DAL.Contact> contactRepository)
-        //{
-        //    _contactRepository = contactRepository;
-        //    _mapper = mapper;
-        //}
+        public ContactService(IMapper mapper, IGenericRepository<DAL.Contact> contactRepository)
+        {
+            _contactRepository = contactRepository;
+            _mapper = mapper;
+        }
 
         public DAL.Contact Get(BLL.Contact Entity)
         {

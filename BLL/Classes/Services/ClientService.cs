@@ -5,7 +5,6 @@ using DAL.Repository;
 using System.Threading.Tasks;
 using System.Linq;
 using BLL.Classes.Services;
-using BLL.Classes.Mapper;
 
 namespace BLL.Services
 {
@@ -24,11 +23,11 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
-        //public ClientService(IMapper mapper, IGenericRepository<DAL.Client> clientRepository)
-        //{
-        //    _clientRepository = clientRepository;
-        //    _mapper = mapper;
-        //}
+        public ClientService(IMapper mapper, IGenericRepository<DAL.Client> clientRepository)
+        {
+            _clientRepository = clientRepository;
+            _mapper = mapper;
+        }
 
         public DAL.Client Get(BLL.Client Entity)
         {
@@ -138,7 +137,6 @@ namespace BLL.Services
 
         public void Add(DAL.Client Entity)
         {
-            //Task.WaitAll();
             _clientRepository.Add(Entity);
             SaveChanges();
         }
