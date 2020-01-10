@@ -33,7 +33,6 @@ namespace DAL.Repository
             }
 
             return null;
-
         }
 
         public T Find(Guid Id)

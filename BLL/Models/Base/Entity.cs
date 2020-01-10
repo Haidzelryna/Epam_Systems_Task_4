@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace BLL
 {
@@ -13,8 +12,6 @@ namespace BLL
             Id = Guid.NewGuid();
         }
 
-        [Key]
-        [Required]
         public virtual Guid Id { get; set; }
     }
 }
