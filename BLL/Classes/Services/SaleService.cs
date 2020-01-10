@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
 using DAL.Repository;
-using System;
 
 namespace BLL.Services
 {
@@ -40,22 +39,8 @@ namespace BLL.Services
 
         public void Add(IEnumerable<DAL.Sale> Entities)
         {
-            try { 
             _saleRepository.Add(Entities);
-            }
-            catch (Exception ex)
-            {
-                var e = ex;
-            }
-            try
-            {
-                SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                var e = ex;
-            }
-
+            SaveChanges();
         }
 
         public void Remove(DAL.Sale Entity)
