@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 
 namespace Task_4
 {
@@ -7,12 +6,12 @@ namespace Task_4
     {
         public static void Main(string[] args)
         {
-            //Стартовые данные, заполняем БД
+            // Start data, fill the database
             //MainMethods.StartData();
 
             MainMethods.watcherCreated();
-        
-            //Для работы с двумя уже существующими файлами из папки Task4\Files
+
+            // To work with two already existing files from the Task4 \ Files folder
             //MainMethods.WorkWithSomeFiles();
 
             Console.ReadLine();
