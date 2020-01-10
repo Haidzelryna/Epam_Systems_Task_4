@@ -59,20 +59,63 @@ namespace BLL.Services
         //для сопоставления Id - name
         public async Task<IEnumerable<DAL.Sale>> CheckNameId(IEnumerable<DAL.Sale> Entities)
         {
+            var _contactRepository = new GenericRepository<DAL.Contact>();
+
             IEnumerable<DAL.Client> clients = await GetAll();
-            if (clients.Any())
+          
+            foreach (var sale in Entities)
             {
-                foreach (var sale in Entities)
+                Guid idClient = new Guid();
+                if (clients.Any())
                 {
                     var clients1 = clients.Where(c => c.Name == sale.ClientName);
                     var i = clients1.Where(x => x != null).Select(c => c.Id);
                     if (i.Count() > 0)
                     {
-                        var idClient = i.Where(x => x != null).First();
-                        sale.ClientId = idClient;
+                        idClient = i.Where(x => x != null).First();
+                    }
+                    //создать в БД
+                    else
+                    {
+                        //контакт
+                        DAL.Contact contact = new DAL.Contact();
+                        contact.Id = Guid.NewGuid();
+                        contact.FirstName = sale.ClientName;
+                        _contactRepository.Add(contact);
+                        SaveChanges();
+                        //клиент
+                        DAL.Client client = new DAL.Client();
+                        client.Id = Guid.NewGuid();
+                        client.Name = sale.ClientName;
+                        client.ContactId = contact.Id;
+                        Add(client);
+                        SaveChanges();
+                        idClient = client.Id;
                     }
                 }
+                //создать в БД
+                else
+                {
+                    //контакт
+                    DAL.Contact contact = new DAL.Contact();
+                    contact.Id = Guid.NewGuid();
+                    contact.FirstName = sale.ClientName;
+                    _contactRepository.Add(contact);
+                    SaveChanges();
+                    //клиент
+                    DAL.Client client = new DAL.Client();
+                    client.Id = Guid.NewGuid();
+                    client.Name = sale.ClientName;
+                    client.ContactId = contact.Id;
+                    Add(client);
+                    SaveChanges();
+                    idClient = client.Id;
+                }
+
+                sale.ClientId = idClient;
+
             }
+
             return Entities;
         }
 

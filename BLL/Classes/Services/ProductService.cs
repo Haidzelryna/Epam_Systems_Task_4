@@ -58,11 +58,13 @@ namespace BLL.Services
         public async Task<IEnumerable<DAL.Sale>> CheckNameId(IEnumerable<DAL.Sale> Entities)
         {
             IEnumerable<DAL.Product> products = await GetAll();
-            if (products.Any())
+          
+            Guid idProduct = new Guid();
+
+            foreach (var sale in Entities)
             {
-                foreach (var sale in Entities)
+                if (products.Any())
                 {
-                    Guid idProduct = new Guid();
                     var products1 = products.Where(c => c.Name == sale.ProductName);
                     var i = products1.Where(x => x != null).Select(c => c.Id);
                     if (i.Count() > 0)
@@ -72,16 +74,28 @@ namespace BLL.Services
                     //создать в БД
                     else
                     {
-                        DAL.Product prod = new DAL.Product();
-                        prod.Id = Guid.NewGuid();
-                        prod.Name = sale.ProductName;
-                        Add(prod);
+                        DAL.Product product = new DAL.Product();
+                        product.Id = Guid.NewGuid();
+                        product.Name = sale.ProductName;
+                        Add(product);
                         SaveChanges();
-                        idProduct = prod.Id;
+                        idProduct = product.Id;
                     }
-                    sale.ProductId = idProduct;
                 }
+                //создать в БД
+                else
+                {
+                    DAL.Product product = new DAL.Product();
+                    product.Id = Guid.NewGuid();
+                    product.Name = sale.ProductName;
+                    Add(product);
+                    SaveChanges();
+                    idProduct = product.Id;
+                }
+
+                sale.ProductId = idProduct;
             }
+
             return Entities;
         }
 

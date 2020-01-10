@@ -210,6 +210,7 @@ namespace Task_4
             //var contactDAL = MappingService.MappingForDALEntity(contactService, contact);
             //contactService.Add(contactDAL);
             //SaveChangesWithException(contactService, "контакта");
+
             var contact = new BLL.Contact();
             contact.Id = Guid.Parse("6acb9fb3-9213-49cd-abda-f9785a658d22");
             contact.FirstName = "Гайдель";
@@ -245,14 +246,15 @@ namespace Task_4
             //var clientDAL = MappingService.MappingForDALEntity(clientService, client);
             //clientService.Add(clientDAL);
             //SaveChangesWithException(clientService, "клиента");
-            var client = new BLL.Client();
-            client.Id = Guid.Parse("6acb9fb3-9213-49cd-abda-f9785a658d22");
-            client.ContactId = contact.Id;
-            client.Name = "Haidzel Iryna Ivanovna";
-            //AutoMapper DAL
-            var clientDAL = MappingService.MappingForDALEntity(clientService, client);
-            clientService.Add(clientDAL);
-            SaveChangesWithException(clientService, "клиента");
+
+            //var client = new BLL.Client();
+            //client.Id = Guid.Parse("6acb9fb3-9213-49cd-abda-f9785a658d22");
+            //client.ContactId = contact.Id;
+            //client.Name = "Haidzel Iryna Ivanovna";
+            ////AutoMapper DAL
+            //var clientDAL = MappingService.MappingForDALEntity(clientService, client);
+            //clientService.Add(clientDAL);
+            //SaveChangesWithException(clientService, "клиента");
 
             //добавим продукт
             //var product = new BLL.Product();
@@ -261,13 +263,14 @@ namespace Task_4
             //var productDAL = MappingService.MappingForDALEntity(productService, product);
             //productService.Add(productDAL);
             //SaveChangesWithException(productService, "продукта");
-            var product = new BLL.Product();
-            product.Id = Guid.Parse("89a5c4a4-6d02-412f-bb58-55a09f8afc22");
-            product.Name = "boots";
-            //AutoMapper DAL
-            var productDAL = MappingService.MappingForDALEntity(productService, product);
-            productService.Add(productDAL);
-            SaveChangesWithException(productService, "продукта");
+
+            //var product = new BLL.Product();
+            //product.Id = Guid.Parse("89a5c4a4-6d02-412f-bb58-55a09f8afc22");
+            //product.Name = "boots";
+            ////AutoMapper DAL
+            //var productDAL = MappingService.MappingForDALEntity(productService, product);
+            //productService.Add(productDAL);
+            //SaveChangesWithException(productService, "продукта");
         }
 
         internal static void SaveChangesWithException(IService service, string text)
