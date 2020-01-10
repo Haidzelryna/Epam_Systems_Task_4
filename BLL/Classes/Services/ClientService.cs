@@ -99,9 +99,9 @@ namespace BLL.Services
                     //контакт
                     DAL.Contact contact = new DAL.Contact();
                     contact.Id = Guid.NewGuid();
-                    contact.FirstName = sale.ClientName;
+                    contact.LastName = sale.ClientName;
                     _contactRepository.Add(contact);
-                    SaveChanges();
+                    _contactRepository.SaveChanges();
                     //клиент
                     DAL.Client client = new DAL.Client();
                     client.Id = Guid.NewGuid();
