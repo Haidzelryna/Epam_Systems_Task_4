@@ -5,6 +5,7 @@ using DAL.Repository;
 using System.Threading.Tasks;
 using System.Linq;
 using BLL.Classes.Services;
+using BLL.Classes.Mapper;
 
 namespace BLL.Services
 {
@@ -17,9 +18,9 @@ namespace BLL.Services
 
         static object locker = new object();
 
-        public ClientService(IMapper mapper)
+        public ClientService(IMapper mapper, IGenericRepository<DAL.Client> clientRepository)
         {
-            _clientRepository = new GenericRepository<DAL.Client>();
+            _clientRepository = clientRepository;
             _mapper = mapper;
         }
 
@@ -59,7 +60,8 @@ namespace BLL.Services
         //для сопоставления Id - name
         public async Task<IEnumerable<DAL.Sale>> CheckNameId(IEnumerable<DAL.Sale> Entities)
         {
-            var _contactRepository = new GenericRepository<DAL.Contact>();
+            var _mappingService = new MappingService();
+            var _contactRepository = new GenericRepository<DAL.Contact>(_mappingService._context);
 
             IEnumerable<DAL.Client> clients = await GetAll();
           

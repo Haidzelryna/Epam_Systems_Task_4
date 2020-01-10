@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using AutoMapper;
-using DAL;
 using DAL.Repository;
 
 namespace BLL.Services
@@ -14,9 +9,9 @@ namespace BLL.Services
         private readonly IGenericRepository<DAL.Sale> _saleRepository;
         private readonly IMapper _mapper;
 
-        public SaleService(IMapper mapper)
+        public SaleService(IMapper mapper, IGenericRepository<DAL.Sale> saleRepository)
         {
-            _saleRepository = new GenericRepository<DAL.Sale>(); ;
+            _saleRepository = saleRepository; 
             _mapper = mapper;
         }
 

@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using DAL.Repository;
+
 namespace DAL
 {
     using System;
@@ -15,6 +17,14 @@ namespace DAL
     
     public partial class SalesEntities : DbContext
     {
+        //мой код
+        public IGenericRepository<DAL.Contact> ContactRepository => new GenericRepository<DAL.Contact>(this);
+        public IGenericRepository<DAL.Client> ClientRepository => new GenericRepository<DAL.Client>(this);
+        public IGenericRepository<DAL.Manager> ManagerRepository => new GenericRepository<DAL.Manager>(this);
+        public IGenericRepository<DAL.Product> ProductRepository => new GenericRepository<DAL.Product>(this);
+        public IGenericRepository<DAL.Sale> SaleRepository => new GenericRepository<DAL.Sale>(this);
+        //
+
         public SalesEntities()
             : base("SalesEntities")
         {

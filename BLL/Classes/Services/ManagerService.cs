@@ -14,9 +14,9 @@ namespace BLL.Services
 
         private static readonly SemaphoreLocker _locker = new SemaphoreLocker();
 
-        public ManagerService(IMapper mapper)
+        public ManagerService(IMapper mapper, IGenericRepository<DAL.Manager> managerRepository)
         {
-            _managerRepository = new GenericRepository<DAL.Manager>();
+            _managerRepository = managerRepository;
             _mapper = mapper;
         }
 

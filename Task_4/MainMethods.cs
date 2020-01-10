@@ -11,6 +11,7 @@ using System.Configuration;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using BLL.Classes.Mapper;
 
 namespace Task_4
 {
@@ -23,14 +24,16 @@ namespace Task_4
 
         private static string PATH = ConfigurationSettings.AppSettings["file"];
 
-        private const string VALIDATEREGEX = @"\w_\d{8}$";
+        private const string VALIDATEREGEX = @"\w_\d{8}.csv$";
 
         private static IMapper mapper = BLL.Mapper.SetupMapping.SetupMapper();
 
-        private static ContactService contactService = new ContactService(mapper);
-        private static ManagerService managerService = new ManagerService(mapper);
-        private static ClientService  clientService  = new ClientService (mapper);
-        private static ProductService productService = new ProductService(mapper);
+        private static MappingService mappingService = new MappingService();
+
+        private static ContactService contactService = new ContactService(mapper, mappingService._context.ContactRepository);
+        private static ManagerService managerService = new ManagerService(mapper, mappingService._context.ManagerRepository);
+        private static ClientService  clientService  = new ClientService (mapper, mappingService._context.ClientRepository);
+        private static ProductService productService = new ProductService(mapper, mappingService._context.ProductRepository);
 
         #endregion
 
@@ -107,7 +110,7 @@ namespace Task_4
 
 
             //4.AutoMapper DAL
-            SaleService saleService = new SaleService(mapper);
+            SaleService saleService = new SaleService(mapper, mappingService._context.SaleRepository);
             var saleDAL = MappingService.MappingForDALEntities<DAL.Sale, BLL.Sale>(saleService, saleBLL);
 
             //найти клиентов и продукты их ID и сопоставить, если нет, создать новые ID

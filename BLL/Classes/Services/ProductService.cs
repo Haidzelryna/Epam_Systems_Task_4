@@ -15,9 +15,9 @@ namespace BLL.Services
 
         private static readonly SemaphoreLocker _locker = new SemaphoreLocker();
 
-        public ProductService(IMapper mapper)
+        public ProductService(IMapper mapper, IGenericRepository<DAL.Product> productRepository)
         {
-            _productRepository = new GenericRepository<DAL.Product>();
+            _productRepository = productRepository;
             _mapper = mapper;
         }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
+using DAL;
 
 namespace DAL.Repository
 {
@@ -11,9 +12,9 @@ namespace DAL.Repository
 
         static object locker = new object();
 
-        public GenericRepository()
+        public GenericRepository(SalesEntities salesDbContext)
         {
-            _context = new SalesEntities();
+            _context = salesDbContext;
         }
 
         public virtual async Task<IEnumerable<T>> GetAllAsync()

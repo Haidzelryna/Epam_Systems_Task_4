@@ -2,6 +2,7 @@
 using AutoMapper;
 using DAL;
 using DAL.Repository;
+using BLL.Classes.Mapper;
 
 namespace BLL.Services
 {
@@ -10,9 +11,9 @@ namespace BLL.Services
         private readonly IGenericRepository<DAL.Contact> _contactRepository;
         private readonly IMapper _mapper;
 
-        public ContactService(IMapper mapper)
+        public ContactService(IMapper mapper, IGenericRepository<DAL.Contact> contactRepository)
         {
-            _contactRepository = new GenericRepository<DAL.Contact>();
+            _contactRepository = contactRepository;
             _mapper = mapper;
         }
 
