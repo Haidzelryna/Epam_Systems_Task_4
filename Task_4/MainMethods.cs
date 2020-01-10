@@ -41,23 +41,18 @@ namespace Task_4
             using (FileSystemWatcher watcher = new FileSystemWatcher())
             {
                 watcher.Path = ConfigurationSettings.AppSettings["folder"];
-
                 // Watch for changes in LastAccess and LastWrite times, and
                 // the renaming of files or directories.
                 watcher.NotifyFilter = NotifyFilters.LastAccess
                                      | NotifyFilters.LastWrite
                                      | NotifyFilters.FileName
                                      | NotifyFilters.DirectoryName;
-
                 // Only watch text files.
                 watcher.Filter = "*.csv";
-
                 // Add event handlers.
                 watcher.Created += OnChanged;
-
                 // Begin watching.
                 watcher.EnableRaisingEvents = true;
-
                 // Wait for the user to quit the program.
                 Console.WriteLine("Press 'q' to quit.");
                 while (Console.Read() != 'q') ;
@@ -75,7 +70,7 @@ namespace Task_4
                 byte[] bytes = streamReader.CurrentEncoding.GetBytes(streamReader.ReadToEnd());
                 FileInfo fileInfo = new FileInfo(e.FullPath);
                 //Проверка формата названия 1 файла
-                if (ValidateFileName("Ivanov_08012020"))
+                if (ValidateFileName(fileInfo.Name))
                 {
                     WorkWithFile(bytes);
                     MessageUtility.ShowInformationMessage("OK");
@@ -96,16 +91,14 @@ namespace Task_4
                 sale.CreatedDateTime = DateTime.UtcNow;
             });
 
-            //Проверка данных, есть ли в БД
-            //ValidateData(sales);
+            //Проверка данных, есть ли в БД(менеджера)
+            ValidateData(sales);
 
             //запись в БД Sales
 
             //3.AutoMapper BLL
             SalesService salesService = new SalesService(mapper);
             var saleBLL = MappingService.MappingForBLLEntities<BLL.Sale, BLL.Sales>(salesService, sales);
-
-            //находим клиентов и продукты по Name, берем ID-шники
 
 
             //пример маппинга // сопоставление
@@ -118,22 +111,12 @@ namespace Task_4
             var saleDAL = MappingService.MappingForDALEntities<DAL.Sale, BLL.Sale>(saleService, saleBLL);
 
             //найти клиентов и продукты их ID и сопоставить, если нет, создать новые ID
-            saleDAL = NameToIdClient(saleDAL).Result;
-            saleDAL = NameToIdProduct(saleDAL).Result;
+            saleDAL = clientService.CheckNameId(saleDAL).Result;
+            saleDAL = productService.CheckNameId(saleDAL).Result;
 
             //запись в БД sales из файла
             saleService.Add(saleDAL);
             SaveChangesWithException(saleService, "заказа");
-        }
-
-        internal static async Task<IEnumerable<DAL.Sale>> NameToIdClient(IEnumerable<DAL.Sale> sales)
-        {
-            return clientService.CheckNameId(sales).Result;
-        }
-
-        internal static async Task<IEnumerable<DAL.Sale>> NameToIdProduct(IEnumerable<DAL.Sale> sales)
-        {
-            return productService.CheckNameId(sales).Result;
         }
 
         internal static bool ValidateFileName(string fileName)
@@ -151,53 +134,57 @@ namespace Task_4
 
         internal static async void ValidateData(IEnumerable<Sales> sales)
         {
-            ////проверка менеджера
+            //проверка менеджера
+            try
+            {
+                var managerActiveTask = managerService.FindAsync(sales.First().CreatedByUserId);
+                var managerActive = await managerActiveTask;
+                MessageUtility.ShowValidationMessage("Менеджер найден:" + managerActive.Name);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Exception Handler: {e}");
+                MessageUtility.ShowErrorMessage("Данного менеджера нет в БД");
+                throw new Exception("Данного менеджера нет в БД");
+            }
+
+            #region validate clients & products
+
+            ////проверка клиентов
             //try
             //{
-            //    var managerActiveTask = managerService.FindAsync(sales.First().CreatedByUserId);
-            //    var managerActive = await managerActiveTask;
-            //    MessageUtility.ShowValidationMessage(new Object(), "Менеджер найден:" + managerActive.Name);
+            //    var clients = sales.Select(s => s.ClientName).ToList();
+            //    bool check = clientService.Check(clients).Result;
+            //    if (check == false)
+            //    {
+            //        MessageUtility.ShowErrorMessage("Одного или нескольких клиентов нет в БД");
+            //        throw new Exception("Одного или нескольких клиентов нет в БД");
+            //    }
             //}
             //catch (Exception e)
             //{
             //    Console.WriteLine($"Exception Handler: {e}");
-            //    MessageUtility.ShowErrorMessage(new Object(), "Данного менеджера нет в БД");
-            //    throw new Exception("Данного менеджера нет в БД");
+            //    MessageUtility.ShowErrorMessage("ERROR IN CLIENTS CHECKING");
             //}
 
-            //проверка клиентов
-            try
-            {
-                var clients = sales.Select(s => s.ClientName).ToList();
-                bool check = clientService.Check(clients).Result;
-                if (check == false)
-                {
-                    MessageUtility.ShowErrorMessage("Одного или нескольких клиентов нет в БД");
-                    throw new Exception("Одного или нескольких клиентов нет в БД");
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Exception Handler: {e}");
-                MessageUtility.ShowErrorMessage("ERROR IN CLIENTS CHECKING");
-            }
+            ////проверка продуктов
+            //try
+            //{
+            //    var products = sales.Select(s => s.ProductName).ToList();
+            //    bool check = productService.Check(products).Result;
+            //    if (check == false)
+            //    {
+            //        MessageUtility.ShowErrorMessage("Одного или нескольких продуктов нет в БД");
+            //        throw new Exception("Одного или нескольких продуктов нет в БД");
+            //    }
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine($"Exception Handler: {e}");
+            //    MessageUtility.ShowErrorMessage("ERROR IN PRODUCTS CHECKING");
+            //}
 
-            //проверка продуктов
-            try
-            {
-                var products = sales.Select(s => s.ProductName).ToList();
-                bool check = productService.Check(products).Result;
-                if (check == false)
-                {
-                    MessageUtility.ShowErrorMessage("Одного или нескольких продуктов нет в БД");
-                    throw new Exception("Одного или нескольких продуктов нет в БД");
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Exception Handler: {e}");
-                MessageUtility.ShowErrorMessage("ERROR IN PRODUCTS CHECKING");
-            }
+            #endregion
         }
 
         internal static void StartData()
