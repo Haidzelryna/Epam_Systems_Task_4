@@ -62,13 +62,24 @@ namespace BLL.Services
             {
                 foreach (var sale in Entities)
                 {
+                    Guid idProduct = new Guid();
                     var products1 = products.Where(c => c.Name == sale.ProductName);
                     var i = products1.Where(x => x != null).Select(c => c.Id);
                     if (i.Count() > 0)
                     {
-                        var idProduct = i.Where(x => x != null).First();
-                        sale.ProductId = idProduct;
+                        idProduct = i.Where(x => x != null).First();
                     }
+                    //создать в БД
+                    else
+                    {
+                        DAL.Product prod = new DAL.Product();
+                        prod.Id = Guid.NewGuid();
+                        prod.Name = sale.ProductName;
+                        Add(prod);
+                        SaveChanges();
+                        idProduct = prod.Id;
+                    }
+                    sale.ProductId = idProduct;
                 }
             }
             return Entities;

@@ -96,7 +96,7 @@ namespace Task_4
             });
 
             //Проверка данных, есть ли в БД
-            ValidateData(sales);
+            //ValidateData(sales);
 
             //запись в БД Sales
 
