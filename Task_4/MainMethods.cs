@@ -61,15 +61,15 @@ namespace Task_4
 
         // Define the event handlers.
         internal static void OnChanged(object source, FileSystemEventArgs e) =>
-        //действия при добавлении нового файла
-        //обработка файла
+        // actions when adding a new file
+        // file processing
         Task.Run(() =>
         {
             using (StreamReader streamReader = new StreamReader(e.FullPath, Encoding.Default))
             {
                 byte[] bytes = streamReader.CurrentEncoding.GetBytes(streamReader.ReadToEnd());
                 FileInfo fileInfo = new FileInfo(e.FullPath);
-                //Проверка формата названия 1 файла
+                // Check the format of the file name 1
                 if (ValidateFileName(fileInfo.Name))
                 {
                     WorkWithFile(bytes);
@@ -77,7 +77,7 @@ namespace Task_4
                 }
                 else
                 {
-                    MessageUtility.ShowValidationMessage("Неверный формат файла!");
+                    MessageUtility.ShowValidationMessage("Invalid file format!");
                 }
             }
         });
@@ -91,10 +91,10 @@ namespace Task_4
                 sale.CreatedDateTime = DateTime.UtcNow;
             });
 
-            //Проверка данных, есть ли в БД(менеджера)
+            // Check data whether there is a database (manager)
             ValidateData(sales);
 
-            //запись в БД Sales
+            // write to the Sales database
 
             //3.AutoMapper BLL
             SalesService salesService = new SalesService(mapper);
@@ -104,11 +104,11 @@ namespace Task_4
             SaleService saleService = new SaleService(mapper);
             var saleDAL = MappingService.MappingForDALEntities<DAL.Sale, BLL.Sale>(saleService, saleBLL);
 
-            //найти клиентов и продукты их ID и сопоставить, если нет, создать новые ID
+            // find customers and products by their ID and, if not, create new IDs
             saleDAL = clientService.CheckNameId(saleDAL).Result;
             saleDAL = productService.CheckNameId(saleDAL).Result;
 
-            //запись в БД sales из файла
+            // write to the sales database from the file
             saleService.Add(saleDAL);
             //SaveChangesWithException(saleService, "заказа");
         }
@@ -128,23 +128,23 @@ namespace Task_4
 
         internal static async void ValidateData(IEnumerable<Sales> sales)
         {
-            //проверка менеджера
+            // manager check
             try
             {
                 var managerActiveTask = managerService.FindAsync(sales.First().CreatedByUserId);
                 var managerActive = await managerActiveTask;
-                MessageUtility.ShowInformationMessage("Менеджер найден:" + managerActive.Name);
+                MessageUtility.ShowInformationMessage("Manager found:" + managerActive.Name);
             }
             catch (Exception e)
             {
                 Console.WriteLine($"Exception Handler: {e}");
-                MessageUtility.ShowErrorMessage("Данного менеджера нет в БД");
-                throw new Exception("Данного менеджера нет в БД");
+                MessageUtility.ShowErrorMessage("This manager is not in the database");
+                throw new Exception("This manager is not in the database");
             }
 
             #region validate clients & products
 
-            ////проверка клиентов
+            //// customer check
             //try
             //{
             //    var clients = sales.Select(s => s.ClientName).ToList();
@@ -161,7 +161,7 @@ namespace Task_4
             //    MessageUtility.ShowErrorMessage("ERROR IN CLIENTS CHECKING");
             //}
 
-            ////проверка продуктов
+            //// check products
             //try
             //{
             //    var products = sales.Select(s => s.ProductName).ToList();
@@ -183,7 +183,7 @@ namespace Task_4
 
         internal static void StartData()
         {
-            //добавим контакт "6acb9fb3-9213-49cd-abda-f9785a658d12"
+            //add contact "6acb9fb3-9213-49cd-abda-f9785a658d12"
             //var contact = new BLL.Contact();
             //contact.Id = Guid.Parse("6acb9fb3-9213-49cd-abda-f9785a658d12");
             //contact.FirstName = "Гайдель";
@@ -202,7 +202,7 @@ namespace Task_4
             contactService.Add(contactDAL);
             SaveChangesWithException(contactService, "контакта");
 
-            //добавим менеджера "6acb9fb3-9213-49cd-abda-f9785a658d88"
+            //add manager "6acb9fb3-9213-49cd-abda-f9785a658d88"
             //80AB7036-5D4A-11E6-9903-0050569977A1
             //var manager = new BLL.Manager();
             //manager.Id = Guid.Parse("80AB7036-5D4A-11E6-9903-0050569977A1");
@@ -220,7 +220,7 @@ namespace Task_4
             managerService.Add(managerDAL);
             SaveChangesWithException(managerService, "менеджера");
 
-            //добавим клиента 6acb9fb3-9213-49cd-abda-f9785a658d55
+            //add client 6acb9fb3-9213-49cd-abda-f9785a658d55
             //var client = new BLL.Client();
             //client.Id = Guid.Parse("6acb9fb3-9213-49cd-abda-f9785a658d55");
             //client.ContactId = contact.Id;
@@ -238,7 +238,7 @@ namespace Task_4
             //clientService.Add(clientDAL);
             //SaveChangesWithException(clientService, "клиента");
 
-            //добавим продукт
+            //add product
             //var product = new BLL.Product();
             //product.Id = Guid.Parse("89a5c4a4-6d02-412f-bb58-55a09f8afc7d");
             ////AutoMapper DAL
@@ -263,7 +263,7 @@ namespace Task_4
             }
             catch (Exception ex)
             {
-                MessageUtility.ShowErrorMessage("Ошибка при добавлении " + text + "! Возможно " + text.Remove(text.Length - 1, 1) + " уже существует");
+                MessageUtility.ShowErrorMessage("Error adding " + text + "! maybe " + text.Remove(text.Length - 1, 1) + " already exists");
             }
         }
 
@@ -272,7 +272,7 @@ namespace Task_4
             //Проверка формата названия 1 файла
             if (ValidateFileName("Ivanov_08012020"))
             {
-                //обработка 1 файла
+                // process 1 file
                 Task.Run(() =>
                 {
                     using (StreamReader streamReader = new StreamReader(PATH, Encoding.Default))
