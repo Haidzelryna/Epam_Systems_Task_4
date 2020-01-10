@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
 using DAL.Repository;
-using System.Threading.Tasks;
+using System;
 
 namespace BLL.Services
 {
@@ -10,11 +10,17 @@ namespace BLL.Services
         private readonly IGenericRepository<DAL.Sale> _saleRepository;
         private readonly IMapper _mapper;
 
-        public SaleService(IMapper mapper, IGenericRepository<DAL.Sale> saleRepository)
+        public SaleService(IMapper mapper)
         {
-            _saleRepository = saleRepository; 
+            _saleRepository = new GenericRepository<DAL.Sale>();
             _mapper = mapper;
         }
+
+        //public SaleService(IMapper mapper, IGenericRepository<DAL.Sale> saleRepository)
+        //{
+        //    _saleRepository = saleRepository;
+        //    _mapper = mapper;
+        //}
 
         public DAL.Sale Get(Sale Entity)
         {
@@ -29,11 +35,27 @@ namespace BLL.Services
         public void Add(DAL.Sale Entity)
         {
             _saleRepository.Add(Entity);
+            SaveChanges();
         }
 
         public void Add(IEnumerable<DAL.Sale> Entities)
         {
+            try { 
             _saleRepository.Add(Entities);
+            }
+            catch (Exception ex)
+            {
+                var e = ex;
+            }
+            try
+            {
+                SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                var e = ex;
+            }
+
         }
 
         public void Remove(DAL.Sale Entity)
@@ -48,11 +70,7 @@ namespace BLL.Services
 
         public void SaveChanges()
         {
-            var banner = new Task(() => _saleRepository.SaveChanges());
-            Task.WaitAll();
-            Task.WhenAll(banner);
-
-            //_saleRepository.SaveChanges();
+            _saleRepository.SaveChanges();
         }
     }
 }

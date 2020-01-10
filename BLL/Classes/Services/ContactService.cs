@@ -11,11 +11,17 @@ namespace BLL.Services
         private readonly IGenericRepository<DAL.Contact> _contactRepository;
         private readonly IMapper _mapper;
 
-        public ContactService(IMapper mapper, IGenericRepository<DAL.Contact> contactRepository)
+        public ContactService(IMapper mapper)
         {
-            _contactRepository = contactRepository;
+            _contactRepository = new GenericRepository<DAL.Contact>();
             _mapper = mapper;
         }
+
+        //public ContactService(IMapper mapper, IGenericRepository<DAL.Contact> contactRepository)
+        //{
+        //    _contactRepository = contactRepository;
+        //    _mapper = mapper;
+        //}
 
         public DAL.Contact Get(BLL.Contact Entity)
         {
@@ -40,11 +46,13 @@ namespace BLL.Services
         public void Add(DAL.Contact Entity)
         {
             _contactRepository.Add(Entity);
+            SaveChanges();
         }
 
         public void Add(IEnumerable<DAL.Contact> Entities)
         {
             _contactRepository.Add(Entities);
+            SaveChanges();
         }
 
         public void SaveChanges()

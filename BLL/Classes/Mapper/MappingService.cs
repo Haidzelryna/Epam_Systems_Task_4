@@ -5,14 +5,14 @@ using DAL;
 
 namespace BLL.Classes.Mapper
 {
-    public class MappingService
+    public static class MappingService
     {
-        public SalesEntities _context;
+        //public SalesEntities _context;
 
-        public MappingService()
-        {
-            _context = new SalesEntities();
-        }
+        //public MappingService()
+        //{
+        //    _context = new SalesEntities();
+        //}
 
         public static IEnumerable<T> MappingForBLLEntities<T, V>(IService<T, V> service, IEnumerable<V> entities)
         {

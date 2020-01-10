@@ -18,11 +18,17 @@ namespace BLL.Services
 
         static object locker = new object();
 
-        public ClientService(IMapper mapper, IGenericRepository<DAL.Client> clientRepository)
+        public ClientService(IMapper mapper)
         {
-            _clientRepository = clientRepository;
+            _clientRepository = new GenericRepository<DAL.Client>();
             _mapper = mapper;
         }
+
+        //public ClientService(IMapper mapper, IGenericRepository<DAL.Client> clientRepository)
+        //{
+        //    _clientRepository = clientRepository;
+        //    _mapper = mapper;
+        //}
 
         public DAL.Client Get(BLL.Client Entity)
         {
@@ -60,8 +66,7 @@ namespace BLL.Services
         //для сопоставления Id - name
         public async Task<IEnumerable<DAL.Sale>> CheckNameId(IEnumerable<DAL.Sale> Entities)
         {
-            var _mappingService = new MappingService();
-            var _contactRepository = new GenericRepository<DAL.Contact>(_mappingService._context);
+            var _contactRepository = new GenericRepository<DAL.Contact>();
 
             IEnumerable<DAL.Client> clients = await GetAll();
           
@@ -70,8 +75,8 @@ namespace BLL.Services
                 Guid idClient = new Guid();
                 if (clients != null)
                 {
-                    if (clients.Any())
-                    {
+                    //if (clients.Any())
+                    //{
                         var clients1 = clients.Where(c => c.Name == sale.ClientName);
                         var i = clients1.Where(x => x != null).Select(c => c.Id);
                         if (i.Count() > 0)
@@ -96,7 +101,7 @@ namespace BLL.Services
                             //SaveChanges();
                             idClient = client.Id;
                         }
-                    }
+                    //}
                 }
                 //создать в БД
                 else
@@ -136,11 +141,13 @@ namespace BLL.Services
         {
             //Task.WaitAll();
             _clientRepository.Add(Entity);
+            SaveChanges();
         }
 
         public void Add(IEnumerable<DAL.Client> Entities)
         {
             _clientRepository.Add(Entities);
+            SaveChanges();
         }
 
         public void SaveChanges()

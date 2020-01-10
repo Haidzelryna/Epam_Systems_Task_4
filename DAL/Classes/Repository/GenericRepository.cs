@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
-//using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repository
 {
@@ -11,6 +10,11 @@ namespace DAL.Repository
         private SalesEntities _context;
 
         static object locker = new object();
+
+        public GenericRepository()
+        {
+            _context = new SalesEntities();
+        }
 
         public GenericRepository(SalesEntities salesDbContext)
         {
@@ -21,13 +25,7 @@ namespace DAL.Repository
         {
             try
             {
-
-                //return await _context.Set<T>().ToListAsync();
-
-                var banner = _context.Set<T>().ToListAsync();
-                Task.WaitAll();
-                await Task.WhenAll(banner);
-
+                return await _context.Set<T>().ToListAsync();
             }
             catch (Exception ex)
             {
@@ -53,41 +51,15 @@ namespace DAL.Repository
 
         public void Add(T entity)
         {
-
-            var banner = new Task(() => _context.Set<T>().Add(entity));
-            Task.WaitAll();
-            Task.WhenAll(banner);
-           
+            _context.Set<T>().Add(entity);
             SaveChanges();
         }
 
         public void Add(IEnumerable<T> entity)
         {
-            //_context.Set<T>().AddRange(entity);
-
-            var banner = new Task(() => _context.Set<T>().AddRange(entity));
-            Task.WaitAll();
-            Task.WhenAll(banner);
-
+            _context.Set<T>().AddRange(entity);
             SaveChanges();
         }
-
-        //public async Task AddRangeAsync(IEnumerable<T> entities)
-        //{
-        //    //var entityEntries = new List<EntityEntry>();
-        //    foreach (var item in entities)
-        //    {
-        //        var addedEntity = await _context[""].AddAsync(item);
-        //        entityEntries.Add(addedEntity);
-        //    }
-
-        //    await _weatherDbContext.SaveChangesAsync();
-
-        //    foreach (var item in entityEntries)
-        //    {
-        //        item.State = EntityState.Detached;
-        //    }
-        //}
 
         public void Delete(T entity)
         {
@@ -101,11 +73,7 @@ namespace DAL.Repository
 
         public void SaveChanges()
         {
-            var banner = new Task(() => _context.SaveChanges());
-            Task.WaitAll();
-            Task.WhenAll(banner);
-
-            //_context.SaveChanges();
+            _context.SaveChanges();
         }
     }
 }

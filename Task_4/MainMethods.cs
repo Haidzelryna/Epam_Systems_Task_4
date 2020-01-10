@@ -27,12 +27,10 @@ namespace Task_4
 
         private static IMapper mapper = BLL.Mapper.SetupMapping.SetupMapper();
 
-        private static MappingService mappingService = new MappingService();
-
-        private static ContactService contactService = new ContactService(mapper, mappingService._context.ContactRepository);
-        private static ManagerService managerService = new ManagerService(mapper, mappingService._context.ManagerRepository);
-        private static ClientService  clientService  = new ClientService (mapper, mappingService._context.ClientRepository);
-        private static ProductService productService = new ProductService(mapper, mappingService._context.ProductRepository);
+        private static ContactService contactService = new ContactService(mapper);
+        private static ManagerService managerService = new ManagerService(mapper);
+        private static ClientService  clientService  = new ClientService (mapper);
+        private static ProductService productService = new ProductService(mapper);
 
         #endregion
 
@@ -102,14 +100,8 @@ namespace Task_4
             SalesService salesService = new SalesService(mapper);
             var saleBLL = MappingService.MappingForBLLEntities<BLL.Sale, BLL.Sales>(salesService, sales);
 
-
-            //пример маппинга // сопоставление
-            //var users =
-            //    Mapper.Map<IEnumerable<User>, List<IndexUserViewModel>>(repo.GetAll());
-
-
             //4.AutoMapper DAL
-            SaleService saleService = new SaleService(mapper, mappingService._context.SaleRepository);
+            SaleService saleService = new SaleService(mapper);
             var saleDAL = MappingService.MappingForDALEntities<DAL.Sale, BLL.Sale>(saleService, saleBLL);
 
             //найти клиентов и продукты их ID и сопоставить, если нет, создать новые ID
@@ -118,7 +110,7 @@ namespace Task_4
 
             //запись в БД sales из файла
             saleService.Add(saleDAL);
-            SaveChangesWithException(saleService, "заказа");
+            //SaveChangesWithException(saleService, "заказа");
         }
 
         internal static bool ValidateFileName(string fileName)
@@ -141,7 +133,7 @@ namespace Task_4
             {
                 var managerActiveTask = managerService.FindAsync(sales.First().CreatedByUserId);
                 var managerActive = await managerActiveTask;
-                MessageUtility.ShowValidationMessage("Менеджер найден:" + managerActive.Name);
+                MessageUtility.ShowInformationMessage("Менеджер найден:" + managerActive.Name);
             }
             catch (Exception e)
             {
