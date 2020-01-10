@@ -7,13 +7,13 @@ namespace Task_4
     {
         public static void Main(string[] args)
         {          
-            //MainMethods.watcherCreated();
+            MainMethods.watcherCreated();
 
             //Стартовые данные, заполняем БД
             //MainMethods.StartData();
 
             //Для работы с двумя уже существующими файлами из папки Task4\Files
-            MainMethods.WorkWithSomeFiles();
+            //MainMethods.WorkWithSomeFiles();
 
             Console.ReadLine();
         }      

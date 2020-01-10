@@ -4,34 +4,34 @@ namespace BLL.Exception
 {
     public static class MessageUtility
     {
-        public static void ShowWarningMessage(Object owner, string message)
+        public static void ShowWarningMessage(string message)
         {
-            Console.WriteLine(String.Concat(owner, ": ", message, "-","Предупреждение"));
+            Console.WriteLine(String.Concat(" ", message, "-","Предупреждение"));
         }
 
-        public static void ShowErrorMessage(Object owner, string message)
+        public static void ShowErrorMessage(string message)
         {
-            Console.WriteLine(String.Concat(owner, ": ", message, "-", "Ошибка"));
+            Console.WriteLine(String.Concat(" ", message, "-", "Ошибка"));
         }
 
-        public static void ShowUnhandledError(Object owner, System.Exception ex)
+        public static void ShowUnhandledError(System.Exception ex)
         {
-            Console.WriteLine(String.Concat(owner, ": ", ex.Message, "-", "Необработанная ошибка"));
+            Console.WriteLine(String.Concat(" ", ex.Message, "-", "Необработанная ошибка"));
         }
 
-        public static void ShowInformationMessage(Object owner, string message)
+        public static void ShowInformationMessage(string message)
         {
-            Console.WriteLine(String.Concat(owner, ": ", message, "-", "Информация"));
+            Console.WriteLine(String.Concat(" ", message, "-", "Информация"));
         }
 
-        public static void ShowValidationErrorSummary(Object owner)
+        public static void ShowValidationErrorSummary()
         {
-            Console.WriteLine(String.Concat(owner, ": ", "Пожалуйста, исправьте ошибки и повторите сохранение."));
+            Console.WriteLine(String.Concat(" ", "Пожалуйста, исправьте ошибки и повторите сохранение."));
         }
 
-        public static void ShowValidationMessage(Object owner, string message)
+        public static void ShowValidationMessage(string message)
         {
-            Console.WriteLine(String.Concat(owner, ": ", message, "-", "Ошибка проверки данных"));
+            Console.WriteLine(String.Concat(" ", message, "-", "Ошибка проверки данных"));
         }
     }
 }

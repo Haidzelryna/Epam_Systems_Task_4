@@ -78,10 +78,11 @@ namespace Task_4
                 if (ValidateFileName("Ivanov_08012020"))
                 {
                     WorkWithFile(bytes);
+                    MessageUtility.ShowInformationMessage("OK");
                 }
                 else
                 {
-                    MessageUtility.ShowValidationMessage(new Object(), "Неверный формат файла!");
+                    MessageUtility.ShowValidationMessage("Неверный формат файла!");
                 }
             }
         });
@@ -171,14 +172,14 @@ namespace Task_4
                 bool check = clientService.Check(clients).Result;
                 if (check == false)
                 {
-                    MessageUtility.ShowErrorMessage(new Object(), "Одного или нескольких клиентов нет в БД");
+                    MessageUtility.ShowErrorMessage("Одного или нескольких клиентов нет в БД");
                     throw new Exception("Одного или нескольких клиентов нет в БД");
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine($"Exception Handler: {e}");
-                MessageUtility.ShowErrorMessage(new Object(), "ERROR IN CLIENTS CHECKING");
+                MessageUtility.ShowErrorMessage("ERROR IN CLIENTS CHECKING");
             }
 
             //проверка продуктов
@@ -188,14 +189,14 @@ namespace Task_4
                 bool check = productService.Check(products).Result;
                 if (check == false)
                 {
-                    MessageUtility.ShowErrorMessage(new Object(), "Одного или нескольких продуктов нет в БД");
+                    MessageUtility.ShowErrorMessage("Одного или нескольких продуктов нет в БД");
                     throw new Exception("Одного или нескольких продуктов нет в БД");
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine($"Exception Handler: {e}");
-                MessageUtility.ShowErrorMessage(new Object(), "ERROR IN PRODUCTS CHECKING");
+                MessageUtility.ShowErrorMessage("ERROR IN PRODUCTS CHECKING");
             }
         }
 
@@ -281,7 +282,7 @@ namespace Task_4
             }
             catch (Exception ex)
             {
-                MessageUtility.ShowErrorMessage(new Object(), "Ошибка при добавлении " + text + "! Возможно " + text.Remove(text.Length - 1, 1) + " уже существует");
+                MessageUtility.ShowErrorMessage("Ошибка при добавлении " + text + "! Возможно " + text.Remove(text.Length - 1, 1) + " уже существует");
             }
         }
 

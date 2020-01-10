@@ -80,7 +80,7 @@ namespace BLL.Services
                         //контакт
                         DAL.Contact contact = new DAL.Contact();
                         contact.Id = Guid.NewGuid();
-                        contact.FirstName = sale.ClientName;
+                        contact.LastName = sale.ClientName;
                         _contactRepository.Add(contact);
                         SaveChanges();
                         //клиент
